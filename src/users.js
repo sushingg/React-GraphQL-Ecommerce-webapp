@@ -6,12 +6,12 @@ const Users = () => (
   <Query
     query={gql`
 		{
-		  users{
+		  users {
 			id
-			name
-			password
+			firstName
+			lastName
 			email
-			tel
+			created
 		  }
 		}
     `}
