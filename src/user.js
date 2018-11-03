@@ -1,14 +1,27 @@
 import React from 'react';
-import { div } from 'react-bootstrap';
 const User = (props) => (
-    <div className="card" style={{'width': '100%', 'marginTop': '10px'}}>
-        <div className="card-body">
-			<h5 className="card-title">{props.user.firstName}</h5>
-			<h6 className="card-subtitle mb-2 text-muted">by {props.user.created}</h6>
-			<p className="card-text">{props.user.lastName}</p>
-			<p className="card-text">{props.user.email}</p>
-        </div>
-    </div>
+  <div className="column is-one-quarter">
+      <div className="card small">
+          <div className="card-image">
+              <figure className="image">
+                  <img src="https://images.unsplash.com/photo-1475778057357-d35f37fa89dd?dpr=1&auto=compress,format&fit=crop&w=1920&h=&q=80&cs=tinysrgb&crop=" alt="Image"/>
+              </figure>
+          </div>
+          <div className="card-content" height="150px">
+              <div className="media">
+                  <div className="media-content">
+                      <p className="title is-4 no-padding">{props.user.firstName}</p>
+                      <p><span className="title is-6"><a href="http://twitter.com/#">{props.user.lastName}</a></span></p>
+                      <p className="subtitle is-6">{props.user.email}</p>
+                  </div>
+              </div>
+              <div className="content">
+                  {props.user.created}
+                  <div className="background-icon"><span class="icon-twitter"></span></div>
+              </div>
+          </div>
+      </div>
+  </div>
+
 );
 export default User;
-

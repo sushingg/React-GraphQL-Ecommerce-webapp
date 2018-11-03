@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter } from 'react-router-dom'
-import './index.css';
+//import './css/bulma.css'
+//import './css/bulma.min.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render((
 	<BrowserRouter>
-    <div className="App container">
         <Route path="/" component={App} />
-	</div>
 	</BrowserRouter>
 ), document.getElementById('root'));
 
