@@ -25,7 +25,7 @@ const App = () => (
   <ApolloProvider client={client}>
 	<Navbar/>
 	<Route exact path='/login' component={Login} />
-		<div className="container is-widescreen is-centered">
+		<div className="container is-widescreen is-centered py-5 bg-light">
 			<div className="section">
 				<div className="row columns is-multiline">
 					<Route exact path="/" component={Products}/>

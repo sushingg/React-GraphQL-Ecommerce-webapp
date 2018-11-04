@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter } from 'react-router-dom'
-//import './css/bulma.css'
-//import './css/bulma.min.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css'
 ReactDOM.render((
 	<BrowserRouter>
         <Route path="/" component={App} />
