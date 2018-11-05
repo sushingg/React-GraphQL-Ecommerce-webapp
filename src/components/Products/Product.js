@@ -1,26 +1,20 @@
 import React from 'react';
-const Product = (props) => (
-    <div className="column is-one-quarter">
-        <div className="card small">
-            <div className="card-image">
-                <figure className="image">
-                    <img src="https://images.unsplash.com/photo-1475778057357-d35f37fa89dd?dpr=1&auto=compress,format&fit=crop&w=1920&h=&q=80&cs=tinysrgb&crop=" alt="product"/>
-                </figure>
-            </div>
-            <div className="card-content" height="150px">
-                <div className="media">
-                    <div className="media-content">
-                        <p className="title is-4 no-padding">{props.product.productTitle}</p>
-                        <p><span className="title is-6"><a href="http://twitter.com/#">{props.product.productSlug}</a></span></p>
-                        <p className="subtitle is-6">{props.product.productPrice}</p>
-                    </div>
-                </div>
-                <div className="content">
-                    {props.product.productDescription}
-                    <div className="background-icon"><span class="icon-twitter"></span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-);
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button, Col } from 'reactstrap';
+const Product = (props) => {
+  return (
+    <Col xs="3" className="d-flex align-items-stretch py-2 ">
+      <Card>
+        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+        <CardBody>
+          <CardTitle>{props.product.productTitle}</CardTitle>
+          <CardSubtitle>{props.product.productPrice}</CardSubtitle>
+          <CardText>{props.product.productDescription}</CardText>
+          <Button>Button</Button>
+        </CardBody>
+      </Card>
+    </Col>
+  );
+};
+
 export default Product;

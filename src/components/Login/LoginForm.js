@@ -31,83 +31,79 @@ class Login extends Component {
   render() {
     const { login, email, password, name, lname } = this.state
     return (
-      <div>
+	<div>
         <div className="column">
           {!login && (
-	<div className="field">
 		<div className="field">
-			<div className="control">
-			<input className="input is-large"
-              value={name}
-              onChange={e => this.setState({ name: e.target.value })}
-              type="text"
-              placeholder="First name"
-            />
+			<div className="form-label-group">
+				<input 
+					type="text" id="inputName" value={name} 
+					className="form-control" placeholder="First Name" 
+					required="" autofocus=""
+					onChange={e => this.setState({ name: e.target.value })}
+				/>
+				<label for="inputName">First Name</label>
+			</div>
+			<div className="form-label-group">
+				<input 
+					type="text" id="inputLname" value={lname} 
+					className="form-control" placeholder="Last Name" 
+					required="" autofocus=""
+					onChange={e => this.setState({ lname: e.target.value })}
+				/>
+				<label for="inputLname">Last Name</label>
 			</div>
 		</div>
-		<div className="field">
-			<div className="control">
-			<input className="input is-large"
-              value={lname}
-              onChange={e => this.setState({ lname: e.target.value })}
-              type="text"
-              placeholder="Last name"
-            />
+          )}
+		<div className="form-label-group">
+			<input 
+				type="email" id="inputEmail" value={email} 
+				className="form-control" placeholder="Email address" 
+				required="" autofocus=""
+				onChange={e => this.setState({ email: e.target.value })}
+			/>
+			<label for="inputEmail">Email address</label>
+		</div>
+		<div class="form-label-group">
+			<input 
+				type="password" id="inputPassword" value={password}
+				class="form-control" placeholder="Password" 
+				required=""
+				onChange={e => this.setState({ password: e.target.value })}
+			/>
+			<label for="inputPassword">Password</label>
+		</div>
+	</div>
+		<div className="column">
+			<br/>
+			<Mutation
+				mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+				variables={{ email, password, name, lname }}
+				onCompleted={data => this._confirm(data)}
+				onError={error => this._error(error) }
+			>
+			{mutation => (
+				<div className="field py-2">
+					<div className="control">
+					  <div className="btn btn-lg btn-primary btn-block" onClick={mutation}>
+						{login ? 'login' : 'create account'}
+					  </div>
+					</div>
+				</div>
+				)}
+			</Mutation>
+			<div className="field py-2">
+				<div className="control">
+					<div
+						className="btn btn-lg btn-primary btn-block"
+						onClick={() => this.setState({ login: !login })}
+					  >
+						{login ? 'need to create an account?' : 'already have an account?'}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-          )}
-		<div className="field">
-			<div className="control">
-			  <input className="input is-large"
-				value={email}
-				onChange={e => this.setState({ email: e.target.value })}
-				type="text"
-				placeholder="Your Email"
-			  />
-			</div>
-		</div>
-		<div className="field">
-			<div className="control">
-			  <input className="input is-large"
-				value={password}
-				onChange={e => this.setState({ password: e.target.value })}
-				type="password"
-				placeholder="Your Password"
-			  />
-			</div>
-		</div>
-        </div>
-		<div className="column">
-		  <br/>
-		  <Mutation
-			mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-			variables={{ email, password, name, lname }}
-			onCompleted={data => this._confirm(data)}
-			onError={error => this._error(error) }
-		  >
-			{mutation => (
-			<div className="field">
-				<div className="control">
-				  <div className="button is-block is-info is-large is-fullwidth" onClick={mutation}>
-					{login ? 'login' : 'create account'}
-				  </div>
-				</div>
-			</div>
-			)}
-		  </Mutation>
-			<div className="field">
-			<div className="control">
-			  <div
-				className="button is-block is-info is-large is-fullwidth"
-				onClick={() => this.setState({ login: !login })}
-			  >
-				{login ? 'need to create an account?' : 'already have an account?'}
-			  </div>
-			  </div>
-		  </div>
-		</div>
-      </div>
     )
   }
 

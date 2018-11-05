@@ -1,3 +1,4 @@
+*.bat
 # Logs
 logs
 *.log

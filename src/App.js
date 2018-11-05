@@ -9,10 +9,12 @@ import Login from './components/Login/Login';
 import Logout from './Logout';
 import Footer from './components/Footer/Footer';
 import Products from './components/Products/Products';
+
+const AUTH_TOKEN = 'auth-token'
 const client = new ApolloClient({
-	uri: "http://localhost:4000/graphql",
+	uri: 'https://sushingg-api.herokuapp.com/graphql',
 	request: async (operation) => {
-		const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YmQ3NjRhYTcwMzgzMDA2ZDQxMTA5Y2QiLCJlbWFpbCI6InNoaW5Ac2hpbi5jaCIsImFkbWluIjp0cnVlLCJleHAiOjE1NDk5MjYxODksImlhdCI6MTU0MDkyMjU4OX0.Up-ku3Hnf6YVoGc2xumP-ax88yBgm6yLN0YGRFwk9uIss'// null
+		const token = localStorage.getItem(AUTH_TOKEN)
 		operation.setContext({
 		  headers: {
 			'x-access-token': token
@@ -25,16 +27,10 @@ const App = () => (
   <ApolloProvider client={client}>
 	<Navbar/>
 	<Route exact path='/login' component={Login} />
-		<div className="container is-widescreen is-centered py-5 bg-light">
-			<div className="section">
-				<div className="row columns is-multiline">
-					<Route exact path="/" component={Products}/>
-				</div>
-			</div>
-		</div>
+	<Route exact path="/" component={Products}/>
 	<Route path='/logout' component={Logout} />
-  <Footer/>
-	</ApolloProvider>
+	<Footer/>
+  </ApolloProvider>
 
 );
 

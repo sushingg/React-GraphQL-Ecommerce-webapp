@@ -14,22 +14,43 @@ import {
   DropdownItem,
   Button
   } from 'reactstrap';
+import isLogin from '../../common'
+
 
 export default class Example extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
+		this.toggle = this.toggle.bind(this);
+		this.state = {
+		  isOpen: false
+		};
+
+
+	}
+	toggle() {
+		this.setState({
+		  isOpen: !this.state.isOpen
+		});
+	}
+	
+
   render() {
+	const login = isLogin()
+	var email
+	var navBtn = ''
+	if(login !== null)
+	{
+		email = login.email
+		navBtn = <NavItem>
+				<Button tag={Link} to="/logout" color="danger">Log Out</Button>{' '}
+			  </NavItem>
+	}else{
+		navBtn = <NavItem>
+		<Button tag={Link} to="/login" color="primary">Login</Button>{' '}
+		</NavItem>
+
+	}
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -38,10 +59,7 @@ export default class Example extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink tag={Link} to="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="https://github.com/sushingg">GitHub</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -49,20 +67,18 @@ export default class Example extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
+                    testDD
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Reset
+                    <NavLink className="text-dark" href="/">Reset</NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-				<NavItem>
-                <Button tag={Link} to="/login/" color="primary">Login</Button>{' '}
-              </NavItem>
+			  <NavItem>
+				<NavLink>{email}</NavLink>
+			  </NavItem>
+			  {navBtn}
             </Nav>
           </Collapse>
         </Navbar>
