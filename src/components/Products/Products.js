@@ -5,9 +5,9 @@ import Product from './Product';
 import Loader from '../Loader';
 import { Row } from 'reactstrap';
 const Products = () => (
-		<div className="container is-widescreen is-centered py-5 bg-light">
-			<div className="section">
-				<Row className="row-eq-height">
+		<div className="album py-5 bg-light">
+			<div className="container">
+				<Row className="row">
   <Query
     query={gql`
       {
