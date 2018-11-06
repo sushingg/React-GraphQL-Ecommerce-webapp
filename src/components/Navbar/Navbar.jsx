@@ -12,7 +12,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Button
+  Button,
+  Badge
   } from 'reactstrap';
 import isLogin from '../../common'
 
@@ -75,6 +76,11 @@ export default class Example extends React.Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+			  <NavItem>
+                <NavLink to="cart">
+					<i class="fa fa-shopping-cart"></i> Cart <Badge color="danger" pill>#</Badge>
+				</NavLink>
+              </NavItem>
 			  <NavItem>
 				<NavLink>{email}</NavLink>
 			  </NavItem>

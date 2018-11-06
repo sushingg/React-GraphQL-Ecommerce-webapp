@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
+import { Alert } from 'reactstrap';
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!,$name:String!,$lname:String!) {
@@ -26,12 +27,16 @@ class Login extends Component {
     password: '',
     name: '',
 	lanme: '',
+	showError: false
   }
 
   render() {
-    const { login, email, password, name, lname } = this.state
+    const { login, email, password, name, lname, errorMessage} = this.state
     return (
 	<div>
+		<Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
+			{errorMessage}
+        </Alert>
         <div className="column">
           {!login && (
 		<div className="field">
@@ -42,7 +47,7 @@ class Login extends Component {
 					required="" autofocus=""
 					onChange={e => this.setState({ name: e.target.value })}
 				/>
-				<label for="inputName">First Name</label>
+				<label htmlFor="inputName">First Name</label>
 			</div>
 			<div className="form-label-group">
 				<input 
@@ -51,7 +56,7 @@ class Login extends Component {
 					required="" autofocus=""
 					onChange={e => this.setState({ lname: e.target.value })}
 				/>
-				<label for="inputLname">Last Name</label>
+				<label htmlFor="inputLname">Last Name</label>
 			</div>
 		</div>
           )}
@@ -59,19 +64,19 @@ class Login extends Component {
 			<input 
 				type="email" id="inputEmail" value={email} 
 				className="form-control" placeholder="Email address" 
-				required="" autofocus=""
+				required="" autoFocus=""
 				onChange={e => this.setState({ email: e.target.value })}
 			/>
-			<label for="inputEmail">Email address</label>
+			<label htmlFor="inputEmail">Email address</label>
 		</div>
-		<div class="form-label-group">
+		<div className="form-label-group">
 			<input 
 				type="password" id="inputPassword" value={password}
-				class="form-control" placeholder="Password" 
+				className="form-control" placeholder="Password" 
 				required=""
 				onChange={e => this.setState({ password: e.target.value })}
 			/>
-			<label for="inputPassword">Password</label>
+			<label htmlFor="inputPassword">Password</label>
 		</div>
 	</div>
 		<div className="column">
@@ -106,14 +111,25 @@ class Login extends Component {
 	</div>
     )
   }
-
+	toggleError = () => {
+		this.setState((prevState, props) => {
+		  return { showError: true }
+		})
+	};
+	onDismiss = () => {
+		this.setState((prevState, props) => {
+		  return { showError: false }
+		})
+	};
 	_confirm = async data => {
 	  const { token } = this.state.login ? data.login : data.addUser
 	  this._saveUserData(token)
 	  this.props.history.push(`/`)
 	}
 	_error = async error => {
-		alert(error);
+		//alert(error);
+		this.setState({errorMessage: error.message})
+		this.toggleError()
 	}
 	_saveUserData = token => {
 	localStorage.setItem(AUTH_TOKEN, token)
