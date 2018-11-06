@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import Products from './components/Products/Products';
 
 const AUTH_TOKEN = 'auth-token'
+//uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
 const client = new ApolloClient({
 	uri: 'https://sushingg-api.herokuapp.com/graphql',
 	request: async (operation) => {
