@@ -12,7 +12,7 @@ import Products from './components/Products/Products';
 
 const AUTH_TOKEN = 'auth-token'
 const client = new ApolloClient({
-	uri: 'http://localhost:4000/graphql',
+	uri: 'https://sushingg-api.herokuapp.com/graphql',
 	request: async (operation) => {
 		const token = localStorage.getItem(AUTH_TOKEN)
 		operation.setContext({
