@@ -9,9 +9,12 @@ body {
 }
 html,body{
     min-height: 100%;
+	
 }
 #root { 
+
     min-height: 100%;
+
 }
 footer{
 	background-color:#ffffff;

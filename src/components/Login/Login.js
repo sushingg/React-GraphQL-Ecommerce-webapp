@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import './Login.css'
 import LoginForm from './LoginForm'
-import { Jumbotron, Button, Col, Row } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
 class Login extends React.Component {
   render() {
 	  return (
