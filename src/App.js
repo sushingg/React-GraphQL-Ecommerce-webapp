@@ -9,11 +9,11 @@ import Login from './components/Login/Login';
 import Logout from './Logout';
 import Footer from './components/Footer/Footer';
 import Products from './components/Products/Products';
-
+import Product from './components/Product/Products';
 const AUTH_TOKEN = 'auth-token'
 //uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
 const client = new ApolloClient({
-	uri: 'http://localhost:4000/graphql',
+	uri: 'https://sushingg-api.herokuapp.com/graphql',
 	request: async (operation) => {
 		const token = localStorage.getItem(AUTH_TOKEN)
 		operation.setContext({
@@ -30,6 +30,7 @@ const App = () => (
 	<Route exact path='/login' component={Login} />
 	<Route exact path="/" component={Products}/>
 	<Route path='/logout' component={Logout} />
+	<Route path="/p/:slug" component={Product}/>
 	<Footer/>
   </ApolloProvider>
 

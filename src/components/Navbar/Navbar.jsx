@@ -78,7 +78,7 @@ export default class Example extends React.Component {
               </UncontrolledDropdown>
 			  <NavItem>
                 <NavLink to="cart">
-					<i class="fa fa-shopping-cart"></i> Cart <Badge color="danger" pill>#</Badge>
+					<i className="fa fa-shopping-cart"></i> Cart <Badge color="danger" pill>#</Badge>
 				</NavLink>
               </NavItem>
 			  <NavItem>
