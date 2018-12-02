@@ -1,34 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react'
 import {  Link } from "react-router-dom";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-  Badge
-  } from 'reactstrap';
+
+import { Button, Dropdown, Menu, Image, Label, Icon, Sidebar, Table, Header, Popup, Rail} from 'semantic-ui-react'
 import isLogin from '../../common'
+import Login from '../Login/Login';
 
-
-export default class Example extends React.Component {
+export default class Example extends Component {
 	constructor(props) {
 		super(props);
 
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-		  isOpen: false
+		  isOpen: false,
+      visible: false,
 		};
-
-
 	}
+  handleHideClick = () => this.setState({ visible: false })
+  handleShowClick = () => this.setState({ visible: true })
+  handleSidebarHide = () => this.setState({ visible: false })
+
 	toggle() {
 		this.setState({
 		  isOpen: !this.state.isOpen
@@ -37,58 +27,109 @@ export default class Example extends React.Component {
 	
 
   render() {
-	const login = isLogin()
-	var email
-	var navBtn = ''
-	if(login !== null)
-	{
-		email = login.email
-		navBtn = <NavItem>
-				<Button tag={Link} to="/logout" color="danger">Log Out</Button>{' '}
-			  </NavItem>
-	}else{
-		navBtn = <NavItem>
-		<Button tag={Link} to="/login" color="primary">Login</Button>{' '}
-		</NavItem>
+    const { visible } = this.state
+  	const login = isLogin()
+  	var email
+  	var navBtn = ''
+  	if(login !== null)
+  	{
+  		email = <Menu.Item> {login.email } </Menu.Item>
+  		navBtn =
+  				<Button primary as={Link} to="/logout" >Log Out</Button>
 
-	}
-    return (
-      <div>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand tag={Link} to="/"><img src="/teche-logo.png" alt=" " width="112" height="28"/></NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="https://github.com/sushingg">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    testDD
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    <NavLink className="text-dark" href="/">Reset</NavLink>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-			  <NavItem>
-                <NavLink to="cart">
-					<i className="fa fa-shopping-cart"></i> Cart <Badge color="danger" pill>#</Badge>
-				</NavLink>
-              </NavItem>
-			  <NavItem>
-				<NavLink>{email}</NavLink>
-			  </NavItem>
-			  {navBtn}
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
+  	}else{
+  		navBtn = 
+          <Popup
+            wide='very'
+            trigger={<Button primary >Login</Button>}
+            content={<Login/>}
+            on='click'
+            position='bottom right'
+          />
+  	}
+    var carts = 
+      <Table basic='very' celled striped unstackable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell width='ten'>รายการ</Table.HeaderCell>
+            <Table.HeaderCell>จำนวน</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>
+              <Header as='h4' image>
+                <Image src='https://react.semantic-ui.com/images/avatar/small/lena.png' rounded size='mini' />
+                <Header.Content>
+                  Test product
+                  <Header.Subheader>detail</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Table.Cell>
+            <Table.Cell>
+              <Header as='h4'>
+                <Header.Content>
+                  999฿
+                  <Header.Subheader>25 ชิ้น</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Table.Cell>
+            <Table.Cell>
+              <Icon name='plus' color='green'/><br/>
+              <Icon name='minus' color='red' />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <Header as='h4' image>
+                <Image src='https://react.semantic-ui.com/images/avatar/small/matthew.png' rounded size='mini' />
+                <Header.Content>
+                  Matthew
+                  <Header.Subheader>Fabric Design</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Table.Cell>
+            <Table.Cell>15</Table.Cell>
+            <Table.Cell>15</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+
+  return (
+
+      <Sidebar.Pushable style={{ height: '100%' }}   >
+        <Sidebar
+          animation='push'
+          onHide={this.handleSidebarHide}
+          visible={visible}
+          width='wide'
+          direction='right'
+        >
+          {carts}
+        </Sidebar>
+        <Sidebar.Pusher dimmed={visible} ref={this.handleContextRef}>
+          <Menu >
+            <Menu.Item as={Link} to="/"> <Header as='h2'>TechE</Header></Menu.Item>
+            <Menu.Menu position='right'>
+              <Popup
+                wide='very'
+                trigger={<Menu.Item disabled={visible} onClick={this.handleShowClick}>Cart<Label><Icon name='shopping cart'/>#</Label></Menu.Item>}
+                content={carts}
+                on={['hover', 'click']}
+                position='bottom right'
+              />
+             {email}
+              <Menu.Item> {navBtn} </Menu.Item>
+            </Menu.Menu>
+          </Menu>
+          {this.props.children}
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+  
+    
+
     );
   }
 }

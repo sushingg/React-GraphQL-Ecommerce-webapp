@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
-import { Alert } from 'reactstrap';
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!,$name:String!,$lname:String!) {
@@ -19,6 +20,49 @@ const LOGIN_MUTATION = gql`
     }
   }
 `
+const LoginForm = () => (
+  <div className='login-form'>
+    {/*
+      Heads up! The styles below are necessary for the correct render of this example.
+      You can do same with CSS, the main idea is that all the elements up to the `Grid`
+      below must have a height of 100%.
+    */}
+    <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+       
+      }
+    `}</style>
+    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='blue' textAlign='center'>
+           Log-in to your account
+        </Header>
+        <Form size='large'>
+          <Segment stacked>
+            <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+            <Form.Input
+              fluid
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+            />
+
+            <Button color='blue' fluid size='large'>
+              Login
+            </Button>
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a href='#'>Sign Up</a>
+        </Message>
+      </Grid.Column>
+    </Grid>
+  </div>
+)
+
 
 class Login extends Component {
   state = {
@@ -33,83 +77,48 @@ class Login extends Component {
   render() {
     const { login, email, password, name, lname, errorMessage} = this.state
     return (
-	<div>
-		<Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-			{errorMessage}
-        </Alert>
-        <div className="column">
-          {!login && (
-		<div className="field">
-			<div className="form-label-group">
-				<input 
-					type="text" id="inputName" value={name} 
-					className="form-control" placeholder="First Name" 
-					required="" autofocus=""
-					onChange={e => this.setState({ name: e.target.value })}
-				/>
-				<label htmlFor="inputName">First Name</label>
-			</div>
-			<div className="form-label-group">
-				<input 
-					type="text" id="inputLname" value={lname} 
-					className="form-control" placeholder="Last Name" 
-					required="" autofocus=""
-					onChange={e => this.setState({ lname: e.target.value })}
-				/>
-				<label htmlFor="inputLname">Last Name</label>
-			</div>
-		</div>
-          )}
-		<div className="form-label-group">
-			<input 
-				type="email" id="inputEmail" value={email} 
-				className="form-control" placeholder="Email address" 
-				required="" autoFocus=""
-				onChange={e => this.setState({ email: e.target.value })}
-			/>
-			<label htmlFor="inputEmail">Email address</label>
-		</div>
-		<div className="form-label-group">
-			<input 
-				type="password" id="inputPassword" value={password}
-				className="form-control" placeholder="Password" 
-				required=""
-				onChange={e => this.setState({ password: e.target.value })}
-			/>
-			<label htmlFor="inputPassword">Password</label>
-		</div>
-	</div>
-		<div className="column">
-			<br/>
-			<Mutation
-				mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-				variables={{ email, password, name, lname }}
-				onCompleted={data => this._confirm(data)}
-				onError={error => this._error(error) }
-			>
-			{mutation => (
-				<div className="field py-2">
-					<div className="control">
-					  <div className="btn btn-lg btn-primary btn-block" onClick={mutation}>
-						{login ? 'login' : 'create account'}
-					  </div>
-					</div>
-				</div>
-				)}
-			</Mutation>
-			<div className="field py-2">
-				<div className="control">
-					<div
-						className="btn btn-lg btn-primary btn-block"
-						onClick={() => this.setState({ login: !login })}
-					  >
-						{login ? 'need to create an account?' : 'already have an account?'}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    )
+  <div className='login-form'>
+    {/*
+      Heads up! The styles below are necessary for the correct render of this example.
+      You can do same with CSS, the main idea is that all the elements up to the `Grid`
+      below must have a height of 100%.
+    */}
+    <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+       
+      }
+    `}</style>
+    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='blue' textAlign='center'>
+           Log-in to your account
+        </Header>
+        <Form size='large'>
+          <Segment stacked>
+            <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+            <Form.Input
+              fluid
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+            />
+
+            <Button color='blue' fluid size='large'>
+              Login
+            </Button>
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a href='#'>Sign Up</a>
+        </Message>
+      </Grid.Column>
+    </Grid>
+  </div>
+)
+
   }
 	toggleError = () => {
 		this.setState((prevState, props) => {
@@ -136,4 +145,4 @@ class Login extends Component {
 	}
 }
 
-export default withRouter(Login);
+export default withRouter(LoginForm);
