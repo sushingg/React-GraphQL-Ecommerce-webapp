@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import {  Link } from "react-router-dom"
 import React, { Component } from 'react'
 import {
   Button,
@@ -19,7 +20,10 @@ import {
   Popup,
   Label
 } from 'semantic-ui-react'
-
+import isLogin from '../common'
+import Login from './Login/Login'
+import Cart from './Cart/CartSummary'
+import { CartContext } from "./CartContext";
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
@@ -58,57 +62,25 @@ class DesktopContainer extends Component {
   render() {
     const { children } = this.props
     const { fixed } = this.state
+    var email
+    var navBtn
+    const login = isLogin()
+    if(login !== null)
+  	{
+  		email = <Menu.Item> {login.email } </Menu.Item>
+  		navBtn =
+  				<Button as='a' as={Link} to="/logout" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Logout</Button>
 
-    var carts = 
-      <Table basic='very' celled striped unstackable>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell width='ten'>รายการ</Table.HeaderCell>
-            <Table.HeaderCell>จำนวน</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>
-              <Header as='h4' image>
-                <Image src='https://react.semantic-ui.com/images/avatar/small/lena.png' rounded size='mini' />
-                <Header.Content>
-                  Test product
-                  <Header.Subheader>detail</Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Table.Cell>
-            <Table.Cell>
-              <Header as='h4'>
-                <Header.Content>
-                  999฿
-                  <Header.Subheader>25 ชิ้น</Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Table.Cell>
-            <Table.Cell>
-              <Icon name='plus' color='green'/><br/>
-              <Icon name='minus' color='red' />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Header as='h4' image>
-                <Image src='https://react.semantic-ui.com/images/avatar/small/matthew.png' rounded size='mini' />
-                <Header.Content>
-                  Matthew
-                  <Header.Subheader>Fabric Design</Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Table.Cell>
-            <Table.Cell>15</Table.Cell>
-            <Table.Cell>15</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-
+  	}else{
+  		navBtn = 
+          <Popup
+            wide='very'
+            trigger={<Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Login</Button>}
+            content={<Login/>}
+            on='click'
+            position='bottom right'
+          />
+  	}
 
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -131,34 +103,38 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>
+                <Menu.Item as={Link} to="/" active>
                   TechE
                 </Menu.Item>
                 <Menu.Item position='right'>
                   <Input icon='search' placeholder='Search...' />
                 </Menu.Item>
-                  <Popup
-                    wide='very'
-                    trigger={<Menu.Item>
-                        <Button as='div' labelPosition='right'>
-                          <Button as='a' inverted={!fixed} primary={fixed}>
-                            <Icon name='shopping cart' />
-                            Cart
-                          </Button>
-                          <Label as='a' basic pointing='left'>
-                            48+
-                          </Label>
+                <Popup
+                  wide='very'
+                  trigger={
+                    <Menu.Item>
+                      <Button as='div' labelPosition='right'>
+                        <Button  inverted={!fixed} primary={fixed}>
+                          <Icon name='shopping cart' />
+                          Cart
                         </Button>
-                        </Menu.Item>
-                    }
-                    content={carts}
-                    on={['hover', 'click']}
-                    position='bottom right'
-                  />
+                        <Label basic pointing='left'>
+                          <CartContext.Consumer>
+                            {cart => (
+                             cart.items.length || '0'
+                            )}
+                          </CartContext.Consumer>
+                        </Label>
+                      </Button>
+                    </Menu.Item>
+                  }
+                  content={Cart}
+                  on='click'
+                  position='bottom right'
+                />
+                {email}
                 <Menu.Item >
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
+                  {navBtn}
                 </Menu.Item>
               </Container>
             </Menu>

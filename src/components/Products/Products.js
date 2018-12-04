@@ -10,7 +10,7 @@ const Products = () => (
 	<div className="container-fluid h-100 py-5 bg-light ">
 		<div className="container">
 			<Card.Group itemsPerRow={4} stackable>
-			<Query
+			<Query 
 				query={gql`
 				  {
 					products {
@@ -26,10 +26,10 @@ const Products = () => (
 				`}
 			>
 				{({ loading, error, data }) => {
-				  if (loading) return <Loader/>;
+				  if (loading) return <Loader key=""/>;
 				  if (error) return <Alert className="text-center col" color="danger">Error :${error.message}</Alert>;
 					return data.products.map((currentProduct) => (
-						<Product key={currentProduct.id} product={currentProduct} />
+						<Product key={currentProduct.productAddedDate} product={currentProduct} />
 					));
 
 				}}

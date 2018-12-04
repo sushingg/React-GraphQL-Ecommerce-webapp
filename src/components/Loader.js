@@ -1,8 +1,12 @@
 
 import React from 'react';
-const Loader =  props => {
+import { Dimmer, Loader } from 'semantic-ui-react'
+
+const Loaders =  props => {
   return (
-    <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        <Dimmer active>
+      <Loader />
+    </Dimmer>
   )
 }
-export default Loader;
+export default Loaders;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
+import { Mutation } from "react-apollo"; 
 import { withRouter } from "react-router-dom";
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Alert } from 'reactstrap';
 
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
@@ -51,7 +52,7 @@ const LoginForm = () => (
             />
 
             <Button color='blue' fluid size='large'>
-              Login
+              Logins
             </Button>
           </Segment>
         </Form>
@@ -70,8 +71,8 @@ class Login extends Component {
     email: '',
     password: '',
     name: '',
-	lanme: '',
-	showError: false
+  	lanme: '',
+  	showError: false
   }
 
   render() {
@@ -91,33 +92,76 @@ class Login extends Component {
       }
     `}</style>
     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid.Column style={{ maxWidth: 450,minWidth:350 }}>
         <Header as='h2' color='blue' textAlign='center'>
-           Log-in to your account
+           {login ? 'Log-in to your account' : ' Sign Up your account'}
         </Header>
+            		<Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
+			    {errorMessage}
+        </Alert>
         <Form size='large'>
           <Segment stacked>
-            <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+          {!login && (
+            <Form.Input 
+              fluid 
+              icon='user' 
+              iconPosition='left' 
+              value={name}
+              placeholder='First Name' 
+              onChange={e => this.setState({ name: e.target.value })}
+            />
+          )}
+          {!login && (
+            <Form.Input 
+              fluid 
+              icon='user' 
+              iconPosition='left' 
+              value={lname}
+              placeholder='Last Name' 
+              onChange={e => this.setState({ lname: e.target.value })}
+            />
+
+          )}
+            <Form.Input 
+              fluid 
+              icon='user' 
+              iconPosition='left' 
+              value={email}
+              placeholder='E-mail address' 
+              onChange={e => this.setState({ email: e.target.value })}
+            />
             <Form.Input
               fluid
               icon='lock'
               iconPosition='left'
               placeholder='Password'
+              value={password}
               type='password'
+              onChange={e => this.setState({ password: e.target.value })}
             />
-
-            <Button color='blue' fluid size='large'>
-              Login
-            </Button>
+      			<Mutation
+      				mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+      				variables={{ email, password, name, lname }}
+      				onCompleted={data => this._confirm(data)}
+      				onError={error => this._error(error) }
+      			>
+      			  {mutation => (
+                <Button color='blue' fluid size='large' onClick={mutation}>
+                  {login ? 'Login' : 'Sign Up'}
+                </Button>
+              )}
+            </Mutation>
           </Segment>
         </Form>
         <Message>
-          New to us? <a href='#'>Sign Up</a>
+          <a href='#' onClick={() => this.setState({ login: !login })}>{login ? 'need to create an account?' : 'already have an account?'}</a>
         </Message>
+
+      
       </Grid.Column>
     </Grid>
   </div>
-)
+) 
 
   }
 	toggleError = () => {
@@ -145,4 +189,4 @@ class Login extends Component {
 	}
 }
 
-export default withRouter(LoginForm);
+export default withRouter(Login);
