@@ -1,6 +1,7 @@
 import React from "react";
 import { CartContext } from "../CartContext";
 import {  Table , Icon, Image, Header } from 'semantic-ui-react'
+import {  Link } from "react-router-dom";
 function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
 }
@@ -37,7 +38,7 @@ export default props => (
               <Header as='h4'>
                 <Header.Content>
                   {p.productPrice}{" "} ฿
-                  <Header.Subheader>{cart.items.filter(pc => pc.productSlug === p.productSlug).length || 'none'}ชิ้น</Header.Subheader>
+                  <Header.Subheader>{p.quantity || 'none'}ชิ้น</Header.Subheader>
                 </Header.Content>
               </Header>
             </Table.Cell>
@@ -50,6 +51,7 @@ export default props => (
         </Table.Body>
       </Table>
         <h4>รวม { cart.items.reduce((acc, { productPrice }) => acc + productPrice, 0) || '0'} บาท</h4>
+        <Link to="/checkout">Checkout</Link>
       </div>
       )}
     </CartContext.Consumer>

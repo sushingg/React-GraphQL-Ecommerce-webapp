@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
 import { Button, Form, Grid, Segment } from 'semantic-ui-react'
@@ -8,30 +9,50 @@ import isLogin from '../../common'
 
 import Cart from '../Cart/CartSummary'
 const login = isLogin()
+if(login !== null){
+  var email = login.email 
+  var fname = login.fname 
+  var lname = login.lname
+}
 const ADD_ORDER_MUTATION = gql`
-  mutation OrderMutation($orderEmail: String!, $orderFirstname: String!, $orderLastname:String!, $orderAddr1:String!, $orderTotal:Int!,$orderProducts:String!) {
+  mutation OrderMutation($orderEmail: String!, $orderFirstname: String!, $orderLastname:String!, $orderAddr1:String!, $orderTotal:Int!,$orderProducts:[orderProductInput]!) {
  	addOrder(orderEmail: $orderEmail, orderFirstname: $orderFirstname, orderLastname: $orderLastname, orderAddr1: $orderAddr1,orderTotal: $orderTotal,orderProducts: $orderProducts ) {
 		orderPaymentLink
     }
   }
 `
 
-
+function onlyUnique(value, index, self) { 
+  return self.indexOf(value) === index;
+}
 class Checkout extends Component {
     state = {
-        orderEmail: login.email ||'',
+        orderEmail: email,
         orderAddr1: '',
-        orderFirstname: login.fname || '',
-    	orderLastname: login.lname || '',
+        orderFirstname: fname,
+    	orderLastname: lname,
     	showError: false,
     }
     render() {
+    if(login == null){this.props.history.push(`/`)}
     const {  orderEmail, orderAddr1, orderFirstname, orderLastname, errorMessage} = this.state
-    
     var items = JSON.parse(localStorage.getItem('items'))
-    var orderTotal = items.reduce((acc, { productPrice }) => acc + productPrice, 0)
-    var orderProducts = JSON.stringify({items})
+    if(items !== null){
+      var orderTotal = items.reduce((acc, { productPrice }) => acc + productPrice, 0)||''
+      var orderProducts = items.filter(onlyUnique).map((p) => {
+        delete p.__typename
+        delete p.productDescription
+        delete p.productTags
+        delete p.productAddedDate
+        delete p.productImage
+        delete p.__typename
+        return p
+      })
     console.log(orderProducts)
+  }
+    
+    
+    //((p, i) => (delete p.__typename return p    )))
     return (
         <CartContext.Consumer>
           {cart => (
@@ -47,6 +68,7 @@ class Checkout extends Component {
                 <Cart/>
             </Grid.Column>
             <Grid.Column  width={8}>
+            
                 <Form size='large' >
                   <Segment >
                     <Form.Input 
@@ -109,7 +131,7 @@ class Checkout extends Component {
 	_confirm = async data => {
 	  const order  = data.addOrder
 	  console.log(order)
-	  window.location = order.orderPaymentLink
+	  //window.location = order.orderPaymentLink
 	}
 	_error = async error => {
 		//alert(error);
