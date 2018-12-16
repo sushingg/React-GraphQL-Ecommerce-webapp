@@ -2,7 +2,7 @@ import React from 'react';
 import {  Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
 
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 const Product = (props) => {
 
@@ -10,6 +10,7 @@ const Product = (props) => {
   <CartContext.Consumer>
     {cart => (
       <Card key={props.product.productSlug} className="shadow" >
+
         <Image wrapped as={Link} to={"p/"+props.product.productSlug}  src={"/image/"+props.product.productSlug+"/"+props.product.productImage} />
         <Card.Content >
     

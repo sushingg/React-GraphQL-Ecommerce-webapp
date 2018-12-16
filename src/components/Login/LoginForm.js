@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
 import { withRouter } from "react-router-dom";
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { Alert } from 'reactstrap';
 
 const AUTH_TOKEN = 'auth-token'
@@ -21,50 +21,6 @@ const LOGIN_MUTATION = gql`
     }
   }
 `
-const LoginForm = () => (
-  <div className='login-form'>
-    {/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
-    <style>{`
-      body > div,
-      body > div > div,
-      body > div > div > div.login-form {
-       
-      }
-    `}</style>
-    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2' color='blue' textAlign='center'>
-           Log-in to your account
-        </Header>
-        <Form size='large'>
-          <Segment stacked>
-            <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
-            <Form.Input
-              fluid
-              icon='lock'
-              iconPosition='left'
-              placeholder='Password'
-              type='password'
-            />
-
-            <Button color='blue' fluid size='large'>
-              Logins
-            </Button>
-          </Segment>
-        </Form>
-        <Message>
-          New to us? <a href='#'>Sign Up</a>
-        </Message>
-      </Grid.Column>
-    </Grid>
-  </div>
-)
-
-
 class Login extends Component {
   state = {
     login: true, // switch between Login and SignUp
@@ -145,8 +101,8 @@ class Login extends Component {
       				onCompleted={data => this._confirm(data)}
       				onError={error => this._error(error) }
       			>
-      			  {mutation => (
-                <Button color='blue' fluid size='large' onClick={mutation}>
+      			  {(mutation, { loading }) =>(
+                <Button color='blue' loading={loading?'loading':null} fluid size='large' onClick={mutation}>
                   {login ? 'Login' : 'Sign Up'}
                 </Button>
               )}
@@ -154,7 +110,7 @@ class Login extends Component {
           </Segment>
         </Form>
         <Message>
-          <a href='#' onClick={() => this.setState({ login: !login })}>{login ? 'need to create an account?' : 'already have an account?'}</a>
+          <a href='/#' onClick={() => this.setState({ login: !login })}>{login ? 'need to create an account?' : 'already have an account?'}</a>
         </Message>
 
       
@@ -181,6 +137,8 @@ class Login extends Component {
 	}
 	_error = async error => {
 		//alert(error);
+    console.log(error.graphQLErrors)
+
 		this.setState({errorMessage: error.message})
 		this.toggleError()
 	}

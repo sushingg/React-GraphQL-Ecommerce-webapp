@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BrowserRouter } from 'react-router-dom'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
 import { Button, Form, Grid, Segment } from 'semantic-ui-react'
@@ -34,9 +33,10 @@ class Checkout extends Component {
     	showError: false,
     }
     render() {
+    console.log(login)
     if(login == null){this.props.history.push(`/`)}
     const {  orderEmail, orderAddr1, orderFirstname, orderLastname, errorMessage} = this.state
-    var items = JSON.parse(localStorage.getItem('items'))
+    var items = JSON.parse(localStorage.getItem('items')|| "[]")
     if(items !== null){
       var orderTotal = items.reduce((acc, { productPrice }) => acc + productPrice, 0)||''
       var orderProducts = items.filter(onlyUnique).map((p) => {
@@ -49,6 +49,8 @@ class Checkout extends Component {
         return p
       })
     console.log(orderProducts)
+  }else{
+    this.props.history.push(`/`)
   }
     
     

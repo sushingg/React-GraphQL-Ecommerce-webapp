@@ -2,62 +2,60 @@ import React, { Component } from "react";
 import { CartContext } from "./CartContext";
 
 class Inventory extends Component {
-  	constructor(props) {
-		super(props);
-		this.state = {
-      items:  JSON.parse(localStorage.getItem('items') || "[]")
-		};
-		this.pitem = []
-	}
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: JSON.parse(localStorage.getItem("items") || "[]")
+    };
+    this.pitem = [];
+  }
 
   onAddToCart = this.onAddToCart.bind(this);
-  async onAddToCart(p){
-    const index = this.state.items.findIndex(function(object) {return object.productSlug === p.productSlug ;})
-    if(index >= 0){
+  async onAddToCart(p) {
+    const index = this.state.items.findIndex(function(object) {
+      return object.productSlug === p.productSlug;
+    });
+    if (index >= 0) {
       var newArray = [...this.state.items];
-      newArray[index].quantity += 1
+      newArray[index].quantity += 1;
       this.setState({
         items: newArray
-      })
-      
-    
-    }else{
-      p.quantity = 1
+      });
+    } else {
+      p.quantity = 1;
       await this.setState({
-          items: [...this.state.items, p]
-      })
+        items: [...this.state.items, p]
+      });
     }
-    this.pitem = JSON.parse(localStorage.getItem('items') || "[]")
-    this.pitem = [...this.pitem, p]
-    await localStorage.setItem('items', JSON.stringify(this.state.items))
-    console.log(p)
-	  //console.log(this.state.items)
+    this.pitem = JSON.parse(localStorage.getItem("items") || "[]");
+    this.pitem = [...this.pitem, p];
+    await localStorage.setItem("items", JSON.stringify(this.state.items));
+    console.log(p);
+    //console.log(this.state.items)
   }
 
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
   onRemoveFromCart(i) {
     const newArray = [...this.state.items];
     newArray.splice(i, 1);
-    
+
     this.setState({
       items: newArray
     });
-    localStorage.setItem('items', JSON.stringify(newArray))
+    localStorage.setItem("items", JSON.stringify(newArray));
   }
   onClearCart = this.onClearCart.bind(this);
   onClearCart() {
     this.setState({
       items: []
     });
-    localStorage.setItem('items', [])
+    localStorage.setItem("items", []);
   }
 
   render() {
     return (
-	
       <CartContext.Provider
-        value={{ 
+        value={{
           items: this.state.items,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
