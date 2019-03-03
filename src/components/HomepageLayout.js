@@ -14,29 +14,29 @@ import {
   Input,
   Popup,
   Label,
-  Dropdown 
+  Dropdown ,
+  Grid
 } from "semantic-ui-react";
 import isLogin from "../common";
 import Login from "./Login/Login";
 import Cart from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
+import Slide from './Slide/Slide';
+import Category from './Category';
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
  */
 const HomepageHeading = ({ mobile }) => (
-  <Container text>
-    <Header
-      as="h1"
-      content="TechE"
-      inverted
-      style={{
-        fontSize: mobile ? "2em" : "5em",
-        fontWeight: "normal",
-        marginBottom: mobile ? ".5em" : "1.5em",
-        marginTop: mobile ? ".5em" : "1.5em"
-      }}
-    />
+  <Container>
+  <Grid columns={2}>
+    <Grid.Column width={4}>
+      <Category/>
+    </Grid.Column>
+    <Grid.Column width={12}>
+      <Slide/>
+    </Grid.Column>
+  </Grid>
   </Container>
 );
 
@@ -113,14 +113,15 @@ class DesktopContainer extends Component {
             <Menu
               fixed={fixed ? "top" : null}
               inverted={!fixed}
-              pointing={!fixed}
+              
               secondary={!fixed}
               size="large"
             >
               <Container>
-                <Menu.Item as={Link} to="/" active>
-                  TechE
+                <Menu.Item as={Link} to="/" >
+                  <h2>TechE</h2>
                 </Menu.Item>
+                
                 <Menu.Item position="right">
                   <Input icon="search" placeholder="Search..." />
                 </Menu.Item>
