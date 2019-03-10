@@ -22,7 +22,7 @@ import Login from "./Login/Login";
 import Cart from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
 import Slide from './Slide/Slide';
-import Category from './Category';
+import Category from './Category/Categories';
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
@@ -30,10 +30,18 @@ import Category from './Category';
 const HomepageHeading = ({ mobile }) => (
   <Container>
   <Grid columns={2}>
-    <Grid.Column width={4}>
-      <Category/>
+    <Grid.Column width={5}>
+      <Menu  vertical fluid attached='top' >
+        <Menu.Item
+          as={Link}
+          to="/category"
+        >
+          <h5>All Cetegories</h5>
+        </Menu.Item>
+        <Category/>
+      </Menu>
     </Grid.Column>
-    <Grid.Column width={12}>
+    <Grid.Column width={11}>
       <Slide/>
     </Grid.Column>
   </Grid>
@@ -63,7 +71,7 @@ class DesktopContainer extends Component {
     if (login !== null) {
       email = <span>{login.email}</span>;
       navBtn = (
-                <Dropdown direction='left' trigger={email} icon='user' labeled floating>
+                <Dropdown  direction='left' trigger={email} icon='user' labeled floating>
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to="/cart"><Icon name='shopping cart' /> Cart</Dropdown.Item>
                     <Dropdown.Item as={Link} to="/checkout"><Icon name='check square outline' /> Check out</Dropdown.Item>
@@ -125,6 +133,7 @@ class DesktopContainer extends Component {
                 <Menu.Item position="right">
                   <Input icon="search" placeholder="Search..." />
                 </Menu.Item>
+
                 <Popup
                   wide="very"
                   trigger={
@@ -183,38 +192,23 @@ class MobileContainer extends Component {
 
     return (
       <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation="uncover"
-            inverted
-            vertical
-            visible={sidebarOpened}
-          >
-            <Menu.Item as="a" active>
-              Home
-            </Menu.Item>
-            <Menu.Item as="a">
-              <Input icon="search" placeholder="Search..." />
-            </Menu.Item>
-          </Sidebar>
-
-          <Sidebar.Pusher
-            dimmed={sidebarOpened}
-            onClick={this.handlePusherClick}
-            style={{ minHeight: "100vh" }}
-          >
             <Segment
               inverted
               textAlign="center"
-              style={{ minHeight: 350, padding: "1em 0em" }}
+              style={{ minHeight: 10, padding: "1em 0em" }}
               vertical
             >
               <Container>
-                <Menu inverted pointing secondary size="large">
-                  <Menu.Item onClick={this.handleToggle}>
-                    <Icon name="sidebar" />
-                  </Menu.Item>
+                <Menu inverted pointing secondary  size="large">
+                  <Dropdown item icon='sidebar' >
+                    <Dropdown.Menu>
+                      <Dropdown.Header>All Categories</Dropdown.Header>
+                      <Category/>
+                      <Dropdown.Divider />
+                      <Dropdown.Header>User</Dropdown.Header>
+                      <Dropdown.Item>Login</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                   <Menu.Item position="right">
                     <Button as="a" inverted>
                       Log in
@@ -225,12 +219,8 @@ class MobileContainer extends Component {
                   </Menu.Item>
                 </Menu>
               </Container>
-              <HomepageHeading mobile />
             </Segment>
-
             {children}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
       </Responsive>
     );
   }

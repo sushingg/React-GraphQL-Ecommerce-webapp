@@ -82,3 +82,6 @@ code {
 }
 
 
+.wordwraps {
+max-width: 150px;
+}

@@ -8,7 +8,6 @@ const isLogin = props => {
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
-    //console.log(decoded);
   } else {
     res = null;
   }
