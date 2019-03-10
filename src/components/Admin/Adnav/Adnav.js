@@ -41,16 +41,16 @@ const Adnav =  props => {
         <Menu vertical  fulid>
 
           <Menu.Item>
-             <Header as='h4'>Menu</Header>
+             <Header as='h4' as={Link} to='/admin' name='menu' active={activeItem === 'menu'} onClick={(e, { name }) => setActiveItem(name)}>Menu</Header>
           </Menu.Item>
 
           <Menu.Item>
             Products
             <Menu.Menu>
-              <Menu.Item name='padd' active={activeItem === 'padd'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='padd' active={activeItem === 'padd'} onClick={(e, { name }) => setActiveItem(name)}>
                 Add
               </Menu.Item>
-              <Menu.Item name='plist' active={activeItem === 'plist'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='plist' active={activeItem === 'plist'} onClick={(e, { name }) => setActiveItem(name)}>
                 List
               </Menu.Item>
             </Menu.Menu>
@@ -59,7 +59,7 @@ const Adnav =  props => {
           <Menu.Item>
             Orders
             <Menu.Menu>
-              <Menu.Item name='olist' active={activeItem === 'olist'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/order' name='olist' active={activeItem === 'olist'} onClick={(e, { name }) => setActiveItem(name)}>
                 List
               </Menu.Item>
             </Menu.Menu>
@@ -68,10 +68,10 @@ const Adnav =  props => {
           <Menu.Item>
             Cetegories
             <Menu.Menu>
-              <Menu.Item name='cadd' active={activeItem === 'cadd'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='cadd' active={activeItem === 'cadd'} onClick={(e, { name }) => setActiveItem(name)}>
                 Add
               </Menu.Item>
-              <Menu.Item name='clist' active={activeItem === 'clist'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='clist' active={activeItem === 'clist'} onClick={(e, { name }) => setActiveItem(name)}>
                 List
               </Menu.Item>
             </Menu.Menu>
@@ -80,19 +80,19 @@ const Adnav =  props => {
           <Menu.Item>
             Users
             <Menu.Menu>
-              <Menu.Item name='ulist' active={activeItem === 'ulist'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='ulist' active={activeItem === 'ulist'} onClick={(e, { name }) => setActiveItem(name)}>
                 List
               </Menu.Item>
-              <Menu.Item name='uedit' active={activeItem === 'uedit'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/wip' name='uedit' active={activeItem === 'uedit'} onClick={(e, { name }) => setActiveItem(name)}>
                 Edit
               </Menu.Item>
             </Menu.Menu>
           </Menu.Item>
 
           <Menu.Item>Settings</Menu.Item>
-          <Menu.Item name='setting' active={activeItem === 'setting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='settings'/>General settings</Menu.Item>
-          <Menu.Item name='gswtting' active={activeItem === 'gswtting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='users'/>Account Settings</Menu.Item>
-          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='sign out'/>Logout</Menu.Item>
+          <Menu.Item as={Link} to='/admin/wip' name='setting' active={activeItem === 'setting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='settings'/>General settings</Menu.Item>
+          <Menu.Item as={Link} to='/admin/wip' name='gswtting' active={activeItem === 'gswtting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='users'/>Account Settings</Menu.Item>
+          <Menu.Item as={Link} to='/admin/wip' name='logout' active={activeItem === 'logout'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='sign out'/>Logout</Menu.Item>
           
         </Menu>
         

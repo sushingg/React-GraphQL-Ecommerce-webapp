@@ -14,6 +14,7 @@ import Checkout from './components/Checkout/Checkout';
 import Home from './components/HomepageLayout';
 import Inventory from './components/Inventory';
 import Reload from './components/Reload';
+import Wip from './components/Wip';
 import Adnav from './components/Admin/Adnav/Adnav';
 import Test from './components/Admin/Mutations/Mutations';
 import AdOrder from './components/Admin/Order/Orders';
@@ -39,6 +40,8 @@ const App = () => (
 			<Adnav>
 			<Switch>
 				<Route path='/admin/login' component={Login} />
+				<Route path='/admin/Order' component={AdOrder} />
+				<Route path='/admin/wip' component={Wip} />
 				<Route path='/admin/test' component={Test} />
 				<Route component={AdOrder}/>
 			</Switch>
