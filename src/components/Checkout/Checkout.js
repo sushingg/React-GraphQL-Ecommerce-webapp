@@ -103,7 +103,7 @@ class Checkout extends Component {
               			<Mutation
               				mutation={ADD_ORDER_MUTATION}
               				variables={{ orderEmail, orderFirstname, orderLastname, orderAddr1, orderTotal, orderProducts}}
-              				onCompleted={data => this._confirm(data)}
+              				onCompleted={data => this._confirm(data) }
               				onError={error => this._error(error) }
               			>
               			  {mutation => (
@@ -135,6 +135,7 @@ class Checkout extends Component {
 	_confirm = async data => {
 	  const order  = data.addOrder
 	  console.log(order)
+    localStorage.setItem("items", [])
 	  window.location = order.orderPaymentLink
 	}
 	_error = async error => {
