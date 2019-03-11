@@ -50,7 +50,7 @@ export default props => (
           ))}
         </Table.Body>
       </Table>
-        <h4>รวม { cart.items.reduce((acc, { productPrice }) => acc + productPrice, 0) || '0'} บาท</h4>
+        <h4>รวม { cart.items.reduce((acc, { productPrice, quantity }) => acc + ( productPrice *quantity ), 0) || '0'} บาท</h4>
         <Link to="/checkout">Checkout</Link>
       </div>
       )}
