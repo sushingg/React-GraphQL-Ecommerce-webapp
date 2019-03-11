@@ -135,7 +135,7 @@ class Checkout extends Component {
 	_confirm = async data => {
 	  const order  = data.addOrder
 	  console.log(order)
-	  //window.location = order.orderPaymentLink
+	  window.location = order.orderPaymentLink
 	}
 	_error = async error => {
 		//alert(error);
