@@ -23,6 +23,7 @@ const ListProducts = () => (
 			<Query 
 				query={gql`
 				  	{products {
+			  		  id
 				  	  productSlug
 					  productTitle
 					  productPrice

@@ -24,7 +24,14 @@ const ListProduct = (props) => {
           }
         })()}
         <Label basic><Icon name='edit'/>edit</Label>
-        <Label basic color='red'><Icon name='delete'/> delete</Label>
+        <Label 
+          basic 
+          color='red'
+          as={Link} to={"/admin/removeproduct/" + props.product.id}
+        >
+          <Icon name='delete'/>
+          delete
+        </Label>
       </Table.Cell>
     </Table.Row>
   );

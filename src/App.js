@@ -20,6 +20,7 @@ import Adnav from './components/Admin/Adnav/Adnav';
 import Test from './components/Admin/Mutations/Mutations';
 import AdOrder from './components/Admin/Order/Orders';
 import AddProduct from './components/Admin/Product/AddProduct';
+import RemoveProduct from './components/Admin/Product/RemoveProduct';
 import ListProduct from './components/Admin/ListProduct/ListProducts';
 const AUTH_TOKEN = 'auth-token'
 //uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
@@ -45,6 +46,7 @@ const App = () => (
 				<Route path='/admin/login' component={Login} />
 				<Route path='/admin/Order' component={AdOrder} />
 				<Route path='/admin/addproduct' component={AddProduct} />
+				<Route path='/admin/removeproduct/:id' component={RemoveProduct} />
 				<Route path='/admin/listproduct' component={ListProduct} />
 				<Route path='/admin/wip' component={Wip} />
 				<Route path='/admin/test' component={Test} />

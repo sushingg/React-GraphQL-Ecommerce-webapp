@@ -31,8 +31,10 @@ moment.locale('th');
           switch (props.order.orderStatus) {
             case null:
               return <Label color="yellow">Wait for paid</Label>;
-            case "paid":
-              return <Label color="green">Paid</Label>;
+            case "successful":
+              return <Label color="green">successful</Label>;
+            case "failed":
+              return <Label color="red">failed</Label>;
             case "cancel":
               return <Label color="red">Cancel</Label>;
             default:
