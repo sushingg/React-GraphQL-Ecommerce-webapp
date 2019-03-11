@@ -11,7 +11,7 @@ const Product = (props) => {
     {cart => (
       <Card key={props.product.productSlug} className="shadow" >
 
-        <Image wrapped as={Link} to={"p/"+props.product.productSlug}  src={"/image/"+props.product.productSlug+"/"+props.product.productImage} />
+        <Image wrapped as={Link} to={"p/"+props.product.productSlug}  src={props.product.productImage?"/image/"+props.product.productSlug+"/"+props.product.productImage:"/image/test.jpg"} />
         <Card.Content >
     
           <Card.Header>

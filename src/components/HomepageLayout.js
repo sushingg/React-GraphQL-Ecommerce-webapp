@@ -4,12 +4,12 @@ import React, { Component } from "react";
 import {
   Button,
   Container,
-  Header,
+  //Header,
   Icon,
   Menu,
   Responsive,
   Segment,
-  Sidebar,
+  //Sidebar,
   Visibility,
   Input,
   Popup,
@@ -177,18 +177,9 @@ DesktopContainer.propTypes = {
 class MobileContainer extends Component {
   state = {};
 
-  handlePusherClick = () => {
-    const { sidebarOpened } = this.state;
-
-    if (sidebarOpened) this.setState({ sidebarOpened: false });
-  };
-
-  handleToggle = () =>
-    this.setState({ sidebarOpened: !this.state.sidebarOpened });
-
   render() {
     const { children } = this.props;
-    const { sidebarOpened } = this.state;
+    
 
     return (
       <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>

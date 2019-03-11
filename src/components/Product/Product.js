@@ -20,7 +20,7 @@ const Product = (props) => {
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
           <Grid.Column floated='left' width={6}>
-        	<Image bordered rounded size='large' src={"/image/"+props.product.productSlug+"/"+props.product.productImage} />
+        	<Image bordered rounded size='large' src={props.product.productImage?"/image/"+props.product.productSlug+"/"+props.product.productImage:"/image/test.jpg"} />
             
           </Grid.Column>
           <Grid.Column  width={8}>

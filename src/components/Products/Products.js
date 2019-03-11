@@ -19,7 +19,7 @@ const Products = () => (
 					  productTitle
 					  productPrice
 					  productDescription
-					  productTags
+
 					  productAddedDate
 					  productImage
 					}

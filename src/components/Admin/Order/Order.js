@@ -1,19 +1,45 @@
 import React from 'react';
-import {  Link } from "react-router-dom";
-import { Card, Image,Table,Icon } from 'semantic-ui-react'
-
+import { Link } from "react-router-dom";
+import { Table,Icon,Label } from 'semantic-ui-react'
+import moment from 'moment'
 const Product = (props) => {
-
+moment.locale('th');  
   return (
     <Table.Row>
-        <Table.Cell collapsing>
-          <Icon name='file outline' />View Order
-        </Table.Cell>
-        <Table.Cell>{'Date: '+props.order.orderDate+'| Email: '+props.order.orderEmail+'| orderFirstname: '+props.order.orderFirstname}</Table.Cell>
-        <Table.Cell>{props.order.orderTotal+' ฿'}</Table.Cell>
-        <Table.Cell collapsing textAlign='right'>
-          {'Status: '+props.order.orderStatus}
-        </Table.Cell>
+      <Table.Cell>
+        <Label basic as={Link} to={"/admin/o/" + props.order.id}>
+          <Icon name="file outline" />
+          View Order
+        </Label>
+      </Table.Cell>
+      <Table.Cell>
+        <Label basic>{moment(props.order.orderDate).format("lll")}</Label>
+        <Label basic>
+          Email
+          <Label.Detail>{props.order.orderEmail}</Label.Detail>
+        </Label>
+        <Label basic>
+          FirstName
+          <Label.Detail>{props.order.orderFirstname}</Label.Detail>
+        </Label>
+      </Table.Cell>
+      <Table.Cell>
+        <Label tag>{props.order.orderTotal + " ฿"}</Label>
+      </Table.Cell>
+      <Table.Cell>
+        {(() => {
+          switch (props.order.orderStatus) {
+            case null:
+              return <Label color="yellow">Wait for paid</Label>;
+            case "paid":
+              return <Label color="green">Paid</Label>;
+            case "cancel":
+              return <Label color="red">Cancel</Label>;
+            default:
+              return <Label>Wait for paid</Label>;
+          }
+        })()}
+      </Table.Cell>
     </Table.Row>
   );
 

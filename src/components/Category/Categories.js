@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Category from './Category';
 import Loader from '../Loader';
-import { Row , Alert } from 'reactstrap';
+import {  Alert } from 'reactstrap';
 
 class Products extends React.Component {
   state = {

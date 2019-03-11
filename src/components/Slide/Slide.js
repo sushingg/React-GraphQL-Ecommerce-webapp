@@ -7,15 +7,15 @@ export default class Carous extends Component {
         return (
             <Carousel showArrows={true} showThumbs={false} infiniteLoop={true} autoPlay={true} emulateTouch={true}>
                 <div>
-                    <img src="assets/1.jpeg" />
+                    <img alt="slider" src="assets/1.jpeg" />
                     
                 </div>
                 <div>
-                    <img src="assets/2.jpeg" />
+                    <img alt="slider" src="assets/2.jpeg" />
                     
                 </div>
                 <div>
-                    <img src="assets/3.jpeg" />
+                    <img alt="slider" src="assets/3.jpeg" />
                     
                 </div>
             </Carousel>

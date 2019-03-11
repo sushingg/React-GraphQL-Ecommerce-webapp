@@ -1,24 +1,11 @@
 // https://www.npmjs.com/package/react-responsive-carousel
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  Button,
-  Container,
-  Header,
-  Icon,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility,
-  Input,
-  Popup,
-  Label,
   Dropdown 
 } from "semantic-ui-react";
 import {  Link } from "react-router-dom";
 
 const Category = (props) => {
-  const options = [];
   return (
     <Dropdown scrolling item  text={props.category.categoryTitle}>
       <Dropdown.Menu>

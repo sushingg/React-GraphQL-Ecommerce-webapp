@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
-import { Button, Form, Grid, Segment } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 import { Alert } from 'reactstrap';
 import { CartContext } from "../../CartContext";
 import isLogin from '../../../common'

@@ -26,7 +26,7 @@ class Products extends React.Component {
 							productTitle
 							productPrice
 							productDescription
-							productTags
+							productTags{tag}
 							productImage
 						  }
 						}

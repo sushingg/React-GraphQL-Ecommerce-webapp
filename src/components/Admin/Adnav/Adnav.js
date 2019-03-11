@@ -1,19 +1,19 @@
-import React, { Component,useState } from 'react'
+import React, { useState } from 'react'
 import {
-  Button,
-  Container,
+  //Button,
+  //Container,
   Header,
   Icon,
   Menu,
-  Responsive,
+  //Responsive,
   Segment,
-  Sidebar,
-  Visibility,
-  Input,
-  Popup,
-  Label,
+  //Sidebar,
+  //Visibility,
+  //Input,
+  //Popup,
+  //Label,
   Grid,
-  Dropdown 
+  //Dropdown 
 } from "semantic-ui-react";
 import {  Link } from "react-router-dom";
 //onClick={(e, { name }) => setActiveItem(name)}
@@ -24,33 +24,31 @@ const Adnav =  props => {
   return (
   <Segment basic>
   <Menu secondary >
-    <Menu.Item >
+    <Menu.Item as={Link} to='/' >
       <Header as='h3'>TechE</Header>
     </Menu.Item>
     <Menu.Menu position='right'>
-      <Menu.Item as={Dropdown} text='Options'>
-            <Dropdown.Menu>
-              <Dropdown.Item><i class="setting icon"></i>setting</Dropdown.Item>
-              <Dropdown.Item><i class="sign out icon"></i>Sing out</Dropdown.Item>
-            </Dropdown.Menu>
+      <Menu.Item as={Link} to='/logout'><i className="sign out icon"></i>Sing out
       </Menu.Item>
     </Menu.Menu>
   </Menu>
-    <Grid>
+    <Grid stackable columns={2}>
       <Grid.Column width={3}>
-        <Menu vertical  fulid>
+        <Menu vertical fluid>
 
-          <Menu.Item>
-             <Header as='h4' as={Link} to='/admin' name='menu' active={activeItem === 'menu'} onClick={(e, { name }) => setActiveItem(name)}>Menu</Header>
+          <Menu.Item as={Link} to='/admin' name='menu' active={activeItem === 'menu'} onClick={(e, { name }) => setActiveItem(name)}>
+             <Header as='h4'>
+              Menu
+             </Header>
           </Menu.Item>
 
           <Menu.Item>
             Products
             <Menu.Menu>
-              <Menu.Item as={Link} to='/admin/wip' name='padd' active={activeItem === 'padd'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/addproduct' name='padd' active={activeItem === 'padd'} onClick={(e, { name }) => setActiveItem(name)}>
                 Add
               </Menu.Item>
-              <Menu.Item as={Link} to='/admin/wip' name='plist' active={activeItem === 'plist'} onClick={(e, { name }) => setActiveItem(name)}>
+              <Menu.Item as={Link} to='/admin/listproduct' name='plist' active={activeItem === 'plist'} onClick={(e, { name }) => setActiveItem(name)}>
                 List
               </Menu.Item>
             </Menu.Menu>
@@ -92,7 +90,7 @@ const Adnav =  props => {
           <Menu.Item>Settings</Menu.Item>
           <Menu.Item as={Link} to='/admin/wip' name='setting' active={activeItem === 'setting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='settings'/>General settings</Menu.Item>
           <Menu.Item as={Link} to='/admin/wip' name='gswtting' active={activeItem === 'gswtting'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='users'/>Account Settings</Menu.Item>
-          <Menu.Item as={Link} to='/admin/wip' name='logout' active={activeItem === 'logout'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='sign out'/>Logout</Menu.Item>
+          <Menu.Item as={Link} to='/logout' name='logout' active={activeItem === 'logout'} onClick={(e, { name }) => setActiveItem(name)}><Icon name='sign out'/>Logout</Menu.Item>
           
         </Menu>
         

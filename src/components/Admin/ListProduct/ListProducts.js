@@ -1,35 +1,32 @@
 import React from 'react';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Order from './Order';
+import ListProduct from './ListProduct';
 import Loader from '../../Loader';
 import { Alert } from 'reactstrap';
 import { Table } from 'semantic-ui-react'
 import {  Link } from "react-router-dom";
-const Products = () => (
+const ListProducts = () => (
   <Table stackable padded> 
     <Table.Header>
       <Table.Row>
-        <Table.HeaderCell colSpan='4'>Order list</Table.HeaderCell>
+        <Table.HeaderCell colSpan='3'>Product list</Table.HeaderCell>
       </Table.Row>
 	  <Table.Row>
-        <Table.HeaderCell colSpan='1'>#</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>Order detail</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>Order total</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>status</Table.HeaderCell>
+        <Table.HeaderCell colSpan='1'>Products</Table.HeaderCell>
+        <Table.HeaderCell colSpan='1'>Price</Table.HeaderCell>
+        <Table.HeaderCell colSpan='1' textAlign='right'>Published</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
 
     <Table.Body>
 			<Query 
 				query={gql`
-				  	{orders{
-				  		id
-				  		orderDate
-						orderEmail
-						orderFirstname
-					  	orderTotal
-					  	orderStatus
+				  	{products {
+				  	  productSlug
+					  productTitle
+					  productPrice
+					  productPublished
 					}}
 				`}
 			>
@@ -37,8 +34,9 @@ const Products = () => (
 				{({ loading, error, data }) => {
 				  if (loading) return <Loader key=""/>;
 				  if (error) return <Alert className="text-center col" color="danger">Error :${error.message}. <Link to="reload"> Reload</Link></Alert>;
-					return data.orders.map((currentOrder,i) => (
-						<Order key={i} order={currentOrder} />
+					console.log(data.products);
+					return data.products.map((currentProduct,i) => (
+						<ListProduct key={i} product={currentProduct} />
 					));
 
 				}}
@@ -47,4 +45,4 @@ const Products = () => (
     </Table.Body>
   </Table>
 	);
-export default Products;
+export default ListProducts;
