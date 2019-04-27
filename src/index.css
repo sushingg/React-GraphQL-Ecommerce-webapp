@@ -85,3 +85,10 @@ code {
 .wordwraps {
 max-width: 150px;
 }
+
+.ui.card>.image>img, .ui.cards>.card>.image>img {
+	background-size:cover;
+	width: 100%;
+  max-width: 300px;
+	height: 250px;
+}

@@ -4,13 +4,12 @@ import gql from "graphql-tag";
 import Product from './Product';
 import Loader from '../Loader';
 import { Alert } from 'reactstrap';
-import { Card } from 'semantic-ui-react'
+import { Card, Container, Segment } from 'semantic-ui-react'
 import {  Link } from "react-router-dom";
 const Products = () => (
-	<div className="container-fluid h-100 py-5 bg-light ">
-		<div className="container">
-			
-			<Card.Group itemsPerRow={4} stackable>
+	<Container >
+			<Segment basic>
+			<Card.Group>
 			<Query 
 				query={gql`
 				  {
@@ -36,7 +35,7 @@ const Products = () => (
 				}}
 			</Query>
 		  	</Card.Group>
-		</div>
-	</div>
+			</Segment>
+	</Container>
 	);
 export default Products;

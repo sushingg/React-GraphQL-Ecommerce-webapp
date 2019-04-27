@@ -8,9 +8,15 @@ const isLogin = props => {
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
+    if (Date.now() / 1000 > res.exp) {
+      localStorage.removeItem(AUTH_TOKEN)
+      localStorage.clear();
+      console.log("expire")
+    }
   } else {
     res = null;
   }
+
   return res;
 };
 export default isLogin;

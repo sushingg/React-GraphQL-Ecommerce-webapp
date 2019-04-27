@@ -9,9 +9,9 @@ const Product = (props) => {
   return (
   <CartContext.Consumer>
     {cart => (
-      <Card key={props.product.productSlug} className="shadow" >
+      <Card key={props.product.productSlug} raised centered className="shadow" >
 
-        <Image wrapped as={Link} to={"p/"+props.product.productSlug}  src={props.product.productImage?"/image/"+props.product.productSlug+"/"+props.product.productImage:"/image/test.jpg"} />
+        <Image className="productImg" wrapped as={Link} to={"p/"+props.product.productSlug}  src={props.product.productImage?"/image/"+props.product.productSlug+"/"+props.product.productImage:"/image/test.jpg"} />
         <Card.Content >
     
           <Card.Header>
