@@ -7,17 +7,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html,body{
-    min-height: 100%;
-	
+html,
+body {
+  min-height: 100%;
 }
-#root { 
-
-    min-height: 100%;
-
+#root {
+  min-height: 100%;
 }
-footer{
-	background-color:#ffffff;
+footer {
+  background-color: #ffffff;
 }
 
 code {
@@ -37,7 +35,7 @@ code {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: #FF00B2;
+  background: #ff00b2;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
@@ -81,14 +79,33 @@ code {
   }
 }
 
-
 .wordwraps {
-max-width: 150px;
+  max-width: 150px;
 }
 
-.ui.card>.image>img, .ui.cards>.card>.image>img {
-	background-size:cover;
-	width: 100%;
+.ui.card > .image > img,
+.ui.cards > .card > .image > img {
+  background-size: cover;
+  width: 100%;
   max-width: 300px;
-	height: 250px;
+  height: 250px;
+}
+
+.admin_menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  background: #1b1c1d;
+  overflow-x: hidden;
+  flex: 1;
+}
+.admin_seg{
+  margin-left:250px;min-width:550px
+}
+.min150{
+  min-width: 150px;
 }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
-import { Button, Form, Grid, Segment } from 'semantic-ui-react'
-import { Alert } from 'reactstrap';
+import { Button, Form, Grid, Segment, Message } from 'semantic-ui-react'
 import { CartContext } from "../CartContext";
 import isLogin from '../../common'
 
@@ -37,8 +36,6 @@ class Checkout extends Component {
                   orderLastname: login.lname,
                   isLogged: true })
     }
-    console.log(login)
-    if(login == null){this.props.history.push(`/`)}
     const {  orderEmail, orderAddr1, orderFirstname, orderLastname, errorMessage} = this.state
     var items = JSON.parse(localStorage.getItem('items')|| "[]")
     if(items !== null){
@@ -52,18 +49,12 @@ class Checkout extends Component {
         delete p.__typename
         return p
       })
-      console.log(orderProducts)
-    }else{
-      this.props.history.push(`/`)
     }
-    //((p, i) => (delete p.__typename return p    )))
     return (
         <CartContext.Consumer>
           {cart => (
           <div>
-          <Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-			    {errorMessage}
-        </Alert>
+          {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
 
         <Grid container stackable verticalAlign='middle'>
         <Grid.Row>

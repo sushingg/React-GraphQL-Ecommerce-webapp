@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
-import { Button, Form, Segment } from 'semantic-ui-react'
-import { Alert } from 'reactstrap';
+import { Button, Form, Segment, Message } from 'semantic-ui-react'
 import { CartContext } from "../../CartContext";
 import isLogin from '../../../common'
 
-const ADD_PRODUCT_MUTATION = gql`
+/*const ADD_PRODUCT_MUTATION = gql`
   mutation AddProductMutation($productSlug: String!, $productTitle: String!, $productPrice:Int!, $productDescription:String!, $productPublished:String!,$productTags:String!,$productOptions:String!,$productImage:String!) {
  	addProduct(productSlug: $productSlug, productTitle: $productTitle, productPrice: $productPrice, productDescription: $productDescription,productPublished: $productPublished,productTags: $productTags,productOptions: $productOptions,productImage: $productImage ) {
 		id
     }
   }
-`
+`*/
 
 const ADD_ORDER_MUTATION = gql`
   mutation AddCategoryMutation($categorySlug: String!, $categorySlug: String!, $tags:[tagsInput]!) {
@@ -68,9 +67,8 @@ class Checkout extends Component {
         <CartContext.Consumer>
           {cart => (
           <div>
-          <Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-          {errorMessage}
-        </Alert>
+
+          {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
         
         <h3 class="ui header">dashboard</h3>
 

@@ -3,8 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import ListProduct from './ListProduct';
 import Loader from '../../Loader';
-import { Alert } from 'reactstrap';
-import { Table } from 'semantic-ui-react'
+import { Table, Message, Segment } from 'semantic-ui-react'
 import {  Link } from "react-router-dom";
 const ListProducts = () => (
 
@@ -22,7 +21,7 @@ const ListProducts = () => (
 
 				{({ loading, error, data }) => {
 				  if (loading) return <Loader key=""/>;
-				  if (error) return <Alert className="text-center col" color="danger">Error :${error.message}. <Link to="reload"> Reload</Link></Alert>;
+				  if (error) return <Segment basic textAlign="center"><Message warning compact>{error.message}</Message></Segment>;
 					console.log(data.products);
 					return data.products.map((currentProduct,i) => (
 						<ListProduct key={i} product={currentProduct} />

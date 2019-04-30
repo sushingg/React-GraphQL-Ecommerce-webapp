@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Table,Icon,Label } from 'semantic-ui-react'
-import moment from 'moment'
 const ListProduct = (props) => {
   return (
     <Table.Row>

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
 import { withRouter } from "react-router-dom";
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { Alert } from 'reactstrap';
+
 
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
@@ -52,9 +52,7 @@ class Login extends Component {
         <Header as='h2' color='blue' textAlign='center'>
            {login ? 'Log-in to your account' : ' Sign Up your account'}
         </Header>
-            		<Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-			    {errorMessage}
-        </Alert>
+        {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
         <Form size='large'>
           <Segment stacked>
           {!login && (

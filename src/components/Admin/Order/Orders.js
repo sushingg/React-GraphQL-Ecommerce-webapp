@@ -1,50 +1,67 @@
-import React from 'react';
+import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Order from './Order';
-import Loader from '../../Loader';
-import { Alert } from 'reactstrap';
-import { Table } from 'semantic-ui-react'
-import {  Link } from "react-router-dom";
+import Order from "./Order";
+import { Table, Message } from "semantic-ui-react";
 const Products = () => (
-  <Table stackable padded> 
+  <Table stackable padded>
     <Table.Header>
       <Table.Row>
-        <Table.HeaderCell colSpan='4'>Order list</Table.HeaderCell>
+        <Table.HeaderCell colSpan="4">Order list</Table.HeaderCell>
       </Table.Row>
-	  <Table.Row>
-        <Table.HeaderCell colSpan='1'>#</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>Order detail</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>Order total</Table.HeaderCell>
-        <Table.HeaderCell colSpan='1'>status</Table.HeaderCell>
+      <Table.Row>
+        <Table.HeaderCell colSpan="1">#</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">Order detail</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">Order total</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">status</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
 
     <Table.Body>
-			<Query 
-				query={gql`
-				  	{orders{
-				  		id
-				  		orderDate
-						orderEmail
-						orderFirstname
-					  	orderTotal
-					  	orderStatus
-					}}
-				`}
-			>
-
-				{({ loading, error, data }) => {
-				  if (loading) return <Loader key=""/>;
-				  if (error) return <Alert className="text-center col" color="danger">Error :${error.message}. <Link to="reload"> Reload</Link></Alert>;
-					return data.orders.map((currentOrder,i) => (
-						<Order key={i} order={currentOrder} />
-					));
-
-				}}
-
-			</Query>
+      <Query
+        query={gql`
+          {
+            users {
+              order {
+                id
+                orderDate
+                orderEmail
+                orderFirstname
+                orderTotal
+                orderStatus
+              }
+            }
+          }
+        `}
+      >
+        {({ loading, error, data }) => {
+          if (loading)
+            return (
+              <Table.Row>
+                <Table.Cell colSpan="6" textAlign="center">
+                  <Message compact>loading</Message>
+                </Table.Cell>
+              </Table.Row>
+            );
+          if (error)
+            return (
+              <Table.Row>
+                <Table.Cell colSpan="6" textAlign="center">
+                  <Message warning compact>
+                    {error.message}
+                  </Message>
+                </Table.Cell>
+              </Table.Row>
+            );
+          console.log(data.users);
+          return data.users.map((currentOrder, i) =>
+            currentOrder.order.map((thisOrder, i) => (
+              <Order key={i} order={thisOrder} />
+            ))
+          );
+        }}
+      </Query>
     </Table.Body>
   </Table>
-	);
+);
 export default Products;

@@ -22,6 +22,7 @@ import AdOrder from './components/Admin/Order/Orders';
 import AddProduct from './components/Admin/Product/AddProduct';
 import RemoveProduct from './components/Admin/Product/RemoveProduct';
 import ListProduct from './components/Admin/ListProduct/ListProducts';
+import Dash from './components/Admin/Dash/Dash';
 const AUTH_TOKEN = 'auth-token'
 //uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
 const client = new ApolloClient({
@@ -50,7 +51,7 @@ const App = () => (
 				<Route path='/admin/listproduct' component={ListProduct} />
 				<Route path='/admin/wip' component={Wip} />
 				<Route path='/admin/test' component={Test} />
-				<Route component={AdOrder}/>
+				<Route component={Dash}/>
 			</Switch>
 			</Adnav>
 		</Route>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
-import { Button, Form, Segment, Input, Label, Dropdown } from 'semantic-ui-react'
-import { Alert } from 'reactstrap';
+import { Button, Form, Segment, Input, Label, Dropdown, Message } from 'semantic-ui-react'
 import { CartContext } from "../../CartContext";
 import isLogin from '../../../common'
 
@@ -22,13 +21,13 @@ const ADD_PRODUCT_MUTATION = gql`
   }
 `*/
 
-function onlyUnique(value, index, self) { 
+/*function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
-}
+}*/
 class Checkout extends Component {
     state = {
-      productSlug:null,
-      productTitle:null,
+      productSlug:'',
+      productTitle:'',
       productPrice:0,
       productDescription:'',
       productPublished:'',
@@ -47,33 +46,34 @@ class Checkout extends Component {
   }
 
   handleChange = (e, { value }) => this.setState({ currentValues: value })
-
-    render() {
-    const login = isLogin()
-    if(login !== null){
-      if(!this.state.isLogged)
-      this.setState({  
-        orderEmail: login.email ,
-        orderFirstname: login.fname ,
-        orderLastname: login.lname,
-        isLogged: true 
-      })
+    componentWillMount(){
+      const login = isLogin()
+      if(login !== null){
+        if(!this.state.isLogged)
+        this.setState({  
+          orderEmail: login.email ,
+          orderFirstname: login.fname ,
+          orderLastname: login.lname,
+          isLogged: true 
+        })
+      }
+      console.log(login)
+      if(login == null){this.props.history.push(`/`)}
     }
-    console.log(login)
-    if(login == null){this.props.history.push(`/`)}
+    render() {
+    
+    
     const {  value,productSlug, productTitle, productPrice, productDescription,productPublished,productTags,productOptions,productImage,errorMessage} = this.state
     const { stateOptions } = this.state
     return (
         <CartContext.Consumer>
           {cart => (
           <div>
-          <Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-          {errorMessage}
-        </Alert>
+          {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
         
-        <h3 class="ui header">Add Product</h3>
+        <h3 className="ui header">Add Product</h3>
                 <Form size='large' >
-                  <Segment >
+                  <Segment basic>
                     <Form.Field
                       control={Input}
                       label='Product Slug'

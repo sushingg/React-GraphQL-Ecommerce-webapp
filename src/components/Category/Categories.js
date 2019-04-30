@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Category from './Category';
 import Loader from '../Loader';
-import {  Alert } from 'reactstrap';
+import {Segment, Message} from 'semantic-ui-react'
 
 class Products extends React.Component {
   state = {
@@ -31,7 +31,7 @@ class Products extends React.Component {
 				>
 					{({ loading, error, data }) => {
 					  if (loading) return <Loader/>;
-					  if (error) return <Alert className="text-center col" color="danger">Error :${error.message}</Alert>;
+					  if (error) return <Segment basic textAlign="center"><Message warning compact>{error.message}</Message></Segment>;
 						return data.categories.map((currentCategory,i) => (
 						<Category key={i} category={currentCategory} />
 						));

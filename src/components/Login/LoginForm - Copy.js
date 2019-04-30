@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
-import { Alert } from 'reactstrap';
+import { Segment, Message } from 'semantic-ui-react'
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!,$name:String!,$lname:String!) {
@@ -34,9 +34,7 @@ class Login extends Component {
     const { login, email, password, name, lname, errorMessage} = this.state
     return (
 	<div>
-		<Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-			{errorMessage}
-        </Alert>
+		{this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
         <div className="column">
           {!login && (
 		<div className="field">

@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import {
   Button,
   Container,
-  //Header,
+  Header,
   Icon,
   Menu,
   Responsive,
@@ -24,33 +24,7 @@ import { CartContext } from "./CartContext";
 import Slide from './Slide/Slide';
 import Category from './Category/Categories';
 /* eslint-disable react/no-multi-comp */
-/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
- * such things.
- */
-const HomepageHeading = ({ mobile }) => (
-  <Container>
-  <Grid columns={2}>
-    <Grid.Column width={5}>
-      <Menu  vertical fluid attached='top' >
-        <Menu.Item
-          as={Link}
-          to="/category"
-        >
-          <h5>All Cetegories</h5>
-        </Menu.Item>
-        <Category/>
-      </Menu>
-    </Grid.Column>
-    <Grid.Column width={11}>
-      <Slide/>
-    </Grid.Column>
-  </Grid>
-  </Container>
-);
 
-HomepageHeading.propTypes = {
-  mobile: PropTypes.bool
-};
 
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
@@ -90,12 +64,14 @@ class DesktopContainer extends Component {
           wide="very"
           trigger={
             <Button
+              animated='fade'
               as="a"
               inverted={!fixed}
               primary={fixed}
               style={{ marginLeft: "0.5em" }}
             >
-              Login
+              <Button.Content visible>Login</Button.Content>
+              <Button.Content hidden><Icon name='sign-in'></Icon></Button.Content>
             </Button>
           }
           content={<Login />}
@@ -115,13 +91,12 @@ class DesktopContainer extends Component {
           <Segment
             inverted
             textAlign="center"
-            style={{ minHeight: 300, padding: "1em 0em" }}
+            style={{ minHeight: 30, padding: "1em 0em" }}
             vertical
           >
             <Menu
               fixed={fixed ? "top" : null}
               inverted={!fixed}
-              
               secondary={!fixed}
               size="large"
             >
@@ -160,10 +135,12 @@ class DesktopContainer extends Component {
                 <Menu.Item>{navBtn}</Menu.Item>
               </Container>
             </Menu>
-            <HomepageHeading />
+            
           </Segment>
+          
+          
         </Visibility>
-
+        
         {children}
       </Responsive>
     );
@@ -200,6 +177,7 @@ class MobileContainer extends Component {
                       <Dropdown.Item>Login</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
+                  <Menu.Item><Header as='h3' inverted>TechE</Header></Menu.Item>
                   <Menu.Item position="right">
                     <Button as="a" inverted>
                       Log in

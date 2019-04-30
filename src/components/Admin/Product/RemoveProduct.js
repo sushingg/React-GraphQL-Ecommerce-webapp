@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo"; 
-import { Button, Form, Segment, Input, Label, Dropdown } from 'semantic-ui-react'
-import { Alert } from 'reactstrap';
-import { CartContext } from "../../CartContext";
+import { Button, Segment, Message } from 'semantic-ui-react'
 import isLogin from '../../../common'
 
 const REMOVE_PRODUCT_MUTATION = gql`
@@ -18,9 +16,9 @@ const REMOVE_PRODUCT_MUTATION = gql`
     }
 `
 
-function onlyUnique(value, index, self) { 
+/*function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
-}
+}*/
 class RemoveProduct extends Component {
     state = {
       showError: false,
@@ -44,9 +42,7 @@ class RemoveProduct extends Component {
     const { errorMessage } = this.state
     return (
           <div>
-          <Alert color="danger" isOpen={this.state.showError} toggle={this.onDismiss} >
-            {errorMessage}
-          </Alert>
+          {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
             <Mutation
               mutation={REMOVE_PRODUCT_MUTATION}
               variables={{id}}

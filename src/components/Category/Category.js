@@ -10,7 +10,7 @@ const Category = (props) => {
     <Dropdown scrolling item  text={props.category.categoryTitle}>
       <Dropdown.Menu>
         <Dropdown.Header>{props.category.categoryTitle}</Dropdown.Header>
-        {props.category.categoryTags.map((tags,i) => (<Dropdown.Item  as={Link} to={"/c/"+props.category.categoryTitle+"/"+tags.tag}>{tags.tag}</Dropdown.Item>))}
+        {props.category.categoryTags.map((tags,i) => (<Dropdown.Item key={i}  as={Link} to={"/c/"+props.category.categoryTitle+"/"+tags.tag}>{tags.tag}</Dropdown.Item>))}
       </Dropdown.Menu>
     </Dropdown>
   );

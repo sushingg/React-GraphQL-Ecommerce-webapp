@@ -34,14 +34,33 @@ class Inventory extends Component {
     //console.log(this.state.items)
   }
 
+  
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
-  onRemoveFromCart(i) {
-    const newArray = [...this.state.items];
+  onRemoveFromCart(p) {
+    const index = this.state.items.findIndex(function(object) {
+      return object.productSlug === p.productSlug;
+    });
+    if (this.state.items[index].quantity > 1) {
+      var newArray = [...this.state.items];
+      newArray[index].quantity -= 1;
+      this.setState({
+        items: newArray
+      });
+      console.log('decress')
+    } else {
+      var newArray = [...this.state.items];
+      newArray.splice(index, 1);
+      this.setState({
+        items: newArray
+      });
+      console.log('remove')
+    }
+    console.log(this.state.items)
+    /*const newArray = [...this.state.items];
     newArray.splice(i, 1);
-
     this.setState({
       items: newArray
-    });
+    });*/
     localStorage.setItem("items", JSON.stringify(newArray));
   }
   onClearCart = this.onClearCart.bind(this);
@@ -59,6 +78,8 @@ class Inventory extends Component {
           items: this.state.items,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
+          onEditCartItem: this.onEditCartItem,
+          onEditCart:this.onEditCart,
           onClearCart: this.onClearCart
         }}
       >
