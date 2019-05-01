@@ -109,3 +109,15 @@ code {
 .min150{
   min-width: 150px;
 }
+.rdw-embedded-wrapper{
+  display: none;
+}
+.editor{
+  min-height: 350px;
+}
+.demo-wrapper {
+  width: 100% !important;
+  display: block !important;
+  margin-bottom: 10px !important;
+  height: 200px !important;
+}

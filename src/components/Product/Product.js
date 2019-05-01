@@ -1,19 +1,41 @@
 import React from "react";
 import { Icon, Image, Container } from "semantic-ui-react";
 import { CartContext } from "../CartContext";
-import { Button, Grid, Header, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Grid,
+  Header,
+  Segment,
+  Rating,
+  Input,
+  Breadcrumb,
+  Divider
+} from "semantic-ui-react";
 var Carousel = require("react-responsive-carousel").Carousel;
+var HtmlToReactParser = require("html-to-react").Parser;
+var htmlToReactParser = new HtmlToReactParser();
 const Product = props => {
   var { quantity } = 0;
   quantity = 1;
+
   return (
     <>
       <CartContext.Consumer>
         {cart => (
-          <Segment secondary style={{ padding: "5em 0em" }} vertical>
+          <Segment secondary style={{ padding: "3em 0em" }} vertical>
             <Container>
+              <Breadcrumb>
+                <Breadcrumb.Section link>Home</Breadcrumb.Section>
+                <Breadcrumb.Divider />
+                <Breadcrumb.Section link>Store</Breadcrumb.Section>
+                <Breadcrumb.Divider />
+
+                <Breadcrumb.Section active>
+                  {props.product.productTitle}
+                </Breadcrumb.Section>
+              </Breadcrumb>
               <Segment padded>
-                <Grid container stackable verticalAlign="middle">
+                <Grid container stackable>
                   <Grid.Row>
                     <Grid.Column floated="left" width={6}>
                       {!props.product.productImage.length && (
@@ -47,45 +69,64 @@ const Product = props => {
                       </Carousel>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Header as="h3" style={{ fontSize: "2em" }}>
-                        {props.product.productTitle}
-                      </Header>
-                      <p style={{ fontSize: "1.33em" }}>
-                        {props.product.productDescription}
-                      </p>
-                      <Header as="h3" style={{ fontSize: "2em" }}>
-                        ฿{props.product.productPrice}
-                      </Header>
-                      <div className="clearfix">
-                        <div>
-                          <span>จำนวน: </span>
-                          <input
-                            id="quantity_input"
-                            className="form-control"
-                            type="number"
-                            pattern="[0-9]*"
-                            value={quantity}
-                            onChange={e => (quantity = e.target.value)}
-                          />
-                        </div>
+                      <Header as="h2">{props.product.productTitle}</Header>
+                      ## ขายแล้ว |{" "}
+                      <Rating maxRating={5} defaultRating={3} icon="star" /> |
+                      ## ผู้ให้คะแนน
+                      <div style={{ padding: "3em 0em" }}/>
+                      
+                      <Header as="h2">฿{props.product.productPrice}</Header>
+                      <div>
+                        <span>จำนวน: </span>
+                        <Button basic attached="left">
+                          <Icon name="minus" />
+                        </Button>
+                        <Input
+                          id="quantity_input"
+                          value={quantity}
+                          onChange={e => (quantity = e.target.value)}
+                        />
+                        <Button basic attached="right">
+                          &nbsp;
+                          <Icon name="plus" />
+                        </Button>
                       </div>
+                      <br />
+                      
+                      <Segment basic textAlign="center">
+                        <Button
+                          animated="fade"
+                          fluid
+                          primary
+                          size="huge"
+                          onClick={() => cart.onAddToCart(props.product)}
+                        >
+                          
+                          <Button.Content visible>
+                            Add to Cart
+                          </Button.Content>
+                          <Button.Content hidden>เพื่มไปยังรถเข็น</Button.Content>
+                        </Button>
+
+                      </Segment>
                     </Grid.Column>
                   </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column textAlign="center">
-                      <Button
-                        primary
-                        size="huge"
-                        onClick={() => cart.onAddToCart(props.product)}
-                      >
-                        Add to Cart
-                      </Button>
-                      <div className="product_fav">
-                        <Icon name="heart" />
-                      </div>
-                    </Grid.Column>
-                  </Grid.Row>
+                  
                 </Grid>
+              </Segment>
+              <br />
+              <Segment padded>
+                <Header as="h2">ข้อมูลจำเพาะของสินค้า</Header>
+                <Divider />
+                
+                {htmlToReactParser.parse(
+            props.product.productDescription
+          )}
+                <Header as="h2">รายละเอียดสินค้า</Header>
+                <Divider />
+                {htmlToReactParser.parse(
+            props.product.productDescription
+          )}
               </Segment>
             </Container>
           </Segment>

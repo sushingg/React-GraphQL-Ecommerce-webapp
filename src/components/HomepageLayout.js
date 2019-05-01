@@ -14,17 +14,16 @@ import {
   Input,
   Popup,
   Label,
-  Dropdown ,
+  Dropdown,
   Grid
 } from "semantic-ui-react";
 import isLogin from "../common";
 import Login from "./Login/Login";
-import Cart from "./Cart/CartSummary";
+import CartSummary from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
-import Slide from './Slide/Slide';
-import Category from './Category/Categories';
+import Slide from "./Slide/Slide";
+import Category from "./Category/Categories";
 /* eslint-disable react/no-multi-comp */
-
 
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
@@ -45,18 +44,26 @@ class DesktopContainer extends Component {
     if (login !== null) {
       email = <span>{login.email}</span>;
       navBtn = (
-                <Dropdown  direction='left' trigger={email} icon='user' labeled floating>
-                  <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to="/cart"><Icon name='shopping cart' /> Cart</Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/checkout"><Icon name='check square outline' /> Check out</Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/"><Icon name='list' /> My Orders</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item as={Link} to="/admin"><Icon name='settings' /> Setting</Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/logout" ><Icon name='power off' /> Logout</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-
-
+        <Dropdown direction="left" trigger={email} icon="user" labeled floating>
+          <Dropdown.Menu>
+            <Dropdown.Item as={Link} to="/cart">
+              <Icon name="shopping cart" /> Cart
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/checkout">
+              <Icon name="check square outline" /> Check out
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/">
+              <Icon name="list" /> My Orders
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item as={Link} to="/admin">
+              <Icon name="settings" /> Setting
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/logout">
+              <Icon name="power off" /> Logout
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       );
     } else {
       navBtn = (
@@ -64,14 +71,16 @@ class DesktopContainer extends Component {
           wide="very"
           trigger={
             <Button
-              animated='fade'
+              animated="fade"
               as="a"
               inverted={!fixed}
               primary={fixed}
               style={{ marginLeft: "0.5em" }}
             >
               <Button.Content visible>Login</Button.Content>
-              <Button.Content hidden><Icon name='sign-in'></Icon></Button.Content>
+              <Button.Content hidden>
+                <Icon name="sign-in" />
+              </Button.Content>
             </Button>
           }
           content={<Login />}
@@ -101,10 +110,10 @@ class DesktopContainer extends Component {
               size="large"
             >
               <Container>
-                <Menu.Item as={Link} to="/" >
+                <Menu.Item as={Link} to="/#">
                   <h2>TechE</h2>
                 </Menu.Item>
-                
+
                 <Menu.Item position="right">
                   <Input icon="search" placeholder="Search..." />
                 </Menu.Item>
@@ -120,27 +129,34 @@ class DesktopContainer extends Component {
                         </Button>
                         <Label basic pointing="left">
                           <CartContext.Consumer>
-                            {cart => cart.items.length || "0"}
+                            {cart =>
+                              cart.items.reduce(
+                                (acc, {  quantity }) =>
+                                  acc + quantity,
+                                0
+                              ) || "0"
+                            }
                           </CartContext.Consumer>
                         </Label>
                       </Button>
                     </Menu.Item>
                   }
-                  content={Cart}
+                  content={
+                    <Header textAlign="right">
+                      <CartSummary />
+                      <Link to="/Cart">ดูรถเข็น</Link>
+                    </Header>
+                  }
                   on="click"
                   position="bottom right"
                 />
-                
 
                 <Menu.Item>{navBtn}</Menu.Item>
               </Container>
             </Menu>
-            
           </Segment>
-          
-          
         </Visibility>
-        
+
         {children}
       </Responsive>
     );
@@ -156,40 +172,43 @@ class MobileContainer extends Component {
 
   render() {
     const { children } = this.props;
-    
 
     return (
       <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-            <Segment
-              inverted
-              textAlign="center"
-              style={{ minHeight: 10, padding: "1em 0em" }}
-              vertical
-            >
-              <Container>
-                <Menu inverted pointing secondary  size="large">
-                  <Dropdown item icon='sidebar' >
-                    <Dropdown.Menu>
-                      <Dropdown.Header>All Categories</Dropdown.Header>
-                      <Category/>
-                      <Dropdown.Divider />
-                      <Dropdown.Header>User</Dropdown.Header>
-                      <Dropdown.Item>Login</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <Menu.Item><Header as='h3' inverted>TechE</Header></Menu.Item>
-                  <Menu.Item position="right">
-                    <Button as="a" inverted>
-                      Log in
-                    </Button>
-                    <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
-                      Sign Up
-                    </Button>
-                  </Menu.Item>
-                </Menu>
-              </Container>
-            </Segment>
-            {children}
+        <Segment
+          inverted
+          textAlign="center"
+          style={{ minHeight: 10, padding: "1em 0em" }}
+          vertical
+        >
+          <Container>
+            <Menu inverted pointing secondary size="large">
+              <Dropdown item icon="sidebar">
+                <Dropdown.Menu>
+                  <Dropdown.Header>All Categories</Dropdown.Header>
+                  <Category />
+                  <Dropdown.Divider />
+                  <Dropdown.Header>User</Dropdown.Header>
+                  <Dropdown.Item>Login</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Menu.Item>
+                <Header as="h3" inverted>
+                  TechE
+                </Header>
+              </Menu.Item>
+              <Menu.Item position="right">
+                <Button as="a" inverted>
+                  Log in
+                </Button>
+                <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
+                  Sign Up
+                </Button>
+              </Menu.Item>
+            </Menu>
+          </Container>
+        </Segment>
+        {children}
       </Responsive>
     );
   }
