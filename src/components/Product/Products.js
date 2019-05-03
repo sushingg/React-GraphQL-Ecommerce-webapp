@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Product from './Product';
 import Loader from '../Loader';
-import { Message, Container, Segment } from 'semantic-ui-react'
+import { Message, Segment } from 'semantic-ui-react'
 class Products extends React.Component {
   state = {
   }
@@ -24,6 +24,7 @@ class Products extends React.Component {
 							productTitle
 							productPrice
 							productDescription
+							productDescriptionHtml
 							productTags{tag}
 							productImage{
 								altText

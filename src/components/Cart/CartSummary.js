@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CartContext } from "../CartContext";
 import { Table, Icon, Image, Header, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";

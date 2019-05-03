@@ -73,8 +73,7 @@ const Product = props => {
                       ## ขายแล้ว |{" "}
                       <Rating maxRating={5} defaultRating={3} icon="star" /> |
                       ## ผู้ให้คะแนน
-                      <div style={{ padding: "3em 0em" }}/>
-                      
+                      <div style={{ padding: "3em 0em" }} />
                       <Header as="h2">฿{props.product.productPrice}</Header>
                       <div>
                         <span>จำนวน: </span>
@@ -92,7 +91,6 @@ const Product = props => {
                         </Button>
                       </div>
                       <br />
-                      
                       <Segment basic textAlign="center">
                         <Button
                           animated="fade"
@@ -101,32 +99,21 @@ const Product = props => {
                           size="huge"
                           onClick={() => cart.onAddToCart(props.product)}
                         >
-                          
-                          <Button.Content visible>
-                            Add to Cart
+                          <Button.Content visible>Add to Cart</Button.Content>
+                          <Button.Content hidden>
+                            เพื่มไปยังรถเข็น
                           </Button.Content>
-                          <Button.Content hidden>เพื่มไปยังรถเข็น</Button.Content>
                         </Button>
-
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
-                  
                 </Grid>
               </Segment>
               <br />
               <Segment padded>
-                <Header as="h2">ข้อมูลจำเพาะของสินค้า</Header>
-                <Divider />
-                
-                {htmlToReactParser.parse(
-            props.product.productDescription
-          )}
                 <Header as="h2">รายละเอียดสินค้า</Header>
                 <Divider />
-                {htmlToReactParser.parse(
-            props.product.productDescription
-          )}
+                {htmlToReactParser.parse(props.product.productDescriptionHtml)}
               </Segment>
             </Container>
           </Segment>

@@ -17,12 +17,11 @@ import Reload from "./components/Reload";
 import Wip from "./components/Wip";
 import P404 from "./components/P404";
 import Editor from "./components/Editor/Editor";
-import Tests from "./components/Editor/testpass";
 //admin comp
 import Adnav from "./components/Admin/Adnav/Adnav";
 import Test from "./components/Admin/Mutations/Mutations";
 import AdOrder from "./components/Admin/Order/Orders";
-import AddProduct from "./components/Admin/Product/AddProduct";
+import AddProducts from "./components/Admin/Product/AddProducts";
 import RemoveProduct from "./components/Admin/Product/RemoveProduct";
 import ListProduct from "./components/Admin/ListProduct/ListProducts";
 import Dash from "./components/Admin/Dash/Dash";
@@ -49,7 +48,7 @@ const App = () => (
             <Switch>
               <Route path="/admin/login" component={Login} />
               <Route path="/admin/Order" component={AdOrder} />
-              <Route path="/admin/addproduct" component={AddProduct} />
+              <Route path="/admin/addproduct" component={AddProducts} />
               <Route
                 path="/admin/removeproduct/:id"
                 component={RemoveProduct}
@@ -71,7 +70,6 @@ const App = () => (
             <Route path="/logout" component={Logout} />
             <Route path="/p/:slug" component={Product} />
 						<Route exact path="/editor" component={Editor} />
-						<Route exact path="/test" component={Tests} />
             <Route component={P404} />
           </Switch>
         </Home>

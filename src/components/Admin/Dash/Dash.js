@@ -1,22 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import {
-  Segment,
   Header,
   Icon,
   Card,
-  Image,
   Statistic
 } from "semantic-ui-react";
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend
 } from "recharts";
 import Order from '../Order/Orders'
 const data = [

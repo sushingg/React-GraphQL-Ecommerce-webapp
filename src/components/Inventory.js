@@ -34,28 +34,26 @@ class Inventory extends Component {
     //console.log(this.state.items)
   }
 
-  
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
   onRemoveFromCart(p) {
     const index = this.state.items.findIndex(function(object) {
       return object.productSlug === p.productSlug;
     });
+    var newArray = [...this.state.items];
     if (this.state.items[index].quantity > 1) {
-      var newArray = [...this.state.items];
       newArray[index].quantity -= 1;
       this.setState({
         items: newArray
       });
-      console.log('decress')
+      console.log("decress");
     } else {
-      var newArray = [...this.state.items];
       newArray.splice(index, 1);
       this.setState({
         items: newArray
       });
-      console.log('remove')
+      console.log("remove");
     }
-    console.log(this.state.items)
+    console.log(this.state.items);
     /*const newArray = [...this.state.items];
     newArray.splice(i, 1);
     this.setState({
@@ -79,7 +77,7 @@ class Inventory extends Component {
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
           onEditCartItem: this.onEditCartItem,
-          onEditCart:this.onEditCart,
+          onEditCart: this.onEditCart,
           onClearCart: this.onClearCart
         }}
       >

@@ -15,13 +15,11 @@ import {
   Popup,
   Label,
   Dropdown,
-  Grid
 } from "semantic-ui-react";
 import isLogin from "../common";
 import Login from "./Login/Login";
 import CartSummary from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
-import Slide from "./Slide/Slide";
 import Category from "./Category/Categories";
 /* eslint-disable react/no-multi-comp */
 

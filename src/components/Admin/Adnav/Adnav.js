@@ -171,7 +171,7 @@ const Adnav = props => {
               <Button animated basic color='red'>
                 <Button.Content visible>Logout</Button.Content>
                 <Button.Content hidden>
-                  <Icon name='sign out icon' />
+                  <Icon name='sign out' />
                 </Button.Content>
               </Button>
             </Menu.Item>

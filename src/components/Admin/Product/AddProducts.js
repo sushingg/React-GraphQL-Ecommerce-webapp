@@ -1,8 +1,8 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Category from "./Category";
-import Loader from "../Loader";
+import AddProduct from "./AddProduct";
+import Loader from "../../Loader";
 import { Segment, Message } from "semantic-ui-react";
 
 class Products extends React.Component {
@@ -14,9 +14,6 @@ class Products extends React.Component {
         query={gql`
           {
             categories {
-              id
-              categorySlug
-              categoryTitle
               categoryTags {
                 tag
               }
@@ -35,7 +32,7 @@ class Products extends React.Component {
               </Segment>
             );
           return data.categories.map((currentCategory, i) => (
-            <Category key={i} category={currentCategory} />
+            <AddProduct key={i} category={currentCategory} history={this.props.history}/>
           ));
         }}
       </Query>

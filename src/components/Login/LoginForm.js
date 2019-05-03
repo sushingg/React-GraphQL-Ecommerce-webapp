@@ -100,7 +100,7 @@ class Login extends Component {
       				onError={error => this._error(error) }
       			>
       			  {(mutation, { loading }) =>(
-                <Button color='blue' loading={loading?'loading':null} fluid size='large' onClick={mutation}>
+                <Button color='blue' loading={loading?true:null} fluid size='large' onClick={mutation}>
                   {login ? 'Login' : 'Sign Up'}
                 </Button>
               )}
