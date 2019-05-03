@@ -28,7 +28,7 @@ import Dash from "./components/Admin/Dash/Dash";
 const AUTH_TOKEN = "auth-token";
 //uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://sushingg-api.herokuapp.com/graphql",
   request: async operation => {
     const token = localStorage.getItem(AUTH_TOKEN);
     operation.setContext({
