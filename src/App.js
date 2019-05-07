@@ -4,7 +4,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Route, Switch } from "react-router-dom";
 //import Navbar from './components/Navbar/Navbar';
-import Login from "./components/Login/Login";
+import LoginLanded from "./components/Login/LoginLanded";
 import Logout from "./Logout";
 import Footer from "./components/Footer/Footer";
 import Products from "./components/Products/Products";
@@ -26,9 +26,10 @@ import RemoveProduct from "./components/Admin/Product/RemoveProduct";
 import ListProduct from "./components/Admin/ListProduct/ListProducts";
 import Dash from "./components/Admin/Dash/Dash";
 const AUTH_TOKEN = "auth-token";
-//uri: 'https://sushingg-api.herokuapp.com/graphql',http://localhost:4000/graphql
+//uri:    https://sushingg-api.herokuapp.com/graphql
+//        http://localhost:4000/graphql
 const client = new ApolloClient({
-  uri: "https://sushingg-api.herokuapp.com/graphql",
+  uri: "http://localhost:4000/graphql",
   request: async operation => {
     const token = localStorage.getItem(AUTH_TOKEN);
     operation.setContext({
@@ -46,7 +47,7 @@ const App = () => (
         <Route path="/admin">
           <Adnav>
             <Switch>
-              <Route path="/admin/login" component={Login} />
+              <Route path="/admin/login" component={LoginLanded} />
               <Route path="/admin/Order" component={AdOrder} />
               <Route path="/admin/addproduct" component={AddProducts} />
               <Route
@@ -62,7 +63,7 @@ const App = () => (
         </Route>
         <Home>
           <Switch>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={LoginLanded} />
             <Route exact path="/" component={Products} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />

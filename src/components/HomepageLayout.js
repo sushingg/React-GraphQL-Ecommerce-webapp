@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
+import { Redirect } from 'react-router';
 import {
   Button,
   Container,
@@ -32,7 +33,13 @@ class DesktopContainer extends Component {
 
   hideFixedMenu = () => this.setState({ fixed: false });
   showFixedMenu = () => this.setState({ fixed: true });
-
+  toggle = () => this.setState({ open: !this.state.open,redirect: true })
+  handleOpen = () => {
+    this.setState({ isOpen: true })
+  }
+  handleClose = () => {
+    this.setState({ isOpen: false })
+  }
   render() {
     const { children } = this.props;
     const { fixed } = this.state;
@@ -40,7 +47,7 @@ class DesktopContainer extends Component {
     var navBtn;
     const login = isLogin();
     if (login !== null) {
-      email = <span>{login.email}</span>;
+      email = <span>{login.email+" "}</span>;
       navBtn = (
         <Dropdown direction="left" trigger={email} icon="user" labeled floating>
           <Dropdown.Menu>
@@ -87,7 +94,10 @@ class DesktopContainer extends Component {
         />
       );
     }
-
+    if (this.state.redirect) {
+      this.setState({redirect: false});
+      return <Redirect push to="/cart" />;
+    }
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -118,6 +128,7 @@ class DesktopContainer extends Component {
 
                 <Popup
                   wide="very"
+                  hideOnScroll
                   trigger={
                     <Menu.Item>
                       <Button as="div" labelPosition="right">
@@ -128,12 +139,8 @@ class DesktopContainer extends Component {
                         <Label basic pointing="left">
                           <CartContext.Consumer>
                             {cart =>
-                              cart.items.reduce(
-                                (acc, {  quantity }) =>
-                                  acc + quantity,
-                                0
-                              ) || "0"
-                            }
+                              cart.itemSum || "0"
+                            } 
                           </CartContext.Consumer>
                         </Label>
                       </Button>
@@ -142,10 +149,12 @@ class DesktopContainer extends Component {
                   content={
                     <Header textAlign="right">
                       <CartSummary />
-                      <Link to="/Cart">ดูรถเข็น</Link>
+                      <Link onClick={this.toggle}>ดูรถเข็น</Link>
                     </Header>
                   }
                   on="click"
+                  onClose={this.handleClose}
+                  onOpen={this.handleOpen}
                   position="bottom right"
                 />
 
@@ -190,17 +199,14 @@ class MobileContainer extends Component {
                   <Dropdown.Item>Login</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Menu.Item>
+              <Menu.Item as={Link} to='/'>
                 <Header as="h3" inverted>
                   TechE
                 </Header>
               </Menu.Item>
               <Menu.Item position="right">
-                <Button as="a" inverted>
-                  Log in
-                </Button>
-                <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
-                  Sign Up
+                <Button as={Link} to='/login' inverted style={{ marginLeft: "0.5em" }}>
+                  Login/Sign Up
                 </Button>
               </Menu.Item>
             </Menu>

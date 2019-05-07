@@ -16,11 +16,19 @@ import {
   //Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { Redirect } from 'react-router';
+import isLogin from "../../../common";
 //onClick={(e, { name }) => setActiveItem(name)}
 
 const Adnav = props => {
   const [activeItem, setActiveItem] = useState("");
-
+  const login = isLogin();
+  console.log(login)
+  if (!login) {
+    return <Redirect push to="/" />;
+  }else if(!login.admin){
+    return <Redirect push to="/" />;
+  }
   return (
     <>
       <div className="admin_menu">

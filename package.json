@@ -6,7 +6,7 @@
   "license": "GPL-3.0",
   "engines": {
     "node": "11.3.x",
-    "yarn": "1.13.x"
+    "yarn": "^1.12.x"
   },
   "dependencies": {
     "apollo-boost": "^0.3.1",

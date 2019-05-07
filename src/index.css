@@ -121,3 +121,16 @@ code {
   margin-bottom: 10px !important;
   height: 200px !important;
 }
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+ .ui.cards > .card > .productImg > img{
+  max-width: 100%;
+  object-fit: cover;
+}

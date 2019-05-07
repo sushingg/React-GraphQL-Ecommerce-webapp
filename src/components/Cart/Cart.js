@@ -5,7 +5,7 @@ import {
   Divider,
   Segment,
 } from "semantic-ui-react";
-import CartSummary from "./CartSummary";
+import CartFull from "./CartFull";
 
 const Cart = props => {
   return (
@@ -14,7 +14,7 @@ const Cart = props => {
         <Segment>
           <Header as='h3'>Cart | รถเข็น</Header>
           <Divider />
-          <CartSummary />
+          <CartFull />
         </Segment>
       </Container>
     </>

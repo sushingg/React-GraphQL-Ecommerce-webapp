@@ -5,11 +5,28 @@ class Inventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: JSON.parse(localStorage.getItem("items") || "[]")
+      items: JSON.parse(localStorage.getItem("items") || "[]"),
+      price:localStorage.getItem("price") || "[]",
+      itemSum:localStorage.getItem("itemSum") || "[]",
     };
     this.pitem = [];
   }
-
+  updatesum(){
+    this.setState({
+      price: this.state.items.reduce(
+        (acc, { productPrice, quantity }) =>
+          acc + productPrice * quantity,
+        0
+      ) || "0",
+      itemSum: this.state.items.reduce(
+        (acc, {  quantity }) =>
+          acc + quantity,
+        0
+      ) || "0",
+    });
+    localStorage.setItem("price", this.state.price);
+    localStorage.setItem("itemSum", this.state.itemSum);
+  }
   onAddToCart = this.onAddToCart.bind(this);
   async onAddToCart(p) {
     const index = this.state.items.findIndex(function(object) {
@@ -30,12 +47,44 @@ class Inventory extends Component {
     this.pitem = JSON.parse(localStorage.getItem("items") || "[]");
     this.pitem = [...this.pitem, p];
     await localStorage.setItem("items", JSON.stringify(this.state.items));
-    console.log(p);
-    //console.log(this.state.items)
+    this.updatesum();
   }
-
+  onSetCartValue = this.onSetCartValue.bind(this);
+  async onSetCartValue(p,value) {
+    const index = this.state.items.findIndex(function(object) {
+      return object.productSlug === p.productSlug;
+    });
+    value = parseInt(value, 10)
+    if(!value || value == 0){value = 1}
+    console.log(value)
+    
+    if (index >= 0) {
+      var newArray = [...this.state.items];
+      newArray[index].quantity = value;
+      this.setState({
+        items: newArray
+      });
+    }
+    this.pitem = JSON.parse(localStorage.getItem("items") || "[]");
+    this.pitem = [...this.pitem, p];
+    await localStorage.setItem("items", JSON.stringify(this.state.items));
+    this.updatesum();
+  }
+  onDeleteFromCart = this.onDeleteFromCart.bind(this);
+  async onDeleteFromCart(p) {
+    const index = this.state.items.findIndex(function(object) {
+      return object.productSlug === p.productSlug;
+    });
+    var newArray = [...this.state.items];
+      newArray.splice(index, 1);
+      this.setState({
+        items: newArray
+      });
+    await localStorage.setItem("items", JSON.stringify(newArray));
+    await this.updatesum();
+  }
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
-  onRemoveFromCart(p) {
+  async onRemoveFromCart(p) {
     const index = this.state.items.findIndex(function(object) {
       return object.productSlug === p.productSlug;
     });
@@ -53,13 +102,15 @@ class Inventory extends Component {
       });
       console.log("remove");
     }
-    console.log(this.state.items);
+    
     /*const newArray = [...this.state.items];
     newArray.splice(i, 1);
     this.setState({
       items: newArray
     });*/
-    localStorage.setItem("items", JSON.stringify(newArray));
+    await localStorage.setItem("items", JSON.stringify(newArray));
+    console.log(this.state.items);
+    await this.updatesum();
   }
   onClearCart = this.onClearCart.bind(this);
   onClearCart() {
@@ -67,6 +118,9 @@ class Inventory extends Component {
       items: []
     });
     localStorage.setItem("items", []);
+    localStorage.setItem("price", 0);
+    localStorage.setItem("itemSum", 0);
+    this.updatesum();
   }
 
   render() {
@@ -74,8 +128,12 @@ class Inventory extends Component {
       <CartContext.Provider
         value={{
           items: this.state.items,
+          price: this.state.price,
+          itemSum: this.state.itemSum,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
+          onDeleteFromCart:this.onDeleteFromCart,
+          onSetCartValue: this.onSetCartValue,
           onEditCartItem: this.onEditCartItem,
           onEditCart: this.onEditCart,
           onClearCart: this.onClearCart

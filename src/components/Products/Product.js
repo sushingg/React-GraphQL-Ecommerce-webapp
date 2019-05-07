@@ -9,7 +9,7 @@ const Product = (props) => {
   <CartContext.Consumer>
     {cart => (
       <Card key={props.product.productSlug} raised link className="shadow" >
-
+ 
         {props.product.productImage.length?
         (<Image className="productImg" wrapped as={Link} to={"p/"+props.product.productSlug}  src={"/image/"+props.product.productSlug+"/"+props.product.productImage[0].name} />)
         :(<Image className="productImg" wrapped as={Link} to={"p/"+props.product.productSlug}  src="/image/test.jpg" />)
