@@ -33,16 +33,22 @@ class DesktopContainer extends Component {
 
   hideFixedMenu = () => this.setState({ fixed: false });
   showFixedMenu = () => this.setState({ fixed: true });
-  toggle = () => this.setState({ open: !this.state.open,redirect: true })
+  /*toggle = () => this.setState({ open: !this.state.open,redirect: true })
   handleOpen = () => {
     this.setState({ isOpen: true })
   }
   handleClose = () => {
     this.setState({ isOpen: false })
   }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({redirect: false })
+      return <Redirect to='/cart' />
+    }
+  }*/
   render() {
     const { children } = this.props;
-    const { fixed } = this.state;
+    const { fixed,redirect } = this.state;
     var email;
     var navBtn;
     const login = isLogin();
@@ -94,12 +100,12 @@ class DesktopContainer extends Component {
         />
       );
     }
-    if (this.state.redirect) {
-      this.setState({redirect: false});
-      return <Redirect push to="/cart" />;
-    }
+
+ 
     return (
+      
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+     
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
@@ -131,7 +137,7 @@ class DesktopContainer extends Component {
                   hideOnScroll
                   trigger={
                     <Menu.Item>
-                      <Button as="div" labelPosition="right">
+                      <Button as={Link} to='/cart' labelPosition="right">
                         <Button inverted={!fixed} primary={fixed}>
                           <Icon name="shopping cart" />
                           Cart
@@ -146,15 +152,8 @@ class DesktopContainer extends Component {
                       </Button>
                     </Menu.Item>
                   }
-                  content={
-                    <Header textAlign="right">
-                      <CartSummary />
-                      <Link onClick={this.toggle}>ดูรถเข็น</Link>
-                    </Header>
-                  }
-                  on="click"
-                  onClose={this.handleClose}
-                  onOpen={this.handleOpen}
+                  content={<CartSummary />}
+                  on="hover"
                   position="bottom right"
                 />
 

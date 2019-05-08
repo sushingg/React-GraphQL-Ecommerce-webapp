@@ -55,8 +55,8 @@ const Products = () => (
             );
           console.log(data.users);
           return data.users.map((currentOrder, i) =>
-            currentOrder.order.map((thisOrder, i) => (
-              <Order key={i} order={thisOrder} />
+            currentOrder.order.map((thisOrder, y) => (
+              <Order key={y} order={thisOrder}/>
             ))
           );
         }}

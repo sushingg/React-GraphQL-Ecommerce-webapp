@@ -7,6 +7,7 @@ moment.locale('th');
   return (
     <Table.Row>
       <Table.Cell>
+        
         <Label basic as={Link} to={"/admin/o/" + props.order.id}>
           <Icon name="file outline" />
           View Order

@@ -15,7 +15,8 @@ import { Redirect } from 'react-router';
 import Cart from "../Cart/CartSummary";
 
 const ADD_ORDER_MUTATION = gql`
-  mutation OrderMutation(
+  mutation addOrderMutation(
+    $userid: ID!
     $orderEmail: String!
     $orderFirstname: String!
     $orderLastname: String!
@@ -23,15 +24,20 @@ const ADD_ORDER_MUTATION = gql`
     $orderTotal: Int!
     $orderProducts: [orderProductInput]!
   ) {
-    addOrder(
-      orderEmail: $orderEmail
-      orderFirstname: $orderFirstname
-      orderLastname: $orderLastname
-      orderAddr1: $orderAddr1
-      orderTotal: $orderTotal
-      orderProducts: $orderProducts
+    addUserOrder(
+      id :$userid,
+      order: {
+        orderEmail: $orderEmail
+        orderFirstname: $orderFirstname
+        orderLastname: $orderLastname
+        orderAddr1: $orderAddr1
+        orderTotal: $orderTotal
+        orderProducts: $orderProducts
+      }
     ) {
-      orderPaymentLink
+      order{
+        orderPaymentId
+      }
     }
   }
 `;
@@ -41,6 +47,7 @@ function onlyUnique(value, index, self) {
 }
 class Checkout extends Component {
   state = {
+    userid: "",
     orderEmail: "",
     orderAddr1: "",
     orderFirstname: "",
@@ -57,6 +64,7 @@ class Checkout extends Component {
     if (login !== null) {
       if (!this.state.isLogged)
         this.setState({
+          userid: login.userId,
           orderEmail: login.email,
           orderFirstname: login.fname,
           orderLastname: login.lname,
@@ -64,6 +72,7 @@ class Checkout extends Component {
         });
     }
     const {
+      userid,
       orderEmail,
       orderAddr1,
       orderFirstname,
@@ -145,6 +154,7 @@ class Checkout extends Component {
                           <Mutation
                             mutation={ADD_ORDER_MUTATION}
                             variables={{
+                              userid,
                               orderEmail,
                               orderFirstname,
                               orderLastname,

@@ -24,8 +24,8 @@ const CartSum = props => {
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell width="ten">รายการ</Table.HeaderCell>
-                      <Table.HeaderCell>ราคา/จำนวน</Table.HeaderCell>
-                      <Table.HeaderCell />
+                      <Table.HeaderCell>ราคา</Table.HeaderCell>
+                      <Table.HeaderCell>จำนวน</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
@@ -61,33 +61,21 @@ const CartSum = props => {
                         </Table.Cell>
                         <Table.Cell>
                           <Header as="h4">
-                            <Header.Content>
-                              {p.productPrice} ฿
-                              <Header.Subheader>
-                                {p.quantity || "none"}ชิ้น
-                              </Header.Subheader>
-                            </Header.Content>
+                            <Header.Content>{p.productPrice} ฿</Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell>
-                          <Icon
-                            name="plus"
-                            color="green"
-                            onClick={() => cart.onAddToCart(p)}
-                          />
-
-                          <br />
-                          <Icon
-                            name="minus"
-                            color="red"
-                            onClick={() => cart.onRemoveFromCart(p)}
-                          />
+                          <Header as="h4">
+                            <Header.Content>
+                              {p.quantity+" " || "none"}ชิ้น
+                            </Header.Content>
+                          </Header>
                         </Table.Cell>
                       </Table.Row>
                     ))}
                   </Table.Body>
                 </Table>
-                <h4>
+                <Header as='h3' textAlign='right'>
                   รวม{" "}
                   {cart.items.reduce(
                     (acc, { productPrice, quantity }) =>
@@ -95,7 +83,7 @@ const CartSum = props => {
                     0
                   ) || "0"}{" "}
                   บาท
-                </h4>
+                </Header>
               </Segment>
             ) : (
               <Segment placeholder>

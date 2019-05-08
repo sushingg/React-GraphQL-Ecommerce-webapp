@@ -6,8 +6,8 @@ class Inventory extends Component {
     super(props);
     this.state = {
       items: JSON.parse(localStorage.getItem("items") || "[]"),
-      price:localStorage.getItem("price") || "[]",
-      itemSum:localStorage.getItem("itemSum") || "[]",
+      price:localStorage.getItem("price") || "0",
+      itemSum:localStorage.getItem("itemSum") || "0",
     };
     this.pitem = [];
   }
@@ -55,7 +55,7 @@ class Inventory extends Component {
       return object.productSlug === p.productSlug;
     });
     value = parseInt(value, 10)
-    if(!value || value == 0){value = 1}
+    if(!value || value < 1){value = 1}
     console.log(value)
     
     if (index >= 0) {
