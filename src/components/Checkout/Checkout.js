@@ -35,9 +35,7 @@ const ADD_ORDER_MUTATION = gql`
         orderProducts: $orderProducts
       }
     ) {
-      order{
-        orderPaymentId
-      }
+        orderPaymentLink
     }
   }
 `;
@@ -200,10 +198,12 @@ class Checkout extends Component {
     });
   };
   _confirm = async data => {
-    const order = data.addOrder;
-    console.log(order);
+    const orders = data.addUserOrder;
+    console.log(orders);
     localStorage.setItem("items", []);
-    window.location = order.orderPaymentLink;
+    localStorage.setItem("price", 0);
+    localStorage.setItem("itemSum", 0);
+    window.location = orders.orderPaymentLink;
   };
   _error = async error => {
     //alert(error);
