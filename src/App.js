@@ -29,7 +29,7 @@ const AUTH_TOKEN = "auth-token";
 //uri:    https://sushingg-api.herokuapp.com/graphql
 //        http://localhost:4000/graphql
 const client = new ApolloClient({
-  uri: "https://sushingg-api.herokuapp.com/graphql",
+  uri: "http://localhost:4000/graphql",
   request: async operation => {
     const token = localStorage.getItem(AUTH_TOKEN);
     operation.setContext({
