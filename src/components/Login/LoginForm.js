@@ -7,16 +7,16 @@ import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 const AUTH_TOKEN = 'auth-token'
 const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!,$name:String!,$lname:String!) {
-    addUser(email: $email, password: $password,firstName:$name,lastName:$lname) {
+  mutation SignupMutation($email: String!, $password: String!,$name:String!,$mno:String!) {
+    addUser(email: $email, password: $password,name:$name,mobileNumber:$mno) {
       token
     }
-  }
+}
 `
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+    loginUser(email: $email, password: $password) {
       token
     }
   }
@@ -27,12 +27,12 @@ class Login extends Component {
     email: '',
     password: '',
     name: '',
-  	lanme: '',
+  	mno: '',
   	showError: false
   }
 
   render() {
-    const { login, email, password, name, lname, errorMessage} = this.state
+    const { login, email, password, name, mno, errorMessage} = this.state
     return (
   <div className='login-form'>
     {/*
@@ -61,7 +61,7 @@ class Login extends Component {
               icon='user' 
               iconPosition='left' 
               value={name}
-              placeholder='First Name' 
+              placeholder='User Name' 
               onChange={e => this.setState({ name: e.target.value })}
             />
           )}
@@ -70,9 +70,9 @@ class Login extends Component {
               fluid 
               icon='user' 
               iconPosition='left' 
-              value={lname}
-              placeholder='Last Name' 
-              onChange={e => this.setState({ lname: e.target.value })}
+              value={mno}
+              placeholder='mobile' 
+              onChange={e => this.setState({ mno: e.target.value })}
             />
 
           )}
@@ -95,7 +95,7 @@ class Login extends Component {
             />
       			<Mutation
       				mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-      				variables={{ email, password, name, lname }}
+      				variables={{ email, password, name, mno }}
       				onCompleted={data => this._confirm(data)}
       				onError={error => this._error(error) }
       			>
@@ -129,9 +129,8 @@ class Login extends Component {
 		})
 	};
 	_confirm = async data => {
-	  const { token } = this.state.login ? data.login : data.addUser
-	  this._saveUserData(token)
-	  this.props.history.push(`/`)
+	  const { token } = this.state.login ? data.loginUser : data.addUser
+    this._saveUserData(token)
 	}
 	_error = async error => {
 		//alert(error);
@@ -141,7 +140,8 @@ class Login extends Component {
 		this.toggleError()
 	}
 	_saveUserData = token => {
-	localStorage.setItem(AUTH_TOKEN, token)
+	  localStorage.setItem(AUTH_TOKEN, token)
+	  this.props.history.push(`/dologin`)
 	}
 }
 

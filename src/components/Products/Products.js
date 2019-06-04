@@ -44,14 +44,15 @@ const Products = () => (
           query={gql`
             {
               products {
-                productSlug
-                productTitle
-                productPrice
-                productDescription
-                productAddedDate
-                productImage {
-                  altText
-                  name
+                product {
+                  slug
+                  title
+                  price
+                  description
+                  image {
+                    altText
+                    name
+                  }
                 }
               }
             }
@@ -66,7 +67,7 @@ const Products = () => (
                   <p>{error.message}</p>
                 </Message>
               );
-            return data.products.map((currentProduct, i) => (
+            return data.products.product.map((currentProduct, i) => (
               <Product key={i} product={currentProduct} />
             ));
           }}

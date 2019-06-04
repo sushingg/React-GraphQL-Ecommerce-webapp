@@ -57,15 +57,15 @@ const CartSum = props => {
                     {cart.items.filter(onlyUnique).map((p, i) => (
                       <Table.Row key={i} verticalAlign="top">
                         <Table.Cell>
-                          {p.productImage.length ? (
+                          {p.image.length ? (
                             <Image
                               rounded
                               size="tiny"
                               src={
                                 "/image/" +
-                                p.productSlug +
+                                p.slug +
                                 "/" +
-                                p.productImage[0].name
+                                p.image[0].name
                               }
                             />
                           ) : (
@@ -75,16 +75,16 @@ const CartSum = props => {
                         <Table.Cell>
                           <Header as="h4">
                             <Header.Content>
-                              {p.productTitle}{" "}
+                              {p.title}{" "}
                               <Header.Subheader>
-                                {p.productDescription}{" "}
+                                {p.description}{" "}
                               </Header.Subheader>
                             </Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <Header as="h4">
-                            <Header.Content>฿{p.productPrice}</Header.Content>
+                            <Header.Content>฿{p.price}</Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell textAlign="center">
@@ -114,7 +114,7 @@ const CartSum = props => {
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <Header as="h4">
-                            {p.quantity * p.productPrice || "none"}
+                            {p.quantity * p.price || "none"}
                           </Header>
                         </Table.Cell>
                         <Table.Cell textAlign="center">

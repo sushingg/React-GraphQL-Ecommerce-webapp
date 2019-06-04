@@ -15,10 +15,12 @@ class Products extends React.Component {
           {
             categories {
               id
-              categorySlug
-              categoryTitle
-              categoryTags {
-                tag
+              slug
+              title
+              subCategory {
+                id
+                slug
+                title
               }
             }
           }

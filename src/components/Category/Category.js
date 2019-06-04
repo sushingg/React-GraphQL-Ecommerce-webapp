@@ -7,10 +7,10 @@ import {  Link } from "react-router-dom";
 
 const Category = (props) => {
   return (
-    <Dropdown scrolling item  text={props.category.categoryTitle}>
+    <Dropdown scrolling item  text={props.category.title}>
       <Dropdown.Menu>
-        <Dropdown.Header>{props.category.categoryTitle}</Dropdown.Header>
-        {props.category.categoryTags.map((tags,i) => (<Dropdown.Item key={i}  as={Link} to={"/c/"+props.category.categoryTitle+"/"+tags.tag}>{tags.tag}</Dropdown.Item>))}
+        <Dropdown.Header>{props.category.title}</Dropdown.Header>
+        {props.category.subCategory.map((data,i) => (<Dropdown.Item key={i}  as={Link} to={"/c/"+props.category.slug+"/"+data.slug}>{data.title}</Dropdown.Item>))}
       </Dropdown.Menu>
     </Dropdown>
   );

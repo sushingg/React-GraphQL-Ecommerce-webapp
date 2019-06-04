@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import { CartContext } from "./CartContext";
-
+import { Query, withApollo  } from "react-apollo";
+import gql from "graphql-tag";
+import Loader from "./Loader";
+import isLogin from "../common";
+const login = isLogin();
+const MY_QUERY = gql`
+  query MY_QUERY {
+    me {
+      id
+      name
+      email
+    }
+  }
+`;
 class Inventory extends Component {
   constructor(props) {
     super(props);
@@ -8,14 +21,23 @@ class Inventory extends Component {
       items: JSON.parse(localStorage.getItem("items") || "[]"),
       price:localStorage.getItem("price") || "0",
       itemSum:localStorage.getItem("itemSum") || "0",
+      user:undefined,
     };
     this.pitem = [];
+  }
+  async runQuery() {
+    const res = await this.props.client.query({
+      query: MY_QUERY,
+    });
+    this.setState({
+      user:res.data.me
+    })
   }
   updatesum(){
     this.setState({
       price: this.state.items.reduce(
-        (acc, { productPrice, quantity }) =>
-          acc + productPrice * quantity,
+        (acc, { price, quantity }) =>
+          acc + price * quantity,
         0
       ) || "0",
       itemSum: this.state.items.reduce(
@@ -30,7 +52,7 @@ class Inventory extends Component {
   onAddToCart = this.onAddToCart.bind(this);
   async onAddToCart(p) {
     const index = this.state.items.findIndex(function(object) {
-      return object.productSlug === p.productSlug;
+      return object.slug === p.slug;
     });
     if (index >= 0) {
       var newArray = [...this.state.items];
@@ -52,7 +74,7 @@ class Inventory extends Component {
   onSetCartValue = this.onSetCartValue.bind(this);
   async onSetCartValue(p,value) {
     const index = this.state.items.findIndex(function(object) {
-      return object.productSlug === p.productSlug;
+      return object.slug === p.slug;
     });
     value = parseInt(value, 10)
     if(!value || value < 1){value = 1}
@@ -73,7 +95,7 @@ class Inventory extends Component {
   onDeleteFromCart = this.onDeleteFromCart.bind(this);
   async onDeleteFromCart(p) {
     const index = this.state.items.findIndex(function(object) {
-      return object.productSlug === p.productSlug;
+      return object.slug === p.slug;
     });
     var newArray = [...this.state.items];
       newArray.splice(index, 1);
@@ -86,7 +108,7 @@ class Inventory extends Component {
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
   async onRemoveFromCart(p) {
     const index = this.state.items.findIndex(function(object) {
-      return object.productSlug === p.productSlug;
+      return object.slug === p.slug;
     });
     var newArray = [...this.state.items];
     if (this.state.items[index].quantity > 1) {
@@ -122,6 +144,20 @@ class Inventory extends Component {
     localStorage.setItem("itemSum", 0);
     this.updatesum();
   }
+  onLogout = this.onLogout.bind(this);
+  onLogout() {
+    this.setState({
+      user:undefined 
+    })
+    this.updatesum();
+    this.forceUpdate()
+    console.log('onlogout')
+  }
+  onLogin = this.onLogin.bind(this);
+  onLogin() {
+    this.runQuery()
+  }
+  
 
   render() {
     return (
@@ -130,6 +166,9 @@ class Inventory extends Component {
           items: this.state.items,
           price: this.state.price,
           itemSum: this.state.itemSum,
+          user:this.state.user,
+          onLogout: this.onLogout,
+          onLogin: this.onLogin,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
           onDeleteFromCart:this.onDeleteFromCart,
@@ -139,10 +178,11 @@ class Inventory extends Component {
           onClearCart: this.onClearCart
         }}
       >
+        
         {this.props.children}
       </CartContext.Provider>
     );
   }
 }
 
-export default Inventory;
+export default withApollo(Inventory);

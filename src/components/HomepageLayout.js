@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
-import { Redirect } from 'react-router';
+import { Redirect } from "react-router";
 import {
   Button,
   Container,
@@ -15,7 +15,7 @@ import {
   Input,
   Popup,
   Label,
-  Dropdown,
+  Dropdown
 } from "semantic-ui-react";
 import isLogin from "../common";
 import Login from "./Login/Login";
@@ -23,16 +23,20 @@ import CartSummary from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
 import Category from "./Category/Categories";
 /* eslint-disable react/no-multi-comp */
-
+const AUTH_TOKEN = "auth-token";
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = {};
-
+  state = {token:localStorage.getItem(AUTH_TOKEN)};
   hideFixedMenu = () => this.setState({ fixed: false });
   showFixedMenu = () => this.setState({ fixed: true });
+  checklogin = (cart) => {
+    if(!cart.user&&this.state.token){
+      cart.onLogin()
+    }
+  }
   /*toggle = () => this.setState({ open: !this.state.open,redirect: true })
   handleOpen = () => {
     this.setState({ isOpen: true })
@@ -48,123 +52,125 @@ class DesktopContainer extends Component {
   }*/
   render() {
     const { children } = this.props;
-    const { fixed,redirect } = this.state;
-    var email;
-    var navBtn;
-    const login = isLogin();
-    if (login !== null) {
-      email = <span>{login.email+" "}</span>;
-      navBtn = (
-        <Dropdown direction="left" trigger={email} icon="user" labeled floating>
-          <Dropdown.Menu>
-            <Dropdown.Item as={Link} to="/cart">
-              <Icon name="shopping cart" /> Cart
-            </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/checkout">
-              <Icon name="check square outline" /> Check out
-            </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/">
-              <Icon name="list" /> My Orders
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item as={Link} to="/admin">
-              <Icon name="settings" /> Setting
-            </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/logout">
-              <Icon name="power off" /> Logout
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      );
-    } else {
-      navBtn = (
-        <Popup
-          wide="very"
-          trigger={
-            <Button
-              animated="fade"
-              as="a"
-              inverted={!fixed}
-              primary={fixed}
-              style={{ marginLeft: "0.5em" }}
-            >
-              <Button.Content visible>Login</Button.Content>
-              <Button.Content hidden>
-                <Icon name="sign-in" />
-              </Button.Content>
-            </Button>
-          }
-          content={<Login />}
-          on="click"
-          position="bottom right"
-        />
-      );
-    }
-
- 
+    const { fixed, redirect } = this.state;
     return (
-      
-      <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-     
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
-        >
-          <Segment
-            inverted
-            textAlign="center"
-            style={{ minHeight: 30, padding: "1em 0em" }}
-            vertical
-          >
-            <Menu
-              fixed={fixed ? "top" : null}
-              inverted={!fixed}
-              secondary={!fixed}
-              size="large"
+      <CartContext.Consumer>
+        {cart => (
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+            {this.checklogin(cart)}
+            <Visibility
+              once={false}
+              onBottomPassed={this.showFixedMenu}
+              onBottomPassedReverse={this.hideFixedMenu}
             >
-              <Container>
-                <Menu.Item as={Link} to="/#">
-                  <h2>TechE</h2>
-                </Menu.Item>
-
-                <Menu.Item position="right">
-                  <Input icon="search" placeholder="Search..." />
-                </Menu.Item>
-
-                <Popup
-                  wide="very"
-                  hideOnScroll
-                  trigger={
-                    <Menu.Item>
-                      <Button as={Link} to='/cart' labelPosition="right">
-                        <Button inverted={!fixed} primary={fixed}>
-                          <Icon name="shopping cart" />
-                          Cart
-                        </Button>
-                        <Label basic pointing="left">
-                          <CartContext.Consumer>
-                            {cart =>
-                              cart.itemSum || "0"
-                            } 
-                          </CartContext.Consumer>
-                        </Label>
-                      </Button>
+              <Segment
+                inverted
+                textAlign="center"
+                style={{ minHeight: 30, padding: "1em 0em" }}
+                vertical
+              >
+                <Menu
+                  fixed={fixed ? "top" : null}
+                  inverted={!fixed}
+                  secondary={!fixed}
+                  size="large"
+                >
+                  <Container>
+                    <Menu.Item as={Link} to="/#">
+                      <h2>TechE</h2>
                     </Menu.Item>
-                  }
-                  content={<CartSummary />}
-                  on="hover"
-                  position="bottom right"
-                />
 
-                <Menu.Item>{navBtn}</Menu.Item>
-              </Container>
-            </Menu>
-          </Segment>
-        </Visibility>
+                    <Menu.Item position="right">
+                      <Input icon="search" placeholder="Search..." />
+                    </Menu.Item>
 
-        {children}
-      </Responsive>
+                    <Popup
+                      wide="very"
+                      hideOnScroll
+                      trigger={
+                        <Menu.Item as="div">
+                          <Button as={Link} to="/cart" labelPosition="right">
+                            <Button inverted={!fixed} primary={fixed}>
+                              <Icon name="shopping cart" />
+                              Cart
+                            </Button>
+                            <Label basic pointing="left">
+                                {cart.itemSum || "0"}
+                            </Label>
+                          </Button>
+                        </Menu.Item>
+                      }
+                      content={<CartSummary />}
+                      on="hover"
+                      position="bottom right"
+                    />
+
+                    <Menu.Item>
+                      <div>
+                        
+                        {cart.user?(
+                          <Dropdown
+                            direction="left"
+                            trigger={<span>{cart.user.email + " "}</span>}
+                            icon="user"
+                            labeled
+                            floating
+                          >
+                            <Dropdown.Menu>
+                              <Dropdown.Item as={Link} to="/cart">
+                                <Icon name="shopping cart" /> Cart
+                              </Dropdown.Item>
+                              <Dropdown.Item as={Link} to="/checkout">
+                                <Icon name="check square outline" /> Check out
+                              </Dropdown.Item>
+                              <Dropdown.Item as={Link} to="/">
+                                <Icon name="list" /> My Orders
+                              </Dropdown.Item>
+                              <Dropdown.Divider />
+                              <Dropdown.Item as={Link} to="/admin">
+                                <Icon name="settings" /> Setting
+                              </Dropdown.Item>
+                              <Dropdown.Item as={Link} to="/logout">
+                                <Icon name="power off" /> Logout
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        ) : (
+                          <>
+                            
+                            <Popup
+                              wide="very"
+                              trigger={
+                                <Button
+                                  animated="fade"
+                                  as="a"
+                                  inverted={!fixed}
+                                  primary={fixed}
+                                  style={{ marginLeft: "0.5em" }}
+                                >
+                                  <Button.Content visible>Login</Button.Content>
+                                  <Button.Content hidden>
+                                    <Icon name="sign-in" />
+                                  </Button.Content>
+                                </Button>
+                              }
+                              content={<Login />}
+                              on="click"
+                              position="bottom right"
+                            />
+                          </>
+                        )}
+                      </div>
+                    </Menu.Item>
+                  </Container>
+                </Menu>
+              </Segment>
+            </Visibility>
+
+            {children}
+          </Responsive>
+        )}
+      </CartContext.Consumer>
     );
   }
 }
@@ -198,13 +204,18 @@ class MobileContainer extends Component {
                   <Dropdown.Item>Login</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Menu.Item as={Link} to='/'>
+              <Menu.Item as={Link} to="/">
                 <Header as="h3" inverted>
                   TechE
                 </Header>
               </Menu.Item>
               <Menu.Item position="right">
-                <Button as={Link} to='/login' inverted style={{ marginLeft: "0.5em" }}>
+                <Button
+                  as={Link}
+                  to="/login"
+                  inverted
+                  style={{ marginLeft: "0.5em" }}
+                >
                   Login/Sign Up
                 </Button>
               </Menu.Item>

@@ -12,6 +12,7 @@ const isLogin = props => {
       localStorage.removeItem(AUTH_TOKEN)
       localStorage.clear();
       console.log("expire")
+    }else{
     }
   } else {
     res = null;

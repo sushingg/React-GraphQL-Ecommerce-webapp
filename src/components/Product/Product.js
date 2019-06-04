@@ -25,20 +25,20 @@ const Product = props => {
           <Segment secondary style={{ padding: "3em 0em" }} vertical>
             <Container>
               <Breadcrumb>
-                <Breadcrumb.Section link>Home</Breadcrumb.Section>
+                <Breadcrumb.Section link>{props.product.category}</Breadcrumb.Section>
                 <Breadcrumb.Divider />
-                <Breadcrumb.Section link>Store</Breadcrumb.Section>
+                <Breadcrumb.Section link>{props.product.subCategory}</Breadcrumb.Section>
                 <Breadcrumb.Divider />
 
                 <Breadcrumb.Section active>
-                  {props.product.productTitle}
+                  {props.product.title}
                 </Breadcrumb.Section>
               </Breadcrumb>
               <Segment padded>
                 <Grid container stackable>
                   <Grid.Row>
                     <Grid.Column floated="left" width={6}>
-                      {!props.product.productImage.length && (
+                      {!props.product.image.length && (
                         <Image
                           bordered
                           rounded
@@ -53,15 +53,15 @@ const Product = props => {
                         autoPlay={true}
                         emulateTouch={true}
                       >
-                        {props.product.productImage.map((keyName, i) => (
+                        {props.product.image.map((keyName, i) => (
                           <div key={i}>
                             <img
                               alt="slider"
                               src={
                                 "/image/" +
-                                props.product.productSlug +
+                                props.product.slug +
                                 "/" +
-                                props.product.productImage[i].name
+                                props.product.image[i].name
                               }
                             />
                           </div>
@@ -69,12 +69,12 @@ const Product = props => {
                       </Carousel>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Header as="h2">{props.product.productTitle}</Header>
+                      <Header as="h2">{props.product.title}</Header>
                       ## ขายแล้ว |{" "}
                       <Rating maxRating={5} defaultRating={3} icon="star" /> |
                       ## ผู้ให้คะแนน
                       <div style={{ padding: "3em 0em" }} />
-                      <Header as="h2">฿{props.product.productPrice}</Header>
+                      <Header as="h2">฿{props.product.price}</Header>
                       <div>
                         <span>จำนวน: </span>
                         <Button basic attached="left">
@@ -113,7 +113,7 @@ const Product = props => {
               <Segment padded>
                 <Header as="h2">รายละเอียดสินค้า</Header>
                 <Divider />
-                {htmlToReactParser.parse(props.product.productDescriptionHtml)}
+                {htmlToReactParser.parse(props.product.descriptionHtml)}
               </Segment>
             </Container>
           </Segment>

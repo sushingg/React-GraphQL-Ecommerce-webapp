@@ -5,7 +5,9 @@ import { ApolloProvider } from "react-apollo";
 import { Route, Switch } from "react-router-dom";
 //import Navbar from './components/Navbar/Navbar';
 import LoginLanded from "./components/Login/LoginLanded";
-import Logout from "./Logout";
+//
+import Logout from "./components/Auth/Logout";
+import Login from "./components/Auth/Login";
 import Footer from "./components/Footer/Footer";
 import Products from "./components/Products/Products";
 import Product from "./components/Product/Products";
@@ -31,12 +33,14 @@ const AUTH_TOKEN = "auth-token";
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   request: async operation => {
-    const token = localStorage.getItem(AUTH_TOKEN);
-    operation.setContext({
-      headers: {
-        "x-access-token": token
-      }
-    });
+    if (localStorage.getItem(AUTH_TOKEN)) {
+      const token = "Bearer " + localStorage.getItem(AUTH_TOKEN);
+      operation.setContext({
+        headers: {
+          Authorization: token
+        }
+      });
+    }
   }
 });
 
@@ -61,6 +65,7 @@ const App = () => (
             </Switch>
           </Adnav>
         </Route>
+        <Route path="/logout" component={Logout} />
         <Home>
           <Switch>
             <Route exact path="/login" component={LoginLanded} />
@@ -68,9 +73,9 @@ const App = () => (
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
             <Route path="/reload" component={Reload} />
-            <Route path="/logout" component={Logout} />
+            <Route path="/dologin" component={Login} />
             <Route path="/p/:slug" component={Product} />
-						<Route exact path="/editor" component={Editor} />
+            <Route exact path="/editor" component={Editor} />
             <Route component={P404} />
           </Switch>
         </Home>

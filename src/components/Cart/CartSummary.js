@@ -33,15 +33,15 @@ const CartSum = props => {
                       <Table.Row key={i}>
                         <Table.Cell>
                           <Header as="h4" image>
-                            {p.productImage.length ? (
+                            {p.image.length ? (
                               <Image
                                 rounded
                                 size="mini"
                                 src={
                                   "/image/" +
-                                  p.productSlug +
+                                  p.slug +
                                   "/" +
-                                  p.productImage[0].name
+                                  p.image[0].name
                                 }
                               />
                             ) : (
@@ -52,16 +52,16 @@ const CartSum = props => {
                               />
                             )}
                             <Header.Content>
-                              {p.productTitle}{" "}
+                              {p.title}{" "}
                               <Header.Subheader>
-                                {p.productDescription}{" "}
+                                {p.description}{" "}
                               </Header.Subheader>
                             </Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell>
                           <Header as="h4">
-                            <Header.Content>{p.productPrice} ฿</Header.Content>
+                            <Header.Content>{p.price} ฿</Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell>
@@ -78,8 +78,8 @@ const CartSum = props => {
                 <Header as='h3' textAlign='right'>
                   รวม{" "}
                   {cart.items.reduce(
-                    (acc, { productPrice, quantity }) =>
-                      acc + productPrice * quantity,
+                    (acc, { price, quantity }) =>
+                      acc + price * quantity,
                     0
                   ) || "0"}{" "}
                   บาท
