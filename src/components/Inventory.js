@@ -1,50 +1,70 @@
 import React, { Component } from "react";
 import { CartContext } from "./CartContext";
-import { Query, withApollo  } from "react-apollo";
+import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import Loader from "./Loader";
-import isLogin from "../common";
-const login = isLogin();
 const MY_QUERY = gql`
   query MY_QUERY {
     me {
       id
       name
       email
+      type
     }
   }
 `;
+
+const AUTH_TOKEN = "auth-token";
+
 class Inventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: JSON.parse(localStorage.getItem("items") || "[]"),
-      price:localStorage.getItem("price") || "0",
-      itemSum:localStorage.getItem("itemSum") || "0",
-      user:undefined,
+      price: localStorage.getItem("price") || "0",
+      itemSum: localStorage.getItem("itemSum") || "0",
+      user: undefined,
+      token: localStorage.getItem(AUTH_TOKEN) || undefined
     };
     this.pitem = [];
   }
+  checklogin = () => {
+    if (!this.state.user && this.state.token) {
+      this.runQuery();
+    }
+  };
   async runQuery() {
-    const res = await this.props.client.query({
-      query: MY_QUERY,
-    });
-    this.setState({
-      user:res.data.me
-    })
+    try {
+      const res = await this.props.client.query({
+        query: MY_QUERY
+      });
+      if (!res) {
+        localStorage.removeItem(AUTH_TOKEN);
+      }
+      this.setState({
+        user: res.data.me
+      });
+      this.updatesum();
+    } catch (e) {
+      console.log("Unexpected error occurred");
+      localStorage.removeItem(AUTH_TOKEN);
+      this.setState({
+        user: undefined,
+        token: undefined
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
   }
-  updatesum(){
+  updatesum() {
     this.setState({
-      price: this.state.items.reduce(
-        (acc, { price, quantity }) =>
-          acc + price * quantity,
-        0
-      ) || "0",
-      itemSum: this.state.items.reduce(
-        (acc, {  quantity }) =>
-          acc + quantity,
-        0
-      ) || "0",
+      price:
+        this.state.items.reduce(
+          (acc, { price, quantity }) => acc + price * quantity,
+          0
+        ) || "0",
+      itemSum:
+        this.state.items.reduce((acc, { quantity }) => acc + quantity, 0) || "0"
     });
     localStorage.setItem("price", this.state.price);
     localStorage.setItem("itemSum", this.state.itemSum);
@@ -72,14 +92,15 @@ class Inventory extends Component {
     this.updatesum();
   }
   onSetCartValue = this.onSetCartValue.bind(this);
-  async onSetCartValue(p,value) {
+  async onSetCartValue(p, value) {
     const index = this.state.items.findIndex(function(object) {
       return object.slug === p.slug;
     });
-    value = parseInt(value, 10)
-    if(!value || value < 1){value = 1}
-    console.log(value)
-    
+    value = parseInt(value, 10);
+    if (!value || value < 1) {
+      value = 1;
+    }
+
     if (index >= 0) {
       var newArray = [...this.state.items];
       newArray[index].quantity = value;
@@ -98,10 +119,10 @@ class Inventory extends Component {
       return object.slug === p.slug;
     });
     var newArray = [...this.state.items];
-      newArray.splice(index, 1);
-      this.setState({
-        items: newArray
-      });
+    newArray.splice(index, 1);
+    this.setState({
+      items: newArray
+    });
     await localStorage.setItem("items", JSON.stringify(newArray));
     await this.updatesum();
   }
@@ -116,22 +137,13 @@ class Inventory extends Component {
       this.setState({
         items: newArray
       });
-      console.log("decress");
     } else {
       newArray.splice(index, 1);
       this.setState({
         items: newArray
       });
-      console.log("remove");
     }
-    
-    /*const newArray = [...this.state.items];
-    newArray.splice(i, 1);
-    this.setState({
-      items: newArray
-    });*/
     await localStorage.setItem("items", JSON.stringify(newArray));
-    console.log(this.state.items);
     await this.updatesum();
   }
   onClearCart = this.onClearCart.bind(this);
@@ -146,18 +158,19 @@ class Inventory extends Component {
   }
   onLogout = this.onLogout.bind(this);
   onLogout() {
+    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.clear();
     this.setState({
-      user:undefined 
-    })
+      token: localStorage.getItem(AUTH_TOKEN) || undefined,
+      user: undefined
+    });
     this.updatesum();
-    this.forceUpdate()
-    console.log('onlogout')
+    this.forceUpdate();
   }
   onLogin = this.onLogin.bind(this);
   onLogin() {
-    this.runQuery()
+    this.runQuery();
   }
-  
 
   render() {
     return (
@@ -166,20 +179,22 @@ class Inventory extends Component {
           items: this.state.items,
           price: this.state.price,
           itemSum: this.state.itemSum,
-          user:this.state.user,
+          user: this.state.user,
           onLogout: this.onLogout,
           onLogin: this.onLogin,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
-          onDeleteFromCart:this.onDeleteFromCart,
+          onDeleteFromCart: this.onDeleteFromCart,
           onSetCartValue: this.onSetCartValue,
           onEditCartItem: this.onEditCartItem,
           onEditCart: this.onEditCart,
           onClearCart: this.onClearCart
         }}
       >
-        
-        {this.props.children}
+        <>
+          {this.checklogin()}
+          {this.props.children}
+        </>
       </CartContext.Provider>
     );
   }

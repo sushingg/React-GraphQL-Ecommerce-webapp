@@ -1,7 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Link } from "react-router-dom";
 import Product from "./Product";
 import Loader from "../Loader";
 import {
@@ -10,7 +9,6 @@ import {
   Segment,
   Message,
   Grid,
-  Menu,
   Responsive
 } from "semantic-ui-react";
 import Slide from "../Slide/Slide";
@@ -20,12 +18,7 @@ const HomepageHeading = () => (
     <Segment padded basic>
       <Grid columns={2}>
         <Grid.Column width={5}>
-          <Menu vertical fluid attached="top">
-            <Menu.Item as={Link} to="/category">
-              <h5>All Cetegories</h5>
-            </Menu.Item>
-            <Category />
-          </Menu>
+          <Category />
         </Grid.Column>
         <Grid.Column width={11}>
           <Slide />
@@ -36,43 +29,47 @@ const HomepageHeading = () => (
 );
 
 const Products = () => (
-  <Container>
+  <Container >
     <HomepageHeading />
-    <Segment basic>
-      <Card.Group itemsPerRow={4} stackable>
-        <Query
-          query={gql`
-            {
-              products {
-                product {
-                  slug
-                  title
-                  price
-                  description
-                  image {
-                    altText
-                    name
+    <Segment basic style={{ paddingBottom: "3em", paddingTop: "3em" }}>
+      <Grid textAlign='center'>
+        <Grid.Column largeScreen={16} mobile={13}>
+          <Card.Group itemsPerRow={4} stackable>
+            <Query
+              query={gql`
+                {
+                  products(limit: 12) {
+                    product {
+                      slug
+                      title
+                      price
+                      description
+                      image {
+                        altText
+                        name
+                      }
+                    }
                   }
                 }
-              }
-            }
-          `}
-        >
-          {({ loading, error, data }) => {
-            if (loading) return <Loader key="" />;
-            if (error)
-              return (
-                <Message>
-                  <Message.Header>Error</Message.Header>
-                  <p>{error.message}</p>
-                </Message>
-              );
-            return data.products.product.map((currentProduct, i) => (
-              <Product key={i} product={currentProduct} />
-            ));
-          }}
-        </Query>
-      </Card.Group>
+              `}
+            >
+              {({ loading, error, data }) => {
+                if (loading) return <Loader key="" />;
+                if (error)
+                  return (
+                    <Message>
+                      <Message.Header>Error</Message.Header>
+                      <p>{error.message}</p>
+                    </Message>
+                  );
+                return data.products.product.map((currentProduct, i) => (
+                  <Product key={i} product={currentProduct} />
+                ));
+              }}
+            </Query>
+          </Card.Group>
+        </Grid.Column>
+      </Grid>
     </Segment>
   </Container>
 );

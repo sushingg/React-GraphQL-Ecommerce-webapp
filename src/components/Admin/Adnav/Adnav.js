@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Button,
+  Button, 
   //Container,
   Header,
   Icon,
@@ -17,21 +17,26 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { Redirect } from 'react-router';
-import isLogin from "../../../common";
+import { CartContext } from "../../CartContext";
 //onClick={(e, { name }) => setActiveItem(name)}
 
 const Adnav = props => {
   const [activeItem, setActiveItem] = useState("");
-  const login = isLogin();
-  console.log(login)
-  if (!login) {
-    return <Redirect push to="/" />;
-  }else if(!login.admin){
-    return <Redirect push to="/" />;
+  const checklogin = (user) => {
+    if(user.type!=='admin'){return <Redirect to="/" />}
+
   }
   return (
     <>
-      <div className="admin_menu">
+      <div className="admin_menu"> 
+        <CartContext.Consumer>
+          {cart => (
+            <>
+              {!cart.user?<Redirect to="/" />:checklogin(cart.user)}
+              
+            </>
+          )}
+        </CartContext.Consumer>
         <Menu borderless compact inverted vertical fluid>
           <Menu.Item
           >

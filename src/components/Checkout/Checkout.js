@@ -59,16 +59,6 @@ class Checkout extends Component {
       this.setState({redirect: false});
       return <Redirect push to="/cart" />;
     }
-    if (login !== null) {
-      if (!this.state.isLogged)
-        this.setState({
-          userid: login.userId,
-          orderEmail: login.email,
-          orderFirstname: login.fname,
-          orderLastname: login.lname,
-          isLogged: true
-        });
-    }
     const {
       userid,
       orderEmail,

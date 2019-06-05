@@ -131,6 +131,7 @@ class Login extends Component {
 	_confirm = async data => {
 	  const { token } = this.state.login ? data.loginUser : data.addUser
     this._saveUserData(token)
+	  localStorage.setItem(AUTH_TOKEN, token)
 	}
 	_error = async error => {
 		//alert(error);
@@ -140,7 +141,6 @@ class Login extends Component {
 		this.toggleError()
 	}
 	_saveUserData = token => {
-	  localStorage.setItem(AUTH_TOKEN, token)
 	  this.props.history.push(`/dologin`)
 	}
 }

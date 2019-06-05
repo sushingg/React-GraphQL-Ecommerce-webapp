@@ -9,7 +9,7 @@ const Category = (props) => {
   return (
     <Dropdown scrolling item  text={props.category.title}>
       <Dropdown.Menu>
-        <Dropdown.Header>{props.category.title}</Dropdown.Header>
+        <Dropdown.Item  as={Link} to={"/c/"+props.category.slug}>{"All "+props.category.title}</Dropdown.Item>
         {props.category.subCategory.map((data,i) => (<Dropdown.Item key={i}  as={Link} to={"/c/"+props.category.slug+"/"+data.slug}>{data.title}</Dropdown.Item>))}
       </Dropdown.Menu>
     </Dropdown>

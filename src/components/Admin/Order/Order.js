@@ -14,22 +14,22 @@ moment.locale('th');
         </Label>
       </Table.Cell>
       <Table.Cell>
-        <Label basic>{moment(props.order.orderDate).format("lll")}</Label>
+        <Label basic>{moment(props.order.createdAt).format("lll")}</Label>
         <Label basic>
           Email
-          <Label.Detail>{props.order.orderEmail}</Label.Detail>
+          <Label.Detail>{props.user.email}</Label.Detail>
         </Label>
         <Label basic>
           FirstName
-          <Label.Detail>{props.order.orderFirstname}</Label.Detail>
+          <Label.Detail>{props.user.orderFirstname}</Label.Detail>
         </Label>
       </Table.Cell>
       <Table.Cell>
-        <Label tag>{props.order.orderTotal + " ฿"}</Label>
+        <Label tag>{props.order.total + " ฿"}</Label>
       </Table.Cell>
       <Table.Cell>
         {(() => {
-          switch (props.order.orderStatus) {
+          switch (props.order.status) {
             case null:
               return <Label color="yellow">Wait for paid</Label>;
             case "successful":

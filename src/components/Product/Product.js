@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon, Image, Container } from "semantic-ui-react";
+import {  Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
 import {
   Button,
@@ -25,9 +26,16 @@ const Product = props => {
           <Segment secondary style={{ padding: "3em 0em" }} vertical>
             <Container>
               <Breadcrumb>
-                <Breadcrumb.Section link>{props.product.category}</Breadcrumb.Section>
+                <Breadcrumb.Section 
+                  link
+                  as={Link} 
+                  to={"/c/"+props.product.category}>{props.product.category}</Breadcrumb.Section>
                 <Breadcrumb.Divider />
-                <Breadcrumb.Section link>{props.product.subCategory}</Breadcrumb.Section>
+                <Breadcrumb.Section 
+                  link
+                  as={Link} 
+                  to={"/c/"+props.product.category+"/"+props.product.subCategory}
+                >{props.product.subCategory}</Breadcrumb.Section>
                 <Breadcrumb.Divider />
 
                 <Breadcrumb.Section active>

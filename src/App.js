@@ -3,16 +3,23 @@ import "./App.css";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Route, Switch } from "react-router-dom";
+
+import jwtDecode from "jwt-decode";
+
 //import Navbar from './components/Navbar/Navbar';
 import LoginLanded from "./components/Login/LoginLanded";
 //
 import Logout from "./components/Auth/Logout";
 import Login from "./components/Auth/Login";
 import Footer from "./components/Footer/Footer";
+//
 import Products from "./components/Products/Products";
 import Product from "./components/Product/Products";
+import AllCategory from "./components/AllCategory/AllCategory";
+//
 import Cart from "./components/Cart/Cart";
 import Checkout from "./components/Checkout/Checkout";
+
 import Home from "./components/HomepageLayout";
 import Inventory from "./components/Inventory";
 import Reload from "./components/Reload";
@@ -28,16 +35,36 @@ import RemoveProduct from "./components/Admin/Product/RemoveProduct";
 import ListProduct from "./components/Admin/ListProduct/ListProducts";
 import Dash from "./components/Admin/Dash/Dash";
 const AUTH_TOKEN = "auth-token";
+
+let token 
 //uri:    https://sushingg-api.herokuapp.com/graphql
 //        http://localhost:4000/graphql
+const checklogin = () => {
+  let res = null
+  token = localStorage.getItem(AUTH_TOKEN)||null
+  if (token !== null) {
+    var decoded = jwtDecode(token);
+    res = decoded;
+    console.log(res)
+    if (Date.now() / 1000 > res.exp) {
+      localStorage.removeItem(AUTH_TOKEN)
+      localStorage.clear();
+      console.log("Oh, you have a key, but it's expired! ")
+    }
+  }else{
+    console.log("You don't have a key? Why don't you ask that gentleman there? Go on then")
+  }
+  
+  return res
+}
+
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   request: async operation => {
-    if (localStorage.getItem(AUTH_TOKEN)) {
-      const token = "Bearer " + localStorage.getItem(AUTH_TOKEN);
+    if (checklogin()) {
       operation.setContext({
         headers: {
-          Authorization: token
+          Authorization: "Bearer " + localStorage.getItem(AUTH_TOKEN)
         }
       });
     }
@@ -72,6 +99,7 @@ const App = () => (
             <Route exact path="/" component={Products} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route path="/c/:category?/:subCategory?" component={AllCategory} />     
             <Route path="/reload" component={Reload} />
             <Route path="/dologin" component={Login} />
             <Route path="/p/:slug" component={Product} />

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
-import { Redirect } from "react-router";
 import {
   Button,
   Container,
@@ -17,26 +16,20 @@ import {
   Label,
   Dropdown
 } from "semantic-ui-react";
-import isLogin from "../common";
 import Login from "./Login/Login";
 import CartSummary from "./Cart/CartSummary";
 import { CartContext } from "./CartContext";
 import Category from "./Category/Categories";
 /* eslint-disable react/no-multi-comp */
-const AUTH_TOKEN = "auth-token";
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = {token:localStorage.getItem(AUTH_TOKEN)};
+  state = {};
   hideFixedMenu = () => this.setState({ fixed: false });
   showFixedMenu = () => this.setState({ fixed: true });
-  checklogin = (cart) => {
-    if(!cart.user&&this.state.token){
-      cart.onLogin()
-    }
-  }
+  
   /*toggle = () => this.setState({ open: !this.state.open,redirect: true })
   handleOpen = () => {
     this.setState({ isOpen: true })
@@ -52,12 +45,11 @@ class DesktopContainer extends Component {
   }*/
   render() {
     const { children } = this.props;
-    const { fixed, redirect } = this.state;
+    const { fixed } = this.state;
     return (
       <CartContext.Consumer>
         {cart => (
-          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            {this.checklogin(cart)}
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}> 
             <Visibility
               once={false}
               onBottomPassed={this.showFixedMenu}
@@ -108,7 +100,7 @@ class DesktopContainer extends Component {
                     <Menu.Item>
                       <div>
                         
-                        {cart.user?(
+                        {cart.user&&(
                           <Dropdown
                             direction="left"
                             trigger={<span>{cart.user.email + " "}</span>}
@@ -127,7 +119,7 @@ class DesktopContainer extends Component {
                                 <Icon name="list" /> My Orders
                               </Dropdown.Item>
                               <Dropdown.Divider />
-                              <Dropdown.Item as={Link} to="/admin">
+                              <Dropdown.Item as={Link} to={"/"+cart.user.type||""}>
                                 <Icon name="settings" /> Setting
                               </Dropdown.Item>
                               <Dropdown.Item as={Link} to="/logout">
@@ -135,7 +127,8 @@ class DesktopContainer extends Component {
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
-                        ) : (
+                        ) }
+                        {!cart.user&&(
                           <>
                             
                             <Popup

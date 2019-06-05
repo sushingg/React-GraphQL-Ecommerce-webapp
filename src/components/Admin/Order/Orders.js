@@ -22,13 +22,14 @@ const Products = () => (
         query={gql`
           {
             users {
+              id
+              email
+              name
               order {
                 id
-                orderDate
-                orderEmail
-                orderFirstname
-                orderTotal
-                orderStatus
+                createdAt
+                total
+                status
               }
             }
           }
@@ -56,7 +57,7 @@ const Products = () => (
           console.log(data.users);
           return data.users.map((currentOrder, i) =>
             currentOrder.order.map((thisOrder, y) => (
-              <Order key={y} order={thisOrder}/>
+              <Order key={y} order={thisOrder} user={{name:currentOrder.name,email:currentOrder.email}} />
             ))
           );
         }}

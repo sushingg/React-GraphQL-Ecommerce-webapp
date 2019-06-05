@@ -5,16 +5,16 @@ const ListProduct = (props) => {
   return (
     <Table.Row>
       <Table.Cell>
-        <Label basic as={Link} to={"/admin/p/" + props.product.productSlug}>
-          {props.product.productTitle}
+        <Label basic as={Link} to={"/admin/p/" + props.product.slug}>
+          {props.product.title}
         </Label>
       </Table.Cell>
       <Table.Cell>
-        <Label tag>{props.product.productPrice + " ฿"}</Label>
+        <Label tag>{props.product.price + " ฿"}</Label>
       </Table.Cell>
       <Table.Cell textAlign='right'>
         {(() => {
-          switch (props.product.productPublished) {
+          switch (props.product.published) {
             case "published":
               return <Label color="green">Published</Label>;
             default:
