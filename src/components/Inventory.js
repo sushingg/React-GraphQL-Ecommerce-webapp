@@ -9,6 +9,16 @@ const MY_QUERY = gql`
       name
       email
       type
+      address{
+        id,
+        firstName,
+        lastName,
+        addr,
+        distric,
+        province,
+        mobileNumber,
+        postcode
+      }
     }
   }
 `;
@@ -19,9 +29,9 @@ class Inventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: JSON.parse(localStorage.getItem("items") || "[]"),
-      price: localStorage.getItem("price") || "0",
-      itemSum: localStorage.getItem("itemSum") || "0",
+      items: JSON.parse(localStorage.getItem("items"))||[],
+      price: localStorage.getItem("price") || 0,
+      itemSum: localStorage.getItem("itemSum") || 0,
       user: undefined,
       token: localStorage.getItem(AUTH_TOKEN) || undefined
     };
@@ -43,6 +53,8 @@ class Inventory extends Component {
       this.setState({
         user: res.data.me
       });
+      console.log(res)
+      console.log('update user context')
       this.updatesum();
     } catch (e) {
       console.log("Unexpected error occurred");
@@ -62,9 +74,9 @@ class Inventory extends Component {
         this.state.items.reduce(
           (acc, { price, quantity }) => acc + price * quantity,
           0
-        ) || "0",
+        ) || 0,
       itemSum:
-        this.state.items.reduce((acc, { quantity }) => acc + quantity, 0) || "0"
+        this.state.items.reduce((acc, { quantity }) => acc + quantity, 0) || 0
     });
     localStorage.setItem("price", this.state.price);
     localStorage.setItem("itemSum", this.state.itemSum);
@@ -86,7 +98,7 @@ class Inventory extends Component {
         items: [...this.state.items, p]
       });
     }
-    this.pitem = JSON.parse(localStorage.getItem("items") || "[]");
+    this.pitem = JSON.parse(localStorage.getItem("items"))||[];
     this.pitem = [...this.pitem, p];
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
@@ -108,7 +120,7 @@ class Inventory extends Component {
         items: newArray
       });
     }
-    this.pitem = JSON.parse(localStorage.getItem("items") || "[]");
+    this.pitem = JSON.parse(localStorage.getItem("items") || []);
     this.pitem = [...this.pitem, p];
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
@@ -151,7 +163,7 @@ class Inventory extends Component {
     this.setState({
       items: []
     });
-    localStorage.setItem("items", []);
+    localStorage.setItem("items", null);
     localStorage.setItem("price", 0);
     localStorage.setItem("itemSum", 0);
     this.updatesum();
@@ -171,6 +183,14 @@ class Inventory extends Component {
   onLogin() {
     this.runQuery();
   }
+  addAddress = this.addAddress.bind(this);
+  addAddress(address) {
+    let user = this.state.user
+    user.address.push(address)
+    this.setState({
+      user: user
+    });
+  }
 
   render() {
     return (
@@ -182,6 +202,7 @@ class Inventory extends Component {
           user: this.state.user,
           onLogout: this.onLogout,
           onLogin: this.onLogin,
+          addAddress: this.addAddress,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
           onDeleteFromCart: this.onDeleteFromCart,

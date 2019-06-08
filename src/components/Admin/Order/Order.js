@@ -14,14 +14,14 @@ moment.locale('th');
         </Label>
       </Table.Cell>
       <Table.Cell>
-        <Label basic>{moment(props.order.createdAt).format("lll")}</Label>
+        <Label basic>{moment(props.order.createdAt/1000).format("lll")}</Label>
         <Label basic>
           Email
           <Label.Detail>{props.user.email}</Label.Detail>
         </Label>
         <Label basic>
-          FirstName
-          <Label.Detail>{props.user.orderFirstname}</Label.Detail>
+          User
+          <Label.Detail>{props.user.name}</Label.Detail>
         </Label>
       </Table.Cell>
       <Table.Cell>

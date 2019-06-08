@@ -18,7 +18,7 @@ import Product from "./components/Product/Products";
 import AllCategory from "./components/AllCategory/AllCategory";
 //
 import Cart from "./components/Cart/Cart";
-import Checkout from "./components/Checkout/Checkout";
+import Checkout from "./components/User/Checkout/Checkout";
 
 import Home from "./components/HomepageLayout";
 import Inventory from "./components/Inventory";
@@ -42,10 +42,11 @@ let token
 const checklogin = () => {
   let res = null
   token = localStorage.getItem(AUTH_TOKEN)||null
+
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
-    console.log(res)
+    console.log(token)
     if (Date.now() / 1000 > res.exp) {
       localStorage.removeItem(AUTH_TOKEN)
       localStorage.clear();
