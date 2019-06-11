@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import ListCategory from "./ListCategory";
 import Loader from "../../Loader";
-import { List, Header, Message, Segment, Label } from "semantic-ui-react";
+import { List, Header, Message, Segment, Label,Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 const ListProducts = () => (
   <>
@@ -41,12 +41,14 @@ const ListProducts = () => (
             </Segment>
           );
         console.log(data.products);
-        return (
+        return (<>          
           <List celled ordered size="medium">
             {data.categories.map((currentCategory, i) => (
               <ListCategory key={i} category={currentCategory} refetch={refetch}/>
             ))}
           </List>
+          <Button onClick={refetch()}>reload</Button>
+          </>
         );
       }}
     </Query>

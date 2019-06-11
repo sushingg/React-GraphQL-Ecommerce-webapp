@@ -15,11 +15,13 @@ const ADD_PRODUCT_MUTATION = gql`
 mutation AddProductMutation(
     $slug: String!
   	$title: String!
-  	$subCategory: ID!
+    $category: String!
+  	$subCategory: String!
   ) {
     addProduct(
       slug:$slug
       title:$title
+      category:$category
       subCategory:$subCategory
     ) {
       id
@@ -43,7 +45,8 @@ class Checkout extends Component {
   state = {
     slug: "",
     title: "",
-    category:0,
+    category:null,
+    categoryvalue:0,
     subCategory:null,
     showError: false,
     isLogged: false,
@@ -56,6 +59,7 @@ class Checkout extends Component {
       slug,
       title,
       category,
+      categoryvalue,
       subCategory,
       errorMessage
     } = this.state;
@@ -106,13 +110,17 @@ class Checkout extends Component {
                     label="Category"
                     placeholder="Category"
                     selection
-                    value={category}
+                    value={categoryvalue}
                     noResultsMessage={null}
                     options={this.props.category.map((data,i) => ({key: data.slug, value: i, text: data.slug}))}
-                    onChange={(e, { value }) =>
-                      this.setState({
-                        category: value
-                      })
+                    onChange={(e, { value }) =>{
+                        console.log(this.props.category[value].slug)
+                        this.setState({
+                          category: this.props.category[value].slug,
+                          categoryvalue:value
+
+                        })
+                      }
                     }
                   />
                   <Form.Field
@@ -123,7 +131,7 @@ class Checkout extends Component {
                     required
                     value={subCategory}
                     noResultsMessage={null}
-                    options={this.props.category[category].subCategory.map((data,i) => ({key: data.slug, value: data.id, text: data.slug}))}
+                    options={this.props.category[categoryvalue].subCategory.map((data,i) => ({key: data.slug, value: data.slug, text: data.slug}))}
                     onChange={(e, { value }) =>{
                       console.log(value)
                       this.setState({
@@ -140,7 +148,9 @@ class Checkout extends Component {
                   variables={{
                     slug,
                     title,
+                    category,
                     subCategory
+                    
                   }}
                   onCompleted={data => this._confirm(data)}
                   onError={error => this._error(error)}

@@ -11,10 +11,13 @@ const Product = (props) => {
       <Card key={props.product.slug} raised link className="shadow" >
  
         {props.product.image.length?
-        (<Image className="productImg" wrapped as={Link} to={"/p/"+props.product.slug}  src={"/image/"+props.product.slug+"/"+props.product.image[0].name} />)
+        (<Image className="productImg" wrapped as={Link} to={"/p/"+props.product.slug}  src={
+          "http://localhost:4000/images/" +
+          props.product.image[0].name
+        } />)
         :(<Image className="productImg" wrapped as={Link} to={"/p/"+props.product.slug}  src="/image/test.jpg" />)
         }
-        <Card.Content >
+        <Card.Content > 
     
           <Card.Header>
           <Link  className="text-secondary" to={"/p/"+props.product.slug}>

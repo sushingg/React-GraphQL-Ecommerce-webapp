@@ -238,7 +238,7 @@ class Checkout extends Component {
                 >
                   {mutation => (
                     <Button color="blue" fluid size="large" onClick={mutation}>
-                      Add Product
+                      Edit Product
                     </Button>
                   )}
                 </Mutation>

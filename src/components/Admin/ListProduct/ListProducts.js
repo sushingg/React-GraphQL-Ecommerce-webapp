@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import ListProduct from "./ListProduct";
-import { Table, Message } from "semantic-ui-react";
+import { Table, Message, Button } from "semantic-ui-react";
 const ListProducts = () => (
   <Table stackable padded>
     <Table.Header>
@@ -20,25 +20,26 @@ const ListProducts = () => (
 
     <Table.Body>
       <Query
-        query={gql`{products {
-						product {
-              id
-							slug
-							title
-							price
-							description
-							descriptionHtml
-							category
-							subCategory
-							image {
-								altText
-								name
-							}
-						}
-					}}
-				
-				
-				`}
+        query={gql`
+          {
+            products {
+              product {
+                id
+                slug
+                title
+                price
+                description
+                descriptionHtml
+                category
+                subCategory
+                image {
+                  altText
+                  name
+                }
+              }
+            }
+          }
+        `}
       >
         {({ loading, error, data, refetch }) => {
           if (loading)
@@ -59,9 +60,14 @@ const ListProducts = () => (
                 </Table.Cell>
               </Table.Row>
             );
-          return data.products.product.map((currentProduct, i) => (
-            <ListProduct key={i} product={currentProduct} refetch={refetch}/>
-          ));
+          return (
+            <>
+              {data.products.product.map((currentProduct, i) => (
+                <ListProduct key={i} product={currentProduct} refetch={refetch} />
+              ))}
+              <Button onClick={refetch()}>reload</Button>
+            </>
+          );
         }}
       </Query>
     </Table.Body>

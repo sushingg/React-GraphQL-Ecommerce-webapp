@@ -79,7 +79,9 @@ export default function AllCategory({ match }) {
                 );
 
               return (
+              
                 <Container fluid>
+                  {console.log(data.products)}
                       <Card.Group itemsPerRow={4} stackable >
                         {data.products.product.map((currentProduct, i) => (
                           <Product key={i} product={currentProduct} />
