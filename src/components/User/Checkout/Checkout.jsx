@@ -26,7 +26,7 @@ const ADD_ORDER_MUTATION = gql`
       id
       total
       status
-      createAt
+      createdAt
     }
   }
 `;
