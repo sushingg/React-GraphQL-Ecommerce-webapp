@@ -191,12 +191,10 @@ class Checkout extends Component {
       return { showError: false };
     });
   };
-  _confirm = async data => {
+  _confirm = async (data,cart) => {
     const orders = data.addUserOrder;
     console.log(orders);
-    localStorage.removeItem("items");
-    localStorage.setItem("price", 0);
-    localStorage.setItem("itemSum", 0);
+    cart.onClearCart();
     this.setState({completed:true,order:orders})
     //window.location = "/myorders";
   };

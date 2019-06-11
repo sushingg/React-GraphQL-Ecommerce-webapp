@@ -163,7 +163,7 @@ class Inventory extends Component {
     this.setState({
       items: []
     });
-    localStorage.setItem("items", null);
+    localStorage.removeItem("items");
     localStorage.setItem("price", 0);
     localStorage.setItem("itemSum", 0);
     this.updatesum();
