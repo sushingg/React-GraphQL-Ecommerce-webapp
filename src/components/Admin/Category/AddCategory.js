@@ -6,13 +6,10 @@ import {
   Form,
   Segment,
   Input,
-  Dropdown,
   Message,
-  Checkbox
+  
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import isLogin from "../../../common";
-import Editor from "../../Editor/Editor";
 const ADD_CATEGORY_MUTATION = gql`
 mutation AddCategoryMutation(
     $slug: String!
@@ -44,8 +41,6 @@ class Checkout extends Component {
     const {
       slug,
       title,
-      category,
-      subCategory,
       errorMessage
     } = this.state;
     return (

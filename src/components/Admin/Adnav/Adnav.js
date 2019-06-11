@@ -32,7 +32,7 @@ const Adnav = props => {
         <CartContext.Consumer>
           {cart => (
             <>
-              {/*!cart.user?<Redirect to="/" />:checklogin(cart.user)*/}
+              {!cart.user?<Redirect to="/" />:checklogin(cart.user)}
               
             </>
           )}

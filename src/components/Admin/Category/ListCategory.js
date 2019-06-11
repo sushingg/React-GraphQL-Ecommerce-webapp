@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { List, Icon, Label, Modal } from "semantic-ui-react";
-import moment from "moment";
 import RemoveCategory from "./RemoveCategory";
 const ListProduct = props => {
   return (

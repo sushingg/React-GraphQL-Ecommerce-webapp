@@ -11,7 +11,6 @@ import {
   Dropdown
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import isLogin from "../../../common";
 import { Redirect } from "react-router";
 import Cart from "../../Cart/CartSummary";
 import EditAddress from "../EditAddress/EditAddress";
@@ -191,7 +190,7 @@ class Checkout extends Component {
       return { showError: false };
     });
   };
-  _confirm = async (data,cart) => {
+  _confirm = async (data,cart) => { 
     const orders = data.addUserOrder;
     console.log(orders);
     cart.onClearCart();

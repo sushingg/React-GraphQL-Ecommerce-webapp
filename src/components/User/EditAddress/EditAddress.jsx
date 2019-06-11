@@ -10,7 +10,6 @@ import {
   Header
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import { Redirect } from "react-router";
 const ADD_ADDRESS_MUTATION = gql`
   mutation addUserAddressMutation(
     $firstName: String!
@@ -62,8 +61,7 @@ class Checkout extends Component {
       province,
       mobileNumber,
       postcode,
-      errorMessage,
-      success
+      errorMessage
     } = this.state;
 
     return (

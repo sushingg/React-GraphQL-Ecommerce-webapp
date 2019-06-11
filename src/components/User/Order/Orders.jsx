@@ -38,7 +38,7 @@ const Product = props => {
             case "cancel":
               return <Label color="red">Cancel</Label>;
             default:
-              return <Label>Wait for paid</Label>;
+              return <Label color="yellow">Wait for paid</Label>;
           }
         })()}
       </Table.Cell>

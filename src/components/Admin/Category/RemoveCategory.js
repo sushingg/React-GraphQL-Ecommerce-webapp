@@ -26,8 +26,6 @@ class RemoveCategory extends Component {
     isRemoved: false
   };
   render() {
-    // const { slug , id } = this.props.match.params
-    const slug = this.props.slug;
     const id = this.props.id;
     const cate = this.props.cate
     const { errorMessage } = this.state;

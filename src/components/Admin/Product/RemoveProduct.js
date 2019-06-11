@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { Button, Segment, Message, Header } from "semantic-ui-react";
-import isLogin from "../../../common";
 import Product from "./GetProduct";
 const REMOVE_PRODUCT_MUTATION = gql`
   mutation deleteProduct($id: ID!) {

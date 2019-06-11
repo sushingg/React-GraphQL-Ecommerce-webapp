@@ -1,5 +1,5 @@
 import React from 'react'
-import axios, { post } from 'axios';
+import { post } from 'axios';
 const AUTH_TOKEN = "auth-token";
 
 class SimpleReactFileUpload extends React.Component {

@@ -5,15 +5,10 @@ import {
   Button,
   Form,
   Segment,
-  Input,
-  Dropdown,
   Message,
-  Checkbox,
-  Container,
   Header,
   Icon,
   Grid,
-  Image,
   Divider
 } from "semantic-ui-react";
 import moment from 'moment'
@@ -32,17 +27,6 @@ const CREATE_PAYMENT_MUTATION = gql`
 }
 `;
 
-/*const ADD_ORDER_MUTATION = gql`
-  mutation AddCategoryMutation($categorySlug: String!, $categorySlug: String!, $tags:[tagsInput]!) {
-  addCategory(categorySlug: $categorySlug, categorySlug: $categorySlug, tags: $tags) {
-    id
-    }
-  }
-`*/
-
-/*function onlyUnique(value, index, self) { 
-  return self.indexOf(value) === index;
-}*/
 class Checkout extends Component {
   state = {
 
@@ -67,7 +51,6 @@ class Checkout extends Component {
           </Segment>
         )}
 
-        <h3 className="ui header">Add Product</h3>
         <Form size="large">
           <Segment basic textAlign="center">
             <Divider horizontal>

@@ -9,8 +9,7 @@ import {
   Image,
   Message,
   Checkbox,
-  Modal,
-  Header
+  Modal
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
 import Upload from './File-Upload'
@@ -87,8 +86,7 @@ class Checkout extends Component {
       descriptionHtml,
       quantity,
       published,
-      errorMessage,
-      stateOptions
+      errorMessage
     } = this.state;
     return (
       <CartContext.Consumer>
@@ -200,6 +198,7 @@ class Checkout extends Component {
                       {this.props.product.image.map((keyName, i) => (
                         <div key={i}>
                           <img
+                            alt={this.props.product.image[i].name}
                             bordered
                             rounded
                             size="medium"

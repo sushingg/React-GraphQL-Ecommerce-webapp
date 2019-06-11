@@ -8,11 +8,8 @@ import {
   Input,
   Dropdown,
   Message,
-  Checkbox
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import isLogin from "../../../common";
-import Editor from "../../Editor/Editor";
 const ADD_PRODUCT_MUTATION = gql`
 mutation AddProductMutation(
     $slug: String!
