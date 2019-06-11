@@ -1,3 +1,4 @@
+import { withRouter } from "react-router";
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
@@ -177,7 +178,7 @@ class Checkout extends Component {
   _confirm = async data => {
     const product = data.addProduct;
     console.log(product);
-    window.location = "/admin/product/edit/"+product.slug;
+    this.props.history.push("/admin/product/edit/"+product.slug);
   };
   _error = async error => {
     //alert(error);
@@ -190,4 +191,4 @@ class Checkout extends Component {
   };
 }
 
-export default Checkout;
+export default withRouter(Checkout);

@@ -1,3 +1,4 @@
+import { withRouter } from "react-router";
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
@@ -127,7 +128,7 @@ class Checkout extends Component {
   _confirm = async data => {
     const cate = data.addSubCategory;
     console.log(cate);
-    window.location = "/admin/category/list/"
+    this.props.history.push("/admin/category/list/")
   };
   _error = async error => {
     this.setState({ errorMessage: error.message });
@@ -138,4 +139,4 @@ class Checkout extends Component {
   };
 }
 
-export default Checkout;
+export default withRouter(Checkout);
