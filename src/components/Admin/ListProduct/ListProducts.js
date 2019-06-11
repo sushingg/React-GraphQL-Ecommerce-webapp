@@ -22,6 +22,7 @@ const ListProducts = () => (
       <Query
         query={gql`{products {
 						product {
+              id
 							slug
 							title
 							price
@@ -39,7 +40,7 @@ const ListProducts = () => (
 				
 				`}
       >
-        {({ loading, error, data }) => {
+        {({ loading, error, data, refetch }) => {
           if (loading)
             return (
               <Table.Row>
@@ -59,7 +60,7 @@ const ListProducts = () => (
               </Table.Row>
             );
           return data.products.product.map((currentProduct, i) => (
-            <ListProduct key={i} product={currentProduct} />
+            <ListProduct key={i} product={currentProduct} refetch={refetch}/>
           ));
         }}
       </Query>

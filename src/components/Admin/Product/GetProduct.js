@@ -1,14 +1,15 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Product from "./Product";
-import Loader from "../Loader";
+import Product from "../../Product/Product";
+import Loader from "../../Loader";
 import { Message, Segment } from "semantic-ui-react";
 class Products extends React.Component {
   state = {};
   componentDidMount() {}
   render() {
-    const { slug } = this.props.match.params
+    const  slug  = this.props.slug
+    console.log(this.props.slug)
     return (
       <>
         <Query

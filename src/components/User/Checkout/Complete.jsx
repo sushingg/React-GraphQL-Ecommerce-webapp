@@ -1,0 +1,80 @@
+// https://www.npmjs.com/package/react-responsive-carousel
+import React, { Component } from "react";
+import {
+  Button,
+  Container,
+  Header,
+  Icon,
+  Grid,
+  Image,
+  Segment,
+  Sidebar,
+  Visibility,
+  Input,
+  Popup,
+  Label,
+  Divider
+} from "semantic-ui-react";
+import moment from 'moment'
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'THB',
+    minimumFractionDigits: 2
+  })
+export default class Carous extends Component {
+  render() { 
+    return (
+      <Container>
+        <Segment basic textAlign="center">
+          <Header as="h2" icon color="green">
+            <Icon name="check" />
+            สั่งซื้อเรียบร้อย
+          </Header>
+          <Divider horizontal>
+            <Header as="h3">
+              <Icon name="ordered list" />
+              รายการสั่งซื้อของคุณคือ #{this.props.order.id}
+            </Header>
+          </Divider>
+          <Grid columns={3} divided>
+            <Grid.Row>
+              <Grid.Column>
+                <Header>
+                  <Icon name="calendar alternate outline" />
+                  ชำระเงินค่าสินค้าภายใน
+                </Header>
+                <Header> 
+            {moment.unix((this.props.order.createdAt)/1000).add(1, 'd').format("llll")}
+              <Header.Subheader>กรุณาชำระเงินก่อนเวลา</Header.Subheader>
+            </Header>
+              </Grid.Column>
+              <Grid.Column>
+                <Header>
+                  <Icon name="money bill alternate outline" />
+                  จำนวนเงินที่ต้องชำระ
+                </Header>
+                <Header>{formatter.format(this.props.order.total)} บาท</Header>
+              </Grid.Column>
+              <Grid.Column>
+                <Header>สถานะรายการสั่งซื้อ</Header>
+                <Header>
+                  รอชำระเงิน
+                  <Header.Subheader>กรุณาชำระเงิน</Header.Subheader>
+                </Header>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={16}>
+                  <Button fluid color='blue'>ชำระเงิน</Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </Container>
+    );
+  }
+}
+
+// Don't forget to include the css in your page
+// <link rel="stylesheet" href="carousel.css"/>
+// Begin DemoSliderControls

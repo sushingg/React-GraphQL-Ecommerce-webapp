@@ -13,16 +13,14 @@ import {
 import { CartContext } from "../../CartContext";
 import isLogin from "../../../common";
 import Editor from "../../Editor/Editor";
-const ADD_PRODUCT_MUTATION = gql`
-mutation AddProductMutation(
+const ADD_CATEGORY_MUTATION = gql`
+mutation AddCategoryMutation(
     $slug: String!
   	$title: String!
-  	$subCategory: ID!
   ) {
-    addProduct(
+    addCategory(
       slug:$slug
       title:$title
-      subCategory:$subCategory
     ) {
       id
       slug
@@ -30,17 +28,6 @@ mutation AddProductMutation(
   }
 `;
 
-/*const ADD_ORDER_MUTATION = gql`
-  mutation AddCategoryMutation($categorySlug: String!, $categorySlug: String!, $tags:[tagsInput]!) {
-  addCategory(categorySlug: $categorySlug, categorySlug: $categorySlug, tags: $tags) {
-    id
-    }
-  }
-`*/
-
-/*function onlyUnique(value, index, self) { 
-  return self.indexOf(value) === index;
-}*/
 class Checkout extends Component {
   state = {
     slug: "",
@@ -77,14 +64,14 @@ class Checkout extends Component {
               </Segment>
             )}
 
-            <h3 className="ui header">Add Product</h3>
+            <h3 className="ui header">Add Category</h3>
             <Form size="large">
               <Segment basic>
                 <Form.Group widths="equal">
                   <Form.Field
                     control={Input}
-                    label="Product Slug"
-                    placeholder="productSlug"
+                    label="Category Slug"
+                    placeholder="CategorySlug"
                     value={slug}
                     required
                     onChange={e =>
@@ -93,8 +80,8 @@ class Checkout extends Component {
                   />
                   <Form.Field
                     control={Input}
-                    label="Product Title"
-                    placeholder="productTitle"
+                    label="Category Title"
+                    placeholder="CategoryTitle"
                     required
                     value={title}
                     onChange={e =>
@@ -102,54 +89,20 @@ class Checkout extends Component {
                     }
                   />
                 </Form.Group>
-                <Form.Group widths="equal">
-                  <Form.Field
-                    control={Dropdown}
-                    label="Category"
-                    placeholder="Category"
-                    selection
-                    value={category}
-                    noResultsMessage={null}
-                    options={this.props.category.map((data,i) => ({key: data.slug, value: i, text: data.slug}))}
-                    onChange={(e, { value }) =>
-                      this.setState({
-                        category: value
-                      })
-                    }
-                  />
-                  <Form.Field
-                    control={Dropdown}
-                    label="Sub Category"
-                    placeholder="Sub Category"
-                    selection
-                    required
-                    value={subCategory}
-                    noResultsMessage={null}
-                    options={this.props.category[category].subCategory.map((data,i) => ({key: data.slug, value: data.id, text: data.slug}))}
-                    onChange={(e, { value }) =>{
-                      console.log(value)
-                      this.setState({
-                        subCategory:value
-                      })
-                    }
-                    }
-                    
-                  />
-                </Form.Group>
+                
 
                 <Mutation
-                  mutation={ADD_PRODUCT_MUTATION}
+                  mutation={ADD_CATEGORY_MUTATION}
                   variables={{
                     slug,
                     title,
-                    subCategory
                   }}
                   onCompleted={data => this._confirm(data)}
                   onError={error => this._error(error)}
                 >
                   {mutation => (
                     <Button color="blue" fluid size="large" onClick={mutation}>
-                      Add Product
+                      Add Category
                     </Button>
                   )}
                 </Mutation>
@@ -178,9 +131,9 @@ class Checkout extends Component {
     });
   };
   _confirm = async data => {
-    const product = data.addProduct;
-    console.log(product);
-    window.location = "/admin/product/edit/"+product.slug;
+    const cate = data.addCategory;
+    console.log(cate);
+    window.location = "/admin/category/list/";
   };
   _error = async error => {
     //alert(error);

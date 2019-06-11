@@ -13,16 +13,16 @@ import {
 import { CartContext } from "../../CartContext";
 import isLogin from "../../../common";
 import Editor from "../../Editor/Editor";
-const ADD_PRODUCT_MUTATION = gql`
-mutation AddProductMutation(
+const ADD_CATEGORY_MUTATION = gql`
+mutation AddCategoryMutation(
+    $id: ID!
     $slug: String!
   	$title: String!
-  	$subCategory: ID!
   ) {
-    addProduct(
+    addSubCategory(
+      id:$id
       slug:$slug
       title:$title
-      subCategory:$subCategory
     ) {
       id
       slug
@@ -30,17 +30,6 @@ mutation AddProductMutation(
   }
 `;
 
-/*const ADD_ORDER_MUTATION = gql`
-  mutation AddCategoryMutation($categorySlug: String!, $categorySlug: String!, $tags:[tagsInput]!) {
-  addCategory(categorySlug: $categorySlug, categorySlug: $categorySlug, tags: $tags) {
-    id
-    }
-  }
-`*/
-
-/*function onlyUnique(value, index, self) { 
-  return self.indexOf(value) === index;
-}*/
 class Checkout extends Component {
   state = {
     slug: "",
@@ -61,10 +50,10 @@ class Checkout extends Component {
       subCategory,
       errorMessage
     } = this.state;
+    const { cslug , id } = this.props.match.params;
+    console.log(id)
     return (
-      <CartContext.Consumer>
-        {cart => (
-          <div>
+          <>
             {this.state.showError && (
               <Segment basic textAlign="center">
                 <Message
@@ -77,14 +66,14 @@ class Checkout extends Component {
               </Segment>
             )}
 
-            <h3 className="ui header">Add Product</h3>
+            <h3 className="ui header">Add Sub Category for {cslug}</h3>
             <Form size="large">
               <Segment basic>
                 <Form.Group widths="equal">
                   <Form.Field
                     control={Input}
-                    label="Product Slug"
-                    placeholder="productSlug"
+                    label="Sub Category Slug"
+                    placeholder="Sub Category Slug"
                     value={slug}
                     required
                     onChange={e =>
@@ -93,8 +82,8 @@ class Checkout extends Component {
                   />
                   <Form.Field
                     control={Input}
-                    label="Product Title"
-                    placeholder="productTitle"
+                    label="Sub Category Title"
+                    placeholder="Sub Category Title"
                     required
                     value={title}
                     onChange={e =>
@@ -102,62 +91,27 @@ class Checkout extends Component {
                     }
                   />
                 </Form.Group>
-                <Form.Group widths="equal">
-                  <Form.Field
-                    control={Dropdown}
-                    label="Category"
-                    placeholder="Category"
-                    selection
-                    value={category}
-                    noResultsMessage={null}
-                    options={this.props.category.map((data,i) => ({key: data.slug, value: i, text: data.slug}))}
-                    onChange={(e, { value }) =>
-                      this.setState({
-                        category: value
-                      })
-                    }
-                  />
-                  <Form.Field
-                    control={Dropdown}
-                    label="Sub Category"
-                    placeholder="Sub Category"
-                    selection
-                    required
-                    value={subCategory}
-                    noResultsMessage={null}
-                    options={this.props.category[category].subCategory.map((data,i) => ({key: data.slug, value: data.id, text: data.slug}))}
-                    onChange={(e, { value }) =>{
-                      console.log(value)
-                      this.setState({
-                        subCategory:value
-                      })
-                    }
-                    }
-                    
-                  />
-                </Form.Group>
+                
 
                 <Mutation
-                  mutation={ADD_PRODUCT_MUTATION}
+                  mutation={ADD_CATEGORY_MUTATION}
                   variables={{
+                    id,
                     slug,
                     title,
-                    subCategory
                   }}
                   onCompleted={data => this._confirm(data)}
                   onError={error => this._error(error)}
                 >
                   {mutation => (
                     <Button color="blue" fluid size="large" onClick={mutation}>
-                      Add Product
+                      Add Sub Category
                     </Button>
                   )}
                 </Mutation>
               </Segment>
             </Form>
-          </div>
-        )}
-      </CartContext.Consumer>
+          </>
     );
   }
   editorText = htmltext => {
@@ -178,13 +132,11 @@ class Checkout extends Component {
     });
   };
   _confirm = async data => {
-    const product = data.addProduct;
-    console.log(product);
-    window.location = "/admin/product/edit/"+product.slug;
+    const cate = data.addSubCategory;
+    console.log(cate);
+    window.location = "/admin/category/list/"
   };
   _error = async error => {
-    //alert(error);
-    console.log(this.state.productImage);
     this.setState({ errorMessage: error.message });
     this.toggleError();
   };

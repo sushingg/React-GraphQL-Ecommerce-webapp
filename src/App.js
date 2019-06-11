@@ -19,7 +19,8 @@ import AllCategory from "./components/AllCategory/AllCategory";
 //
 import Cart from "./components/Cart/Cart";
 import Checkout from "./components/User/Checkout/Checkout";
-
+import Order from "./components/User/Order/SingleOrder";
+import OrderList from "./components/User/Order/ListOrder";
 import Home from "./components/HomepageLayout";
 import Inventory from "./components/Inventory";
 import Reload from "./components/Reload";
@@ -30,9 +31,16 @@ import Editor from "./components/Editor/Editor";
 import Adnav from "./components/Admin/Adnav/Adnav";
 import Test from "./components/Admin/Mutations/Mutations";
 import AdOrder from "./components/Admin/Order/Orders";
+//product
 import AddProducts from "./components/Admin/Product/AddProducts";
 import RemoveProduct from "./components/Admin/Product/RemoveProduct";
 import ListProduct from "./components/Admin/ListProduct/ListProducts";
+import EditProduct from "./components/Admin/Product/EditProductGetData";
+//category
+import ListCategory from "./components/Admin/Category/ListCategorys";
+import AddCategory from "./components/Admin/Category/AddCategory"
+import AddSubCategory from "./components/Admin/Category/AddSubCategory"
+
 import Dash from "./components/Admin/Dash/Dash";
 const AUTH_TOKEN = "auth-token";
 
@@ -60,7 +68,7 @@ const checklogin = () => {
 }
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://sushingg-api.herokuapp.com/graphql",
   request: async operation => {
     if (checklogin()) {
       operation.setContext({
@@ -81,12 +89,18 @@ const App = () => (
             <Switch>
               <Route path="/admin/login" component={LoginLanded} />
               <Route path="/admin/Order" component={AdOrder} />
-              <Route path="/admin/addproduct" component={AddProducts} />
+              <Route path="/admin/product/add" component={AddProducts} />
+              <Route path="/admin/product/list" component={ListProduct} />              
+              <Route path="/admin/product/edit/:slug?" component={EditProduct} />
+              
+              <Route path="/admin/category/list" component={ListCategory} />      
+              <Route path="/admin/category/add/" component={AddCategory} />    
+              <Route path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />            
               <Route
-                path="/admin/removeproduct/:id"
+                path="/admin/removeproduct/:slug/:id"
                 component={RemoveProduct}
               />
-              <Route path="/admin/listproduct" component={ListProduct} />
+              
               <Route path="/admin/wip" component={Wip} />
               <Route path="/admin/test" component={Test} />
               <Route component={Dash} />
@@ -96,6 +110,8 @@ const App = () => (
         <Route path="/logout" component={Logout} />
         <Home>
           <Switch>
+            <Route exact path="/my/order/:id" component={Order} />
+            <Route exact path="/my/orderlist" component={OrderList} />
             <Route exact path="/login" component={LoginLanded} />
             <Route exact path="/" component={Products} />
             <Route exact path="/cart" component={Cart} />

@@ -2,7 +2,7 @@ import React from "react";
 import { Icon, Image, Container } from "semantic-ui-react";
 import {  Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
-import {
+import { 
   Button,
   Grid,
   Header,
@@ -66,9 +66,7 @@ const Product = props => {
                             <img
                               alt="slider"
                               src={
-                                "/image/" +
-                                props.product.slug +
-                                "/" +
+                                "http://localhost:4000/images/" +
                                 props.product.image[i].name
                               }
                             />

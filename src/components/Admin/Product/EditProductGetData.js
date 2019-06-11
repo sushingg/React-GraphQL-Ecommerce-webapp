@@ -1,26 +1,34 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Product from "./Product";
-import Loader from "../Loader";
+import EditProduct from "./EditProduct";
+import Loader from "../../Loader";
 import { Message, Segment } from "semantic-ui-react";
 class Products extends React.Component {
   state = {};
-  componentDidMount() {}
+  componentDidMount() {
+
+  }
+  
   render() {
-    const { slug } = this.props.match.params
+    const { slug } = this.props.match.params;
+  
+    if(!slug)return <div>noparam</div>
     return (
       <>
         <Query
           query={gql`
             query GetProduct($slug: String!) { 
               product(slug: $slug) {
+                id
                 slug
                 title
                 price
+                quantity
                 description
                 descriptionHtml
                 category
+                published
                 subCategory
                 image {
                   altText
@@ -31,7 +39,7 @@ class Products extends React.Component {
           `}
           variables={{ slug }}
         >
-          {({ loading, error, data }) => {
+          {({ loading, error, data, refetch }) => {
             if (loading) return <Loader />;
             if (error)
               return (
@@ -41,7 +49,7 @@ class Products extends React.Component {
                   </Message>
                 </Segment>
               );
-            return <Product key={data.product.id} product={data.product} />;
+            return <EditProduct key={data.product.id} product={data.product} refetch={refetch} />;
           }}
         </Query>
       </>

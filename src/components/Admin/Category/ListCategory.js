@@ -1,32 +1,72 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
-import { Table,Icon,Label } from 'semantic-ui-react'
-import moment from 'moment'
-const ListProduct = (props) => {
+import { List, Icon, Label, Modal } from "semantic-ui-react";
+import moment from "moment";
+import RemoveCategory from "./RemoveCategory";
+const ListProduct = props => {
   return (
-    <Table.Row>
-      <Table.Cell>
-        <Label basic as={Link} to={"/admin/p/" + props.product.productSlug}>
-          {props.product.productTitle}
-        </Label>
-      </Table.Cell>
-      <Table.Cell>
-        <Label tag>{props.product.productPrice + " ฿"}</Label>
-      </Table.Cell>
-      <Table.Cell textAlign='right'>
-        {(() => {
-          switch (props.product.productPublished) {
-            case "published":
-              return <Label color="green">Published</Label>;
-            default:
-              return <Label color="yellow">Draft</Label>;
+    <List.Item>
+      <List.Header>
+        {props.category.title + "  "}
+        <Label
+          basic
+          as={Link}
+          to={
+            "/admin/category/addsub/" +
+            props.category.slug +
+            "/" +
+            props.category.id
           }
-        })()}
-        <Label basic color='red'><Icon name='delete'/> delete</Label>
-      </Table.Cell>
-    </Table.Row>
-  );
+        >
+          Add Subcategory
+        </Label>
+        <Modal
+          trigger={
+            <Label basic color="red">
+              <Icon name="delete" />
+              delete Category
+            </Label>
+          }
+          basic
+          size="small"
+        >
+          <RemoveCategory
+            id={props.category.id}
+            slug={props.category.slug}
+            cate={true}
+            refetch={props.refetch}
+          />
+        </Modal>
+      </List.Header>
 
+      <List.List>
+        {props.category.subCategory.map((sub, i) => (
+          <List.Item>
+            <List.Header>
+              {sub.title + "  "}
+              <Modal
+                trigger={
+                  <Label basic color="red">
+                    <Icon name="delete" />
+                    delete SubCategory
+                  </Label>
+                }
+                basic
+                size="small"
+              >
+                <RemoveCategory
+                  id={sub.id}
+                  slug={sub.slug}
+                  cate={false}
+                  refetch={props.refetch}
+                />
+              </Modal>
+            </List.Header>
+          </List.Item>
+        ))}
+      </List.List>
+    </List.Item>
+  );
 };
 
 export default ListProduct;

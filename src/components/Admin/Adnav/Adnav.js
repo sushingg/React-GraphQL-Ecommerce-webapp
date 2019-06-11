@@ -32,7 +32,7 @@ const Adnav = props => {
         <CartContext.Consumer>
           {cart => (
             <>
-              {!cart.user?<Redirect to="/" />:checklogin(cart.user)}
+              {/*!cart.user?<Redirect to="/" />:checklogin(cart.user)*/}
               
             </>
           )}
@@ -56,7 +56,7 @@ const Adnav = props => {
             <Menu.Menu>
               <Menu.Item
                 as={Link}
-                to="/admin/addproduct"
+                to="/admin/product/add"
                 name="padd"
                 active={activeItem === "padd"}
                 onClick={(e, { name }) => setActiveItem(name)}
@@ -65,7 +65,7 @@ const Adnav = props => {
               </Menu.Item>
               <Menu.Item
                 as={Link}
-                to="/admin/listproduct"
+                to="/admin/product/list"
                 name="plist"
                 active={activeItem === "plist"}
                 onClick={(e, { name }) => setActiveItem(name)}
@@ -95,7 +95,7 @@ const Adnav = props => {
             <Menu.Menu>
               <Menu.Item
                 as={Link}
-                to="/admin/wip"
+                to="/admin/category/add"
                 name="cadd"
                 active={activeItem === "cadd"}
                 onClick={(e, { name }) => setActiveItem(name)}
@@ -104,7 +104,7 @@ const Adnav = props => {
               </Menu.Item>
               <Menu.Item
                 as={Link}
-                to="/admin/wip"
+                to="/admin/category/list"
                 name="clist"
                 active={activeItem === "clist"}
                 onClick={(e, { name }) => setActiveItem(name)}

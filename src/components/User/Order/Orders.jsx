@@ -12,7 +12,7 @@ const Product = props => {
   return (
     <Table.Row>
       <Table.Cell>
-        <Label basic as={Link} to={"/admin/o/" + props.order.id}>
+        <Label basic as={Link} to={"/my/order/" + props.order.id}>
           <Icon name="file outline" />
           View Order
         </Label>
@@ -21,14 +21,7 @@ const Product = props => {
         <Label basic>
           {moment.unix((props.order.createdAt)/1000).format("llll")}
         </Label>
-        <Label basic>
-          Email
-          <Label.Detail>{props.user.email}</Label.Detail>
-        </Label>
-        <Label basic>
-          User
-          <Label.Detail>{props.user.name}</Label.Detail>
-        </Label>
+        
       </Table.Cell>
       <Table.Cell>
         <Label tag>{formatter.format(props.order.total)}</Label>

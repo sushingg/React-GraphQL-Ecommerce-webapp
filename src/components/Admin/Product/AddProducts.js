@@ -14,8 +14,13 @@ class Products extends React.Component {
         query={gql`
           {
             categories {
-              categoryTags {
-                tag
+              id
+              slug
+              title
+              subCategory {
+                id
+                slug
+                title
               }
             }
           }
@@ -31,9 +36,10 @@ class Products extends React.Component {
                 </Message>
               </Segment>
             );
-          return data.categories.map((currentCategory, i) => (
-            <AddProduct key={i} category={currentCategory} history={this.props.history}/>
-          ));
+          return <AddProduct
+              category={data.categories}
+              history={this.props.history}
+            />
         }}
       </Query>
     );

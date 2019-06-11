@@ -1,12 +1,21 @@
 import React, { Component } from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw , ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from 'html-to-draftjs';
+
 import { Container, Segment } from "semantic-ui-react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+const html_draft =(html) =>{
+  const blocksFromHtml = htmlToDraft(html);
+  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+  return contentState
+}
+
 class EditorConvertToHTML extends Component {
   state = {
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createWithContent(html_draft(this.props.html||""))
   };
 
   render() {

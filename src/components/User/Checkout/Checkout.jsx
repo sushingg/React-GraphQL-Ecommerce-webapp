@@ -15,16 +15,18 @@ import isLogin from "../../../common";
 import { Redirect } from "react-router";
 import Cart from "../../Cart/CartSummary";
 import EditAddress from "../EditAddress/EditAddress";
+import Complete from "./Complete"
 const ADD_ORDER_MUTATION = gql`
   mutation addUserOrderMutation(
     $total: Int!
     $address: Addressinput!
-    $products: [OrderProductinput!]
+    $products: [OrderProductinput]!
   ) {
     addUserOrder(total: $total, address: $address, orderProduct: $products) {
       id
       total
       status
+      createAt
     }
   }
 `;
@@ -33,31 +35,47 @@ class Checkout extends Component {
     addrIndex: null,
     total: null,
     address: [],
-    orderProduct: null,
+    products: null,
     disable: true,
     showError: false,
-    isLogged: false
+    isLogged: false,
+    completed:false,
+    order:undefined
   };
   handleChangeAddress = (value, cart) => {
     if (cart.itemSum > 0) {
       let address = cart.user.address[value];
+      var product = JSON.parse(localStorage.getItem("items"))||[]
       try {
         delete address.__typename;
         delete address.id;
+        product.map(function(a, i) {
+          let res = a
+          delete res.description
+          delete res.descriptionHtml
+          delete res.category
+          delete res.subCategory
+          delete res.image
+          delete res.__typename
+          return res;
+        })
       } catch {}
       this.setState({
         addrIndex: value,
         total: cart.price,
         address: address,
-        orderProduct: cart.items,
+        products: product,
         disable: false
       });
       console.log(address);
       console.log(this.state.total);
+      console.log(cart.items);
+      console.log(product);
     }
   };
   render() {
-    const { errorMessage, total, address, orderProduct, diasble } = this.state;
+    const { errorMessage, total, address, products } = this.state;
+    if(this.state.completed) return <Complete order={this.state.order}/>
     return (
       <Container style={{ padding: "3em 0em" }}>
         <CartContext.Consumer>
@@ -137,7 +155,7 @@ class Checkout extends Component {
                     variables={{
                       total,
                       address,
-                      orderProduct
+                      products
                     }}
                     onCompleted={data => this._confirm(data, cart)}
                     onError={error => this._error(error)}
@@ -176,10 +194,11 @@ class Checkout extends Component {
   _confirm = async data => {
     const orders = data.addUserOrder;
     console.log(orders);
-    localStorage.setItem("items", []);
+    localStorage.removeItem("items");
     localStorage.setItem("price", 0);
     localStorage.setItem("itemSum", 0);
-    window.location = "/myorders";
+    this.setState({completed:true,order:orders})
+    //window.location = "/myorders";
   };
   _error = async error => {
     //alert(error);

@@ -2,20 +2,24 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { Button, Segment, Message, Header } from "semantic-ui-react";
-import isLogin from "../../../common";
-import Product from "./GetProduct";
-const REMOVE_PRODUCT_MUTATION = gql`
-  mutation deleteProduct($id: ID!) {
-    deleteProduct(id: $id) {
+const REMOVE_CATE_MUTATION = gql`
+  mutation deleteCategory($id: ID!) {
+    deleteCategory(id: $id) {
       message
     }
   }
 `;
-
+const REMOVE_SUBCATE_MUTATION = gql`
+  mutation deleteSubCategory($id: ID!) {
+    deleteSubCategory(id: $id) {
+      message
+    }
+  }
+`;
 /*function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
 }*/
-class RemoveProduct extends Component {
+class RemoveCategory extends Component {
   state = {
     showError: false,
     isLogged: false,
@@ -25,6 +29,7 @@ class RemoveProduct extends Component {
     // const { slug , id } = this.props.match.params
     const slug = this.props.slug;
     const id = this.props.id;
+    const cate = this.props.cate
     const { errorMessage } = this.state;
     if (this.state.isRemoved)
       return (
@@ -46,7 +51,7 @@ class RemoveProduct extends Component {
           </Segment>
         )}
         <Mutation
-          mutation={REMOVE_PRODUCT_MUTATION}
+          mutation={cate ? REMOVE_CATE_MUTATION : REMOVE_SUBCATE_MUTATION}
           variables={{ id }}
           onCompleted={data => this._confirm(data)}
           onError={error => this._error(error)}
@@ -57,7 +62,6 @@ class RemoveProduct extends Component {
             </Button>
           )}
         </Mutation>
-        <Product slug={slug} />
       </div>
     );
   }
@@ -89,4 +93,4 @@ class RemoveProduct extends Component {
   };
 }
 
-export default RemoveProduct;
+export default RemoveCategory;
