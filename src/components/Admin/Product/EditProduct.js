@@ -203,7 +203,7 @@ class Checkout extends Component {
                             rounded
                             size="medium"
                             src={
-                              "http://localhost:4000/images/" +
+                              "https://sushingg-api.herokuapp.com/images/" +
                               this.props.product.image[i].name
                             }
                           />

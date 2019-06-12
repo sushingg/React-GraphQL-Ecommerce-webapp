@@ -19,7 +19,7 @@ const CartSum = props => {
                   celled
                   striped
                   unstackable
-                  style={{ minWidth: 450 }}
+                  style={{ minWidth: 500 }}
                 >
                   <Table.Header>
                     <Table.Row>
@@ -36,11 +36,9 @@ const CartSum = props => {
                             {p.image.length ? (
                               <Image
                                 rounded
-                                size="mini"
+                                size="small"
                                 src={
-                                  "/image/" +
-                                  p.slug +
-                                  "/" +
+                                  "https://sushingg-api.herokuapp.com/images/" +
                                   p.image[0].name
                                 }
                               />
