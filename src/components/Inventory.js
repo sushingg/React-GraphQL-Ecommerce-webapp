@@ -25,16 +25,19 @@ const MY_QUERY = gql`
 
 const AUTH_TOKEN = "auth-token";
 
+let item =[]
 class Inventory extends Component {
   constructor(props) {
+    if(localStorage.getItem("items")) item = JSON.parse(localStorage.getItem("items"))
     super(props);
     this.state = {
-      items: JSON.parse(localStorage.getItem("items"))||[],
+      items: item,
       price: localStorage.getItem("price") || 0,
       itemSum: localStorage.getItem("itemSum") || 0,
       user: undefined,
       token: localStorage.getItem(AUTH_TOKEN) || undefined
     };
+    console.log(item)
     this.pitem = [];
   }
   checklogin = () => {
@@ -98,8 +101,7 @@ class Inventory extends Component {
         items: [...this.state.items, p]
       });
     }
-    this.pitem = JSON.parse(localStorage.getItem("items"))||[];
-    this.pitem = [...this.pitem, p];
+ 
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
   }
@@ -120,8 +122,6 @@ class Inventory extends Component {
         items: newArray
       });
     }
-    this.pitem = JSON.parse(localStorage.getItem("items") || []);
-    this.pitem = [...this.pitem, p];
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
   }

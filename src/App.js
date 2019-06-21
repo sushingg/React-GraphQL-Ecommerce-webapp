@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+//import "./App.css";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Route, Switch } from "react-router-dom";
@@ -13,7 +13,7 @@ import Logout from "./components/Auth/Logout";
 import Login from "./components/Auth/Login";
 import Footer from "./components/Footer/Footer";
 //
-import Products from "./components/Products/Products";
+import Products from "./components/Products/ShowAllProduct";
 import Product from "./components/Product/Products";
 import AllCategory from "./components/AllCategory/AllCategory";
 //
@@ -68,7 +68,7 @@ const checklogin = () => {
 }
 
 const client = new ApolloClient({
-  uri: "https://sushingg-api.herokuapp.com/graphql",
+  uri: "http://localhost:4000/graphql",
   request: async operation => {
     if (checklogin()) {
       operation.setContext({

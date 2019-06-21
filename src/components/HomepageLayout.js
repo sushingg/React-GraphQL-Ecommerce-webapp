@@ -16,10 +16,11 @@ import {
   Label,
   Dropdown
 } from "semantic-ui-react";
-import Login from "./Login/Login";
-import CartSummary from "./Cart/CartSummary";
+import Loader from "./Loader";
 import { CartContext } from "./CartContext";
 import Category from "./Category/Categories";
+const CartSummary = React.lazy(() => import("./Cart/CartSummary"))
+const Login = React.lazy(() => import("./Login/Login"))
 /* eslint-disable react/no-multi-comp */
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
@@ -92,7 +93,7 @@ class DesktopContainer extends Component {
                           </Button>
                         </Menu.Item>
                       }
-                      content={<CartSummary />}
+                      content={<React.Suspense fallback={<Loader/>}><CartSummary /></React.Suspense>}
                       on="hover"
                       position="bottom right"
                     />
@@ -147,7 +148,7 @@ class DesktopContainer extends Component {
                                   </Button.Content>
                                 </Button>
                               }
-                              content={<Login />}
+                              content={<React.Suspense fallback={<Loader/>}><Login /></React.Suspense>}
                               on="click"
                               position="bottom right"
                             />
