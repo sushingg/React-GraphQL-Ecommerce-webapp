@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon, Image, Container } from "semantic-ui-react";
 import {  Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
@@ -16,9 +16,13 @@ var Carousel = require("react-responsive-carousel").Carousel;
 var HtmlToReactParser = require("html-to-react").Parser;
 var htmlToReactParser = new HtmlToReactParser();
 const Product = props => {
-  var { quantity } = 0;
-  quantity = 1;
-
+  const [quantity, setQuantity] = useState(1);
+  const handlePlus =()=>{
+    setQuantity(quantity+1)
+  }
+  const handleMinus =()=>{
+    if (quantity > 1) setQuantity(quantity-1)
+  }
   return (
     <>
       <CartContext.Consumer>
@@ -83,15 +87,15 @@ const Product = props => {
                       <Header as="h2">฿{props.product.price}</Header>
                       <div>
                         <span>จำนวน: </span>
-                        <Button basic attached="left">
+                        <Button basic attached="left" onClick={() => (handleMinus())}>
                           <Icon name="minus" />
                         </Button>
                         <Input
                           id="quantity_input"
                           value={quantity}
-                          onChange={e => (quantity = e.target.value)}
+                          onChange={e => (setQuantity(e.target.value))}
                         />
-                        <Button basic attached="right">
+                        <Button basic attached="right" onClick={() => (handlePlus())}>
                           &nbsp;
                           <Icon name="plus" />
                         </Button>
@@ -103,7 +107,7 @@ const Product = props => {
                           fluid
                           primary
                           size="huge"
-                          onClick={() => cart.onAddToCart(props.product)}
+                          onClick={() => cart.onAddToCart(props.product,quantity)}
                         >
                           <Button.Content visible>Add to Cart</Button.Content>
                           <Button.Content hidden>

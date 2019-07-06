@@ -30,7 +30,7 @@ const Product = (props) => {
           <Card.Description>{props.product.description}</Card.Description>
           <br/>
         </Card.Content>
-        <Button animated='vertical' color='blue'  onClick={() => cart.onAddToCart(props.product)}>
+        <Button animated='vertical' color='blue'  onClick={() => cart.onAddToCart(props.product,1)}>
           <Button.Content visible>Add to Cart</Button.Content>
           <Button.Content hidden><Icon name='cart arrow down'/></Button.Content>
         </Button>

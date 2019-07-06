@@ -16,27 +16,13 @@ import {
   //Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router';
-import { CartContext } from "../../CartContext";
 //onClick={(e, { name }) => setActiveItem(name)}
 
 const Adnav = props => {
   const [activeItem, setActiveItem] = useState("");
-  const checklogin = (user) => {
-    if(user.type!=='admin'){return <Redirect to="/" />}
-
-  }
   return (
     <>
       <div className="admin_menu"> 
-        <CartContext.Consumer>
-          {cart => (
-            <>
-              {!cart.user?<Redirect to="/" />:checklogin(cart.user)}
-              
-            </>
-          )}
-        </CartContext.Consumer>
         <Menu borderless compact inverted vertical fluid>
           <Menu.Item
           >
@@ -126,15 +112,7 @@ const Adnav = props => {
               >
                 List
               </Menu.Item>
-              <Menu.Item
-                as={Link}
-                to="/admin/wip"
-                name="uedit"
-                active={activeItem === "uedit"}
-                onClick={(e, { name }) => setActiveItem(name)}
-              >
-                Edit
-              </Menu.Item>
+
             </Menu.Menu>
           </Menu.Item>
 

@@ -63,9 +63,17 @@ const ListProducts = () => (
           return (
             <>
               {data.products.product.map((currentProduct, i) => (
-                <ListProduct key={i} product={currentProduct} refetch={refetch} />
+                <ListProduct
+                  key={i}
+                  product={currentProduct}
+                  refetch={refetch}
+                />
               ))}
-              <Button onClick={refetch()}>reload</Button>
+              <Table.Row>
+                <Table.Cell colSpan="6" textAlign="center">
+                  <Button onClick={()=>(refetch())}>reload</Button>
+                </Table.Cell>
+              </Table.Row>
             </>
           );
         }}

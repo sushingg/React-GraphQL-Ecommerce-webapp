@@ -9,14 +9,14 @@ const MY_QUERY = gql`
       name
       email
       type
-      address{
-        id,
-        firstName,
-        lastName,
-        addr,
-        distric,
-        province,
-        mobileNumber,
+      address {
+        id
+        firstName
+        lastName
+        addr
+        distric
+        province
+        mobileNumber
         postcode
       }
     }
@@ -24,11 +24,11 @@ const MY_QUERY = gql`
 `;
 
 const AUTH_TOKEN = "auth-token";
-
-let item =[]
+let item = [];
 class Inventory extends Component {
   constructor(props) {
-    if(localStorage.getItem("items")) item = JSON.parse(localStorage.getItem("items"))
+    if (localStorage.getItem("items"))
+      item = JSON.parse(localStorage.getItem("items"));
     super(props);
     this.state = {
       items: item,
@@ -37,17 +37,17 @@ class Inventory extends Component {
       user: undefined,
       token: localStorage.getItem(AUTH_TOKEN) || undefined
     };
-    console.log(item)
-    this.pitem = [];
   }
-  checklogin = () => {
+  componentDidMount() {
     if (!this.state.user && this.state.token) {
       this.runQuery();
     }
-  };
+  }
+
   async runQuery() {
     try {
       const res = await this.props.client.query({
+        fetchPolicy:'network-only',
         query: MY_QUERY
       });
       if (!res) {
@@ -56,8 +56,8 @@ class Inventory extends Component {
       this.setState({
         user: res.data.me
       });
-      console.log(res)
-      console.log('update user context')
+      console.log(res);
+      console.log("update user context");
       this.updatesum();
     } catch (e) {
       console.log("Unexpected error occurred");
@@ -85,23 +85,23 @@ class Inventory extends Component {
     localStorage.setItem("itemSum", this.state.itemSum);
   }
   onAddToCart = this.onAddToCart.bind(this);
-  async onAddToCart(p) {
+  async onAddToCart(p,n) {
     const index = this.state.items.findIndex(function(object) {
       return object.slug === p.slug;
     });
     if (index >= 0) {
       var newArray = [...this.state.items];
-      newArray[index].quantity += 1;
+      newArray[index].quantity += n;
       this.setState({
         items: newArray
       });
     } else {
-      p.quantity = 1;
+      p.quantity = n;
       await this.setState({
         items: [...this.state.items, p]
       });
     }
- 
+
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
   }
@@ -185,14 +185,15 @@ class Inventory extends Component {
   }
   addAddress = this.addAddress.bind(this);
   addAddress(address) {
-    let user = this.state.user
-    user.address.push(address)
+    let user = this.state.user;
+    user.address.push(address);
     this.setState({
       user: user
     });
   }
 
   render() {
+    console.log(this.state.items)
     return (
       <CartContext.Provider
         value={{
@@ -212,10 +213,7 @@ class Inventory extends Component {
           onClearCart: this.onClearCart
         }}
       >
-        <>
-          {this.checklogin()}
-          {this.props.children}
-        </>
+        {this.props.children}
       </CartContext.Provider>
     );
   }

@@ -9,9 +9,10 @@ const P404 = props => {
           <Header as='h2' icon>
             <Icon name="file alternate" />
             404
-            <Header.Content>
+            <Header.Subheader>
               <Link to="/">back</Link>
-            </Header.Content>
+            </Header.Subheader>
+
           </Header>
         </Segment>
       </Container>

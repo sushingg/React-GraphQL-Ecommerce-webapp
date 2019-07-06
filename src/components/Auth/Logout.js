@@ -1,25 +1,27 @@
-import React from 'react';
-import { Redirect } from 'react-router'
+import React from "react";
+import { Redirect } from "react-router";
 import { CartContext } from "../CartContext";
 
-const Logout =  props => {
-  let loggedout = false
-  const logout =  cart => {
-    if(!loggedout){
-      loggedout = true
-      cart.onLogout()
-      return <Redirect to="/"/>
+class DoLogout extends React.Component {
+  componentDidMount() {
+    let loggedout = false;
+    this.props.context.onLogout();
+    if (!loggedout) {
+      loggedout = true;
     }
   }
-  return ( 
-      <CartContext.Consumer>
-      {cart => (
-        <>
-        {logout(cart)}
-        </>)
-      }      
-      </CartContext.Consumer>      
-  )
+  render() {
+    return <Redirect to="/" />;
+  }
 }
 
+const Logout = () => (
+  <CartContext.Consumer>
+    {cart => (
+      <>
+        <DoLogout context={cart} />
+      </>
+    )}
+  </CartContext.Consumer>
+);
 export default Logout;

@@ -3,7 +3,8 @@ import React from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Route, Switch } from "react-router-dom";
-
+import PRoute from "./components/Route/PRoute"
+import ARoute from "./components/Route/ARoute"
 import jwtDecode from "jwt-decode";
 
 //import Navbar from './components/Navbar/Navbar';
@@ -28,7 +29,7 @@ import Wip from "./components/Wip";
 import P404 from "./components/P404";
 import Editor from "./components/Editor/Editor";
 //admin comp
-import Adnav from "./components/Admin/Adnav/Adnav";
+import Admin from "./components/Admin/Adnav/Adnav";
 import Test from "./components/Admin/Mutations/Mutations";
 import AdOrder from "./components/Admin/Order/Orders";
 //product
@@ -47,14 +48,13 @@ const AUTH_TOKEN = "auth-token";
 let token 
 //uri:    https://sushingg-api.herokuapp.com/graphql
 //        http://localhost:4000/graphql
-const checklogin = () => {
+function checklogin(){
   let res = null
   token = localStorage.getItem(AUTH_TOKEN)||null
 
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
-    console.log(token)
     if (Date.now() / 1000 > res.exp) {
       localStorage.removeItem(AUTH_TOKEN)
       localStorage.clear();
@@ -63,7 +63,6 @@ const checklogin = () => {
   }else{
     console.log("You don't have a key? Why don't you ask that gentleman there? Go on then")
   }
-  
   return res
 }
 
@@ -85,37 +84,37 @@ const App = () => (
     <Inventory>
       <Switch>
         <Route path="/admin">
-          <Adnav>
+          <Admin>
             <Switch>
-              <Route path="/admin/login" component={LoginLanded} />
-              <Route path="/admin/Order" component={AdOrder} />
-              <Route path="/admin/product/add" component={AddProducts} />
-              <Route path="/admin/product/list" component={ListProduct} />              
-              <Route path="/admin/product/edit/:slug?" component={EditProduct} />
+              <ARoute path="/admin/login" component={LoginLanded} />
+              <ARoute path="/admin/Order" component={AdOrder} />
+              <ARoute path="/admin/product/add" component={AddProducts} />
+              <ARoute path="/admin/product/list" component={ListProduct} />              
+              <ARoute path="/admin/product/edit/:slug?" component={EditProduct} />
               
-              <Route path="/admin/category/list" component={ListCategory} />      
-              <Route path="/admin/category/add/" component={AddCategory} />    
-              <Route path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />            
-              <Route
+              <ARoute path="/admin/category/list" component={ListCategory} />      
+              <ARoute path="/admin/category/add/" component={AddCategory} />    
+              <ARoute path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />            
+              <ARoute
                 path="/admin/removeproduct/:slug/:id"
                 component={RemoveProduct}
               />
               
-              <Route path="/admin/wip" component={Wip} />
-              <Route path="/admin/test" component={Test} />
-              <Route component={Dash} />
+              <ARoute path="/admin/wip" component={Wip} />
+              <ARoute path="/admin/test" component={Test} />
+              <ARoute component={Dash} />
             </Switch>
-          </Adnav>
+          </Admin>
         </Route>
         <Route path="/logout" component={Logout} />
         <Home>
           <Switch>
-            <Route exact path="/my/order/:id" component={Order} />
-            <Route exact path="/my/orderlist" component={OrderList} />
+            <PRoute exact path="/my/order/:id" component={Order} />
+            <PRoute exact path="/my/orderlist" component={OrderList} />
             <Route exact path="/login" component={LoginLanded} />
             <Route exact path="/" component={Products} />
             <Route exact path="/cart" component={Cart} />
-            <Route exact path="/checkout" component={Checkout} />
+            <PRoute exact path="/checkout" component={Checkout} />
             <Route path="/c/:category?/:subCategory?" component={AllCategory} />     
             <Route path="/reload" component={Reload} />
             <Route path="/dologin" component={Login} />

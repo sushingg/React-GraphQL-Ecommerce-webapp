@@ -11,7 +11,6 @@ import {
   Dropdown
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import { Redirect } from "react-router";
 import Cart from "../../Cart/CartSummary";
 import EditAddress from "../EditAddress/EditAddress";
 import Complete from "./Complete"
@@ -80,7 +79,6 @@ class Checkout extends Component {
         <CartContext.Consumer>
           {cart => (
             <>
-              {!cart.user && <Redirect to="/cart" />}
               {this.state.showError && (
                 <Segment basic textAlign="center">
                   <Message
@@ -128,7 +126,7 @@ class Checkout extends Component {
 
                 <Modal
                   trigger={
-                    <Button style={{ width: "19%" }}>เพิ่มที่อยู่ไหม่</Button>
+                    <Button style={{ width: "19%" }} attached="right" fluid>เพิ่มที่อยู่ไหม่</Button>
                   }
                   basic
                   size="small"

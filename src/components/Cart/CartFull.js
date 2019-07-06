@@ -105,7 +105,7 @@ const CartSum = props => {
                               <Icon
                                 name="plus"
                                 color="green"
-                                onClick={() => cart.onAddToCart(p)}
+                                onClick={() => cart.onAddToCart(p,1)}
                               />
                             </Header.Content>
                           </Header>
