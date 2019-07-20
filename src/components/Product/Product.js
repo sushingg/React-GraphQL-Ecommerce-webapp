@@ -7,7 +7,6 @@ import {
   Grid,
   Header,
   Segment,
-  Rating,
   Input,
   Breadcrumb,
   Divider
@@ -80,9 +79,7 @@ const Product = props => {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Header as="h2">{props.product.title}</Header>
-                      ## ขายแล้ว |{" "}
-                      <Rating maxRating={5} defaultRating={3} icon="star" /> |
-                      ## ผู้ให้คะแนน
+                      {"คงเหลือ "+props.product.quantity+" ชิ้น"}
                       <div style={{ padding: "3em 0em" }} />
                       <Header as="h2">฿{props.product.price}</Header>
                       <div>
@@ -102,14 +99,17 @@ const Product = props => {
                       </div>
                       <br />
                       <Segment basic textAlign="center">
+
                         <Button
                           animated="fade"
                           fluid
                           primary
                           size="huge"
                           onClick={() => cart.onAddToCart(props.product,quantity)}
+                          disabled = {props.product.quantity === 0 && true }
                         >
-                          <Button.Content visible>Add to Cart</Button.Content>
+                          
+                          <Button.Content visible>{props.product.quantity === 0 ?("สินค้าหมด"):("Add to Cart")}</Button.Content>
                           <Button.Content hidden>
                             เพื่มไปยังรถเข็น
                           </Button.Content>

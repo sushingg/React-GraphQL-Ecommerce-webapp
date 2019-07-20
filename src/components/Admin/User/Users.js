@@ -1,19 +1,20 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import ListProduct from "./ListProduct";
+import User from "./User";
 import { Table, Message, Button } from "semantic-ui-react";
-const ListProducts = () => (
+const Users = () => (
   <Table stackable padded>
     <Table.Header>
       <Table.Row>
-        <Table.HeaderCell colSpan="3">Product list</Table.HeaderCell>
+        <Table.HeaderCell colSpan="4">User list</Table.HeaderCell>
       </Table.Row>
       <Table.Row>
-        <Table.HeaderCell colSpan="1">Products</Table.HeaderCell>
-        <Table.HeaderCell colSpan="1">Price</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">ชื่อผู้ใช้งาน</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">อีเมล์</Table.HeaderCell>
+        <Table.HeaderCell colSpan="1">เบอร์โทรศัพท์</Table.HeaderCell>
         <Table.HeaderCell colSpan="1" textAlign="right">
-          Published
+          ประเภท
         </Table.HeaderCell>
       </Table.Row>
     </Table.Header>
@@ -22,20 +23,21 @@ const ListProducts = () => (
       <Query
         query={gql`
           {
-            products {
-              product {
+            users {
+              id
+              name
+              email
+              mobileNumber
+              type
+              address {
                 id
-                slug
-                title
-                price
-                description
-                descriptionHtml
-                category
-                subCategory
-                image {
-                  altText
-                  name
-                }
+                firstName
+                lastName
+                addr
+                distric
+                province
+                mobileNumber
+                postcode
               }
             }
           }
@@ -62,16 +64,14 @@ const ListProducts = () => (
             );
           return (
             <>
-              {data.products.product.map((currentProduct, i) => (
-                <ListProduct
-                  key={i}
-                  product={currentProduct}
-                  refetch={refetch}
-                />
+              {data.users.map((currentUser, i) => (
+                <User key={i} user={currentUser} refetch={refetch} />
               ))}
               <Table.Row>
-                <Table.Cell colSpan="6">
-                  <Button fluid onClick={()=>(refetch())}>reload</Button>
+                <Table.Cell colSpan="6" textAlign="center">
+                  <Button fluid onClick={() => refetch()}>
+                    reload
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             </>
@@ -81,4 +81,4 @@ const ListProducts = () => (
     </Table.Body>
   </Table>
 );
-export default ListProducts;
+export default Users;

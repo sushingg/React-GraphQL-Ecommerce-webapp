@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
-import Product from "./Product"
+import Product from "../Products/Product"
 import Loader from "../Loader"
 import {
   Card,
@@ -54,6 +54,7 @@ export default function AllCategory({ match }) {
                     descriptionHtml
                     category
                     subCategory
+                    quantity
                     image {
                       altText
                       name

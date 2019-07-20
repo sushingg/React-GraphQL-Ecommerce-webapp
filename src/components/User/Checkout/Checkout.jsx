@@ -49,6 +49,8 @@ class Checkout extends Component {
         delete address.id;
         product.map(function(a, i) {
           let res = a
+          delete res.title
+          delete res.price
           delete res.description
           delete res.descriptionHtml
           delete res.category
@@ -60,7 +62,8 @@ class Checkout extends Component {
       } catch {}
       this.setState({
         addrIndex: value,
-        total: cart.price,
+        //total: cart.price,
+        total: 0,
         address: address,
         products: product,
         disable: false
@@ -189,9 +192,9 @@ class Checkout extends Component {
     });
   };
   _confirm = async (data,cart) => { 
+    await cart.onClearCart();
     const orders = data.addUserOrder;
     console.log(orders);
-    cart.onClearCart();
     this.setState({completed:true,order:orders})
     //window.location = "/myorders";
   };
@@ -199,9 +202,6 @@ class Checkout extends Component {
     //alert(error);
     this.setState({ errorMessage: error.message });
     this.toggleError();
-  };
-  _saveUserData = token => {
-    //localStorage.setItem(AUTH_TOKEN, token)
   };
 }
 

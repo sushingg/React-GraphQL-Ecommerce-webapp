@@ -31,7 +31,6 @@ const ListProduct = props => {
             <Label
               basic
               color="red"
-              //as={Link} to={"/admin/removeproduct/" + props.product.slug+ "/"+props.product.id}
             >
               <Icon name="delete" />
               delete

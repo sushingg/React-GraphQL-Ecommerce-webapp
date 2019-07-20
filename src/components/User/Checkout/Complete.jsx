@@ -32,7 +32,9 @@ class Checkout extends Component {
     showError: false,
     isLogged: false
   };
-  componentWillMount() {}
+  componentWillMount() {
+    
+  }
   render() {
     const { errorMessage } = this.state;
     const id = this.props.order.id

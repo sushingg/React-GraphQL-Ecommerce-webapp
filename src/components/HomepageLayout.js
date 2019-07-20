@@ -9,9 +9,7 @@ import {
   Menu,
   Responsive,
   Segment,
-  //Sidebar,
   Visibility,
-  Input,
   Popup,
   Label,
   Dropdown
@@ -19,8 +17,10 @@ import {
 import Loader from "./Loader";
 import { CartContext } from "./CartContext";
 import Category from "./Category/Categories";
+import  Search   from "./Search/Search"
 const CartSummary = React.lazy(() => import("./Cart/CartSummary"))
 const Login = React.lazy(() => import("./Login/Login"))
+
 /* eslint-disable react/no-multi-comp */
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
@@ -74,7 +74,7 @@ class DesktopContainer extends Component {
                     </Menu.Item>
 
                     <Menu.Item position="right">
-                      <Input icon="search" placeholder="Search..." />
+                      <Search/>
                     </Menu.Item>
 
                     <Popup

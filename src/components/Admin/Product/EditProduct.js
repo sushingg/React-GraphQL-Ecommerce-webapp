@@ -187,7 +187,7 @@ class Checkout extends Component {
                       src="/image/test.jpg"
                     />
                   )}
-                  <div style={{ width: "300px", height: "200px" }}>
+                  <div style={{ width: "300px", height: "300px" }}>
                     <Carousel
                       showArrows={true}
                       showThumbs={false}
@@ -199,9 +199,6 @@ class Checkout extends Component {
                         <div key={i}>
                           <img
                             alt={this.props.product.image[i].name}
-                            bordered
-                            rounded
-                            size="medium"
                             src={
                               "https://sushingg-api.herokuapp.com/images/" +
                               this.props.product.image[i].name

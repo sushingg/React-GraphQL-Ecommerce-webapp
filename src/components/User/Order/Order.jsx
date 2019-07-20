@@ -124,7 +124,7 @@ class Checkout extends Component {
               " " +
               this.props.order.address.postcode}
           </Header>
-          {this.props.order.status === "successful" ? (
+          {this.props.order.status != null ? (
             ""
           ) : (
             <Mutation

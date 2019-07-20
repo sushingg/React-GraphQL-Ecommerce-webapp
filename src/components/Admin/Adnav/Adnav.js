@@ -105,7 +105,7 @@ const Adnav = props => {
             <Menu.Menu>
               <Menu.Item
                 as={Link}
-                to="/admin/wip"
+                to="/admin/user/list"
                 name="ulist"
                 active={activeItem === "ulist"}
                 onClick={(e, { name }) => setActiveItem(name)}

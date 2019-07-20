@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { CartContext } from "./CartContext";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
+import toast from "toasted-notes";
 const MY_QUERY = gql`
   query MY_QUERY {
     me {
@@ -47,7 +48,7 @@ class Inventory extends Component {
   async runQuery() {
     try {
       const res = await this.props.client.query({
-        fetchPolicy:'network-only',
+        fetchPolicy: "network-only",
         query: MY_QUERY
       });
       if (!res) {
@@ -58,6 +59,7 @@ class Inventory extends Component {
       });
       console.log(res);
       console.log("update user context");
+      toast.notify("ยินดีต้อนรับคุณ " + res.data.me.name);
       this.updatesum();
     } catch (e) {
       console.log("Unexpected error occurred");
@@ -85,23 +87,25 @@ class Inventory extends Component {
     localStorage.setItem("itemSum", this.state.itemSum);
   }
   onAddToCart = this.onAddToCart.bind(this);
-  async onAddToCart(p,n) {
+  async onAddToCart(p, n) {
     const index = this.state.items.findIndex(function(object) {
       return object.slug === p.slug;
     });
     if (index >= 0) {
       var newArray = [...this.state.items];
-      newArray[index].quantity += n;
+      newArray[index].quantity += parseInt(n, 10);
       this.setState({
         items: newArray
       });
     } else {
-      p.quantity = n;
+      p.quantity = parseInt(n, 10);
       await this.setState({
         items: [...this.state.items, p]
       });
     }
-
+    toast.notify("เพิ่มสินค้า " + n + " ชิ้นเข้าตะกร้า", {
+      position: "bottom-right"
+    });
     await localStorage.setItem("items", JSON.stringify(this.state.items));
     this.updatesum();
   }
@@ -135,6 +139,9 @@ class Inventory extends Component {
     this.setState({
       items: newArray
     });
+    toast.notify("ลบสินค้าออกจากตะกร้า",{
+      position: "bottom-right"
+    });
     await localStorage.setItem("items", JSON.stringify(newArray));
     await this.updatesum();
   }
@@ -159,14 +166,17 @@ class Inventory extends Component {
     await this.updatesum();
   }
   onClearCart = this.onClearCart.bind(this);
-  onClearCart() {
-    this.setState({
-      items: []
+  async onClearCart() {
+    await this.setState({
+      items: [],
+      price: 0,
+      itemSum: 0
     });
     localStorage.removeItem("items");
     localStorage.setItem("price", 0);
     localStorage.setItem("itemSum", 0);
-    this.updatesum();
+    await this.updatesum();
+    console.log("cleared cart");
   }
   onLogout = this.onLogout.bind(this);
   onLogout() {
@@ -193,7 +203,6 @@ class Inventory extends Component {
   }
 
   render() {
-    console.log(this.state.items)
     return (
       <CartContext.Provider
         value={{

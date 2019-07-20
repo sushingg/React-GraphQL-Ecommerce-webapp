@@ -2,7 +2,7 @@ import React from "react";
 //import "./App.css";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,BrowserRouter } from "react-router-dom";
 import PRoute from "./components/Route/PRoute"
 import ARoute from "./components/Route/ARoute"
 import jwtDecode from "jwt-decode";
@@ -42,7 +42,9 @@ import ListCategory from "./components/Admin/Category/ListCategorys";
 import AddCategory from "./components/Admin/Category/AddCategory"
 import AddSubCategory from "./components/Admin/Category/AddSubCategory"
 
+import Search from "./components/Search/Search"
 import Dash from "./components/Admin/Dash/Dash";
+import Users from "./components/Admin/User/Users";
 const AUTH_TOKEN = "auth-token";
 
 let token 
@@ -67,7 +69,7 @@ function checklogin(){
 }
 
 const client = new ApolloClient({
-  uri: "https://sushingg-api.herokuapp.com/graphql",
+  uri: "http://localhost:4000/graphql",
   request: async operation => {
     if (checklogin()) {
       operation.setContext({
@@ -81,6 +83,7 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
+    <BrowserRouter>
     <Inventory>
       <Switch>
         <Route path="/admin">
@@ -94,7 +97,9 @@ const App = () => (
               
               <ARoute path="/admin/category/list" component={ListCategory} />      
               <ARoute path="/admin/category/add/" component={AddCategory} />    
-              <ARoute path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />            
+              <ARoute path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />    
+
+              <ARoute path="/admin/user/list" component={Users} />      
               <ARoute
                 path="/admin/removeproduct/:slug/:id"
                 component={RemoveProduct}
@@ -120,12 +125,14 @@ const App = () => (
             <Route path="/dologin" component={Login} />
             <Route path="/p/:slug" component={Product} />
             <Route exact path="/editor" component={Editor} />
+            <Route path="/search" component={Search} />
             <Route component={P404} />
           </Switch>
         </Home>
       </Switch>
       <Footer />
     </Inventory>
+    </BrowserRouter>
   </ApolloProvider>
 );
 

@@ -20,6 +20,7 @@ class Products extends React.Component {
                 price
                 description
                 descriptionHtml
+                quantity
                 category
                 subCategory
                 image {
@@ -30,6 +31,7 @@ class Products extends React.Component {
             }
           `}
           variables={{ slug }}
+          fetchPolicy="network-only"
         >
           {({ loading, error, data }) => {
             if (loading) return <Loader />;

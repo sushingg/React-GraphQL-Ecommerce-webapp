@@ -17,6 +17,7 @@ const Products = () => (
                   title
                   price
                   description
+                  quantity
                   image {
                     altText
                     name
@@ -25,6 +26,7 @@ const Products = () => (
               }
             }
           `}
+          pollInterval={2000}
         >
           {({ loading, error, data }) => {
             if (loading) return <div>Loading..</div>;

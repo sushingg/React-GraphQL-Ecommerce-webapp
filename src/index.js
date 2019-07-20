@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css'
 import './carousel.css'
+import 'toasted-notes/src/styles.css';
 ReactDOM.render((
 	<BrowserRouter>
         <Route path="/" component={App} />

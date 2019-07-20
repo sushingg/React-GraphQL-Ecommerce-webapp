@@ -30,15 +30,15 @@ const Product = props => {
         {(() => {
           switch (props.order.status) {
             case null:
-              return <Label color="yellow">Wait for paid</Label>;
+              return <Label color="yellow">รอชำระเงิน</Label>;
             case "successful":
-              return <Label color="green">successful</Label>;
+              return <Label color="green">ชำระเงินแล้ว</Label>;
             case "failed":
-              return <Label color="red">failed</Label>;
+              return <Label color="red">ล้มเหลว</Label>;
             case "cancel":
-              return <Label color="red">Cancel</Label>;
+              return <Label color="red">ยกเลิก</Label>;
             default:
-              return <Label color="yellow">Wait for paid</Label>;
+              return <Label color="yellow">รอชำระเงิน</Label>;
           }
         })()}
       </Table.Cell>
