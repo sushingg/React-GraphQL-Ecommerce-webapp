@@ -12,7 +12,7 @@ import {
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
 import Cart from "../../Cart/CartSummary";
-import EditAddress from "../EditAddress/EditAddress";
+import AddAddress from "../../User/Menu/MyAddress/AddAddress";
 import Complete from "./Complete"
 const ADD_ORDER_MUTATION = gql`
   mutation addUserOrderMutation(
@@ -138,7 +138,7 @@ class Checkout extends Component {
                     <Segment>
                       <Header as="h3">เพิ่มที่อยู่ไหม่</Header>
                     </Segment>
-                    <EditAddress />
+                    <AddAddress />
                   </>
                 </Modal>
               </Segment>

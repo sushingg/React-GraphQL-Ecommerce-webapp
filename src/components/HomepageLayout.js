@@ -120,7 +120,7 @@ class DesktopContainer extends Component {
                                 <Icon name="list" /> My Orders
                               </Dropdown.Item>
                               <Dropdown.Divider />
-                              <Dropdown.Item as={Link} to={"/"+cart.user.type||""}>
+                              <Dropdown.Item as={Link} to={"/my"}>
                                 <Icon name="settings" /> Setting
                               </Dropdown.Item>
                               <Dropdown.Item as={Link} to="/logout">

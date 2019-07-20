@@ -9,7 +9,7 @@ import {
   Container,
   Header
 } from "semantic-ui-react";
-import { CartContext } from "../../CartContext";
+import { CartContext } from "../../../CartContext";
 const ADD_ADDRESS_MUTATION = gql`
   mutation addUserAddressMutation(
     $firstName: String!

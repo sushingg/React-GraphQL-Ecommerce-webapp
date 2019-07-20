@@ -26,7 +26,7 @@ const Products = () => (
               }
             }
           `}
-          pollInterval={2000}
+          pollInterval={20000}
         >
           {({ loading, error, data }) => {
             if (loading) return <div>Loading..</div>;

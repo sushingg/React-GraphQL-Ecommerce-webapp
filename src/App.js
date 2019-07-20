@@ -19,9 +19,12 @@ import Product from "./components/Product/Products";
 import AllCategory from "./components/AllCategory/AllCategory";
 //
 import Cart from "./components/Cart/Cart";
+
 import Checkout from "./components/User/Checkout/Checkout";
 import Order from "./components/User/Order/SingleOrder";
 import OrderList from "./components/User/Order/ListOrder";
+import UserMenu from "./components/User/Menu/Menu"
+
 import Home from "./components/HomepageLayout";
 import Inventory from "./components/Inventory";
 import Reload from "./components/Reload";
@@ -116,6 +119,7 @@ const App = () => (
           <Switch>
             <PRoute exact path="/my/order/:id" component={Order} />
             <PRoute exact path="/my/orderlist" component={OrderList} />
+            <PRoute exact path="/my" component={UserMenu} />
             <Route exact path="/login" component={LoginLanded} />
             <Route exact path="/" component={Products} />
             <Route exact path="/cart" component={Cart} />

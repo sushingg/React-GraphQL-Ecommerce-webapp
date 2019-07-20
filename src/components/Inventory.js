@@ -10,6 +10,7 @@ const MY_QUERY = gql`
       name
       email
       type
+      mobileNumber
       address {
         id
         firstName
@@ -59,7 +60,6 @@ class Inventory extends Component {
       });
       console.log(res);
       console.log("update user context");
-      toast.notify("ยินดีต้อนรับคุณ " + res.data.me.name);
       this.updatesum();
     } catch (e) {
       console.log("Unexpected error occurred");
@@ -193,14 +193,7 @@ class Inventory extends Component {
   onLogin() {
     this.runQuery();
   }
-  addAddress = this.addAddress.bind(this);
-  addAddress(address) {
-    let user = this.state.user;
-    user.address.push(address);
-    this.setState({
-      user: user
-    });
-  }
+
 
   render() {
     return (
@@ -212,7 +205,6 @@ class Inventory extends Component {
           user: this.state.user,
           onLogout: this.onLogout,
           onLogin: this.onLogin,
-          addAddress: this.addAddress,
           onAddToCart: this.onAddToCart,
           onRemoveFromCart: this.onRemoveFromCart,
           onDeleteFromCart: this.onDeleteFromCart,

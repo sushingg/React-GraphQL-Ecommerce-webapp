@@ -9,9 +9,10 @@ import {
   Container,
   Header
 } from "semantic-ui-react";
-import { CartContext } from "../../CartContext";
-const ADD_ADDRESS_MUTATION = gql`
-  mutation addUserAddressMutation(
+import { CartContext } from "../../../CartContext";
+const UPDATE_ADDRESS_MUTATION = gql`
+mutation updateUserAddress(
+  	$id:ID!
     $firstName: String!
     $lastName: String!
     $addr: String!
@@ -20,7 +21,8 @@ const ADD_ADDRESS_MUTATION = gql`
     $mobileNumber: String!
     $postcode: String!
   ) {
-    addUserAddress(
+    updateUserAddress(
+      id:$id
       firstName: $firstName
       lastName: $lastName
       addr: $addr
@@ -28,6 +30,7 @@ const ADD_ADDRESS_MUTATION = gql`
       province: $province
       mobileNumber: $mobileNumber
       postcode: $postcode
+      
     ) {
       id
       firstName
@@ -41,17 +44,34 @@ const ADD_ADDRESS_MUTATION = gql`
   }
 `;
 class Checkout extends Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    addr: "",
-    distric: "",
-    province: "",
-    mobileNumber: "",
-    postcode: "",
-    showError: false,
-    success: false
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      firstName: "",
+      lastName: "",
+      addr: "",
+      distric: "",
+      province: "",
+      mobileNumber: "",
+      postcode: "",
+      showError: false,
+      success: false,
+    };
+  }
+  
+  componentDidMount() {
+    let a = this.props.a;
+    this.setState({
+      firstName: a.firstName,
+      lastName: a.lastName,
+      addr: a.addr,
+      distric: a.distric,
+      province: a.province,
+      mobileNumber: a.mobileNumber,
+      postcode: a.postcode
+    });
+  }
+  
   render() {
     const {
       firstName,
@@ -63,7 +83,7 @@ class Checkout extends Component {
       postcode,
       errorMessage
     } = this.state;
-
+    const id = this.props.a.id
     return (
       <Container>
         {this.state.showError && (
@@ -144,8 +164,9 @@ class Checkout extends Component {
                 {cart => (
                   <>
                     <Mutation
-                      mutation={ADD_ADDRESS_MUTATION}
+                      mutation={UPDATE_ADDRESS_MUTATION}
                       variables={{
+                        id,
                         firstName,
                         lastName,
                         addr,
