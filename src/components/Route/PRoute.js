@@ -10,7 +10,6 @@ function checklogin() {
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
-    console.log(res);
     if (Date.now() / 1000 > res.exp) {
       localStorage.removeItem(AUTH_TOKEN);
       localStorage.clear();

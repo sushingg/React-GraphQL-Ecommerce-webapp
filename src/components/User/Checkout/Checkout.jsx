@@ -134,12 +134,7 @@ class Checkout extends Component {
                   basic
                   size="small"
                 >
-                  <>
-                    <Segment>
-                      <Header as="h3">เพิ่มที่อยู่ไหม่</Header>
-                    </Segment>
                     <AddAddress />
-                  </>
                 </Modal>
               </Segment>
               <Segment padded>

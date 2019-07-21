@@ -30,7 +30,8 @@ class RemoveProduct extends Component {
         </Segment>
       );
     return (
-      <div>
+      <Segment>
+        <Header>ลบที่อยู่</Header>
         {this.state.showError && (
           <Segment basic textAlign="center">
             <Message
@@ -72,7 +73,7 @@ class RemoveProduct extends Component {
             </Mutation>
           </Card.Content>
         </Card>
-      </div>
+      </Segment>
     );
   }
 

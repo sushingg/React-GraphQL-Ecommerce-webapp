@@ -11,8 +11,8 @@ import {
 } from "semantic-ui-react";
 import { CartContext } from "../../../CartContext";
 const UPDATE_ADDRESS_MUTATION = gql`
-mutation updateUserAddress(
-  	$id:ID!
+  mutation updateUserAddress(
+    $id: ID!
     $firstName: String!
     $lastName: String!
     $addr: String!
@@ -22,7 +22,7 @@ mutation updateUserAddress(
     $postcode: String!
   ) {
     updateUserAddress(
-      id:$id
+      id: $id
       firstName: $firstName
       lastName: $lastName
       addr: $addr
@@ -30,7 +30,6 @@ mutation updateUserAddress(
       province: $province
       mobileNumber: $mobileNumber
       postcode: $postcode
-      
     ) {
       id
       firstName
@@ -44,7 +43,7 @@ mutation updateUserAddress(
   }
 `;
 class Checkout extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       firstName: "",
@@ -55,10 +54,10 @@ class Checkout extends Component {
       mobileNumber: "",
       postcode: "",
       showError: false,
-      success: false,
+      success: false
     };
   }
-  
+
   componentDidMount() {
     let a = this.props.a;
     this.setState({
@@ -71,7 +70,7 @@ class Checkout extends Component {
       postcode: a.postcode
     });
   }
-  
+
   render() {
     const {
       firstName,
@@ -83,7 +82,7 @@ class Checkout extends Component {
       postcode,
       errorMessage
     } = this.state;
-    const id = this.props.a.id
+    const id = this.props.a.id;
     return (
       <Container>
         {this.state.showError && (
@@ -98,13 +97,15 @@ class Checkout extends Component {
           </Segment>
         )}
         {this.state.success ? (
-          <Segment placeholder textAlign='center'>
-            <Header as='h2'>เพื่มที่อยู่สำเร็จ</Header>
+          <Segment placeholder textAlign="center">
+            <Header as="h2">เพื่มที่อยู่สำเร็จ</Header>
           </Segment>
         ) : (
           <Form size="large">
             <Segment>
+              <Header>แก้ไขที่อยู่</Header>
               <Form.Input
+                label="ชื่อ"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -113,6 +114,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ firstName: e.target.value })}
               />
               <Form.Input
+                label="นามสกุล"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -121,6 +123,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ lastName: e.target.value })}
               />
               <Form.Input
+                label="ที่อยู่"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -129,6 +132,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ addr: e.target.value })}
               />
               <Form.Input
+                label="อำเภอ"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -137,6 +141,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ distric: e.target.value })}
               />
               <Form.Input
+                label="จังหวัด"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -145,6 +150,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ province: e.target.value })}
               />
               <Form.Input
+                label="หมายเลขโทรศัพท์"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -153,6 +159,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ mobileNumber: e.target.value })}
               />
               <Form.Input
+                label="รหัสไปรษณีย์"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -175,7 +182,7 @@ class Checkout extends Component {
                         mobileNumber,
                         postcode
                       }}
-                      onCompleted={data => this._confirm(data,cart)}
+                      onCompleted={data => this._confirm(data, cart)}
                       onError={error => this._error(error)}
                     >
                       {mutation => (
@@ -209,9 +216,9 @@ class Checkout extends Component {
       return { showError: false };
     });
   };
-  _confirm = async (data,cart) => {
+  _confirm = async (data, cart) => {
     this.setState({ success: true });
-    cart.onLogin()
+    cart.onLogin();
   };
   _error = async error => {
     //alert(error);

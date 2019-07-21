@@ -47,16 +47,17 @@ class Login extends Component {
        
       }
     `}</style>
-    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+    <Grid textAlign='center' style={{ height: '100%',margin: 0 }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450,minWidth:350 }}>
         <Header as='h2' color='blue' textAlign='center'>
-           {login ? 'Log-in to your account' : ' Sign Up your account'}
+           {login ? 'ลงชื่อเข้าสู่ระบบ' : 'ลงทะเบียนสมัครสมาชิก'}
         </Header>
         {this.state.showError&&(<Segment basic textAlign="center"><Message warning onDismiss={(e) => this.setState({showError: false})} compact>{errorMessage}</Message></Segment>)}
         <Form size='large'>
-          <Segment stacked>
+          <Segment stacked textAlign='left'>
           {!login && (
             <Form.Input 
+              label='ชื่อผู้ใช้งาน'
               fluid 
               icon='user' 
               iconPosition='left' 
@@ -67,6 +68,7 @@ class Login extends Component {
           )}
           {!login && (
             <Form.Input 
+              label='หมายเลขโทรศัพท์'
               fluid 
               icon='user' 
               iconPosition='left' 
@@ -77,6 +79,7 @@ class Login extends Component {
 
           )}
             <Form.Input 
+              label='ที่อยู่อีเมล์'
               fluid 
               icon='user' 
               iconPosition='left' 
@@ -85,6 +88,7 @@ class Login extends Component {
               onChange={e => this.setState({ email: e.target.value })}
             />
             <Form.Input
+              label='รหัสผ่าน'
               fluid
               icon='lock'
               iconPosition='left'
@@ -101,14 +105,14 @@ class Login extends Component {
       			>
       			  {(mutation, { loading }) =>(
                 <Button color='blue' loading={loading?true:null} fluid size='large' onClick={mutation}>
-                  {login ? 'Login' : 'Sign Up'}
+                  {login ? 'เข้าสู่ระบบ' : 'สมัครสมาชิก'}
                 </Button>
               )}
             </Mutation>
           </Segment>
         </Form>
         <Message>
-          <a href='/#' onClick={() => this.setState({ login: !login })}>{login ? 'need to create an account?' : 'already have an account?'}</a>
+          <Header as='h4' color='blue' onClick={() => this.setState({ login: !login })}>{login ? 'สมัครสมาชิก?' : 'เข้าสู่ระบบ?'}</Header>
         </Message>
 
       

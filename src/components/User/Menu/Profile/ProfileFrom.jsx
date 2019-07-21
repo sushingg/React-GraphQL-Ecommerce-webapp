@@ -42,7 +42,7 @@ class Checkout extends Component {
     const { errorMessage, name, email, mobileNumber, password, oldPassword } = this.state;
     const cart = this.props.cart;
     return (
-      <Container style={{ padding: "3em 0em" }}>
+      <Container >
         {this.state.showError && (
           <Segment basic textAlign="center">
             <Message

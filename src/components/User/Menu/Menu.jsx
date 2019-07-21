@@ -3,44 +3,80 @@ import { Grid, Menu, Segment, Container, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../CartContext";
 import Profile from "./Profile/Profile";
-import MyAddrss from "./MyAddress/MyAddress";
+import MyAddres from "./MyAddress/MyAddress";
+import Orders from "./Order/ListOrder";
+import Order from "./Order/SingleOrder";
 export default class MyMenu extends Component {
-  state = { activeItem: "ข้อมูลส่วนตัว" };
+  state = {
+    activeItem: "profile",
+    orderId: undefined
+  };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) =>
+    this.setState({ activeItem: name, orderId: undefined });
+
+  setId = id => {
+    this.setState({ orderId: id });
+    console.log(id);
+  };
+
+  componentDidMount() {
+    if (this.props.match.params.active) {
+      this.setState({ activeItem: this.props.match.params.active });
+    }
+    if (this.props.match.params.id) {
+      this.setState({ orderId: this.props.match.params.id });
+    }
+    console.log(this.state.activeItem);
+  }
 
   render() {
     const { activeItem } = this.state;
 
     return (
-      <Container style={{ paddingBottom: "3em", paddingTop: "3em" }}>
+      <Container style={{ paddingBottom: "2em", paddingTop: "2em" }}>
         <Segment basic>
           <Grid>
             <Grid.Column width={4}>
               <Header>การตั่งค่า</Header>
               <Menu fluid vertical tabular>
                 <Menu.Item
-                  name="ข้อมูลส่วนตัว"
-                  active={activeItem === "ข้อมูลส่วนตัว"}
+                  name="profile"
+                  as={Link}
+                  to={"/my/profile/"}
+                  active={activeItem === "profile"}
                   onClick={this.handleItemClick}
-                />
+                >
+                  ข้อมูลส่วนตัว
+                </Menu.Item>
                 <Menu.Item
-                  name="ที่อยู่ของฉัน"
-                  active={activeItem === "ที่อยู่ของฉัน"}
+                  name="address"
+                  as={Link}
+                  to={"/my/address/"}
+                  active={activeItem === "address"}
                   onClick={this.handleItemClick}
-                />
-
+                >
+                  ที่อยู่ของฉัน
+                </Menu.Item>
+                <Menu.Item
+                  name="orders"
+                  as={Link}
+                  to={"/my/orders/"}
+                  active={activeItem === "orders"}
+                  onClick={this.handleItemClick}
+                >
+                  การซื้อของฉัน
+                </Menu.Item>
                 <CartContext.Consumer>
                   {cart =>
-                    cart.user && (
-                        cart.user.type === "admin" && (
-                            <Menu.Item
-                              name="จัดการร้านค้าร้านค้า"
-                              as={Link}
-                              to={"/"+cart.user.type||""}
-                            />
-                          )
-                    )
+                    cart.user &&
+                    (cart.user.type === "admin" && (
+                      <Menu.Item
+                        name="จัดการร้านค้าร้านค้า"
+                        as={Link}
+                        to={"/" + cart.user.type || ""}
+                      />
+                    ))
                   }
                 </CartContext.Consumer>
               </Menu>
@@ -48,8 +84,14 @@ export default class MyMenu extends Component {
 
             <Grid.Column stretched width={12}>
               <Segment>
-                {activeItem === "ข้อมูลส่วนตัว" && <Profile />}
-                {activeItem === "ที่อยู่ของฉัน" && <MyAddrss />}
+                {activeItem === "profile" && <Profile />}
+                {activeItem === "address" && <MyAddres />}
+                {activeItem === "orders" &&
+                  (this.state.orderId ? (
+                    <Order id={this.state.orderId} />
+                  ) : (
+                    <Orders setId={this.setId} />
+                  ))}
               </Segment>
             </Grid.Column>
           </Grid>

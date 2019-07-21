@@ -116,9 +116,6 @@ class DesktopContainer extends Component {
                               <Dropdown.Item as={Link} to="/checkout">
                                 <Icon name="check square outline" /> Check out
                               </Dropdown.Item>
-                              <Dropdown.Item as={Link} to="/my/orderlist">
-                                <Icon name="list" /> My Orders
-                              </Dropdown.Item>
                               <Dropdown.Divider />
                               <Dropdown.Item as={Link} to={"/my"}>
                                 <Icon name="settings" /> Setting

@@ -84,7 +84,9 @@ class Checkout extends Component {
         ) : (
           <Form size="large">
             <Segment>
+              <Header>เพิ่มที่อยู่ใหม่</Header>
               <Form.Input
+                label='ชื่อ'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -93,6 +95,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ firstName: e.target.value })}
               />
               <Form.Input
+                label='นามสกุล'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -101,6 +104,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ lastName: e.target.value })}
               />
               <Form.Input
+                label='ที่อยู่'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -109,6 +113,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ addr: e.target.value })}
               />
               <Form.Input
+                label='อำเภอ'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -117,6 +122,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ distric: e.target.value })}
               />
               <Form.Input
+                label='จังหวัด'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -125,6 +131,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ province: e.target.value })}
               />
               <Form.Input
+                label='หมายเลขโทรศัพท์'
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -133,6 +140,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ mobileNumber: e.target.value })}
               />
               <Form.Input
+                label='รหัสไปรษณีย์'
                 fluid
                 icon="user"
                 iconPosition="left"

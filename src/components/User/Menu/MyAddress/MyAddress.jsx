@@ -18,7 +18,7 @@ class Checkout extends Component {
   render() {
     const { errorMessage } = this.state;
     return (
-      <Container style={{ padding: "3em 0em" }}>
+      <Container>
         <CartContext.Consumer>
           {cart => (
             <>
@@ -34,6 +34,8 @@ class Checkout extends Component {
                 </Segment>
               )}
               <Segment basic padded>
+                
+              <Header>แก้ไขที่อยู่</Header>
                 {cart.user && (
                   <Card.Group>
                     {cart.user.address.map(function(a, i) {
@@ -89,7 +91,7 @@ class Checkout extends Component {
 
                 <Modal
                   trigger={
-                    <Button fluid style={{ marginTop: "2em" }}>
+                    <Button fluid basic color="green" style={{ marginTop: "2em" }}>
                       เพิ่มที่อยู่ไหม่
                     </Button>
                   }
