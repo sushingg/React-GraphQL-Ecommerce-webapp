@@ -115,27 +115,15 @@ const Adnav = props => {
 
             </Menu.Menu>
           </Menu.Item>
-
-          <Menu.Item>Settings</Menu.Item>
           <Menu.Item
             as={Link}
-            to="/admin/wip"
-            name="setting"
-            active={activeItem === "setting"}
+            to="/admin/deliver"
+            name="deliver"
+            active={activeItem === "deliver"}
             onClick={(e, { name }) => setActiveItem(name)}
           >
-            <Icon name="settings" />
-            General settings
-          </Menu.Item>
-          <Menu.Item
-            as={Link}
-            to="/admin/wip"
-            name="gswtting"
-            active={activeItem === "gswtting"}
-            onClick={(e, { name }) => setActiveItem(name)}
-          >
-            <Icon name="users" />
-            Account Settings
+            <Icon name="truck" />
+            การจัดส่ง
           </Menu.Item>
           <Menu.Item
             as={Link}

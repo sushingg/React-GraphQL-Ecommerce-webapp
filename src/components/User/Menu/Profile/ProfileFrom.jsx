@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { Button, Segment, Message, Container, Form, Header } from "semantic-ui-react";
+import {
+  Button,
+  Segment,
+  Message,
+  Container,
+  Form,
+  Header
+} from "semantic-ui-react";
 const GQL_MUTATION = gql`
   mutation updateUser(
     $oldPassword: String!
@@ -10,14 +17,20 @@ const GQL_MUTATION = gql`
     $password: String!
     $mobileNumber: String!
   ) {
-    updateUser(oldPassword: $oldPassword, name: $name, email: $email, password: $password, mobileNumber: $mobileNumber) {
+    updateUser(
+      oldPassword: $oldPassword
+      name: $name
+      email: $email
+      password: $password
+      mobileNumber: $mobileNumber
+    ) {
       id
-			name
+      name
     }
   }
 `;
 class Checkout extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       completed: false,
@@ -25,10 +38,10 @@ class Checkout extends Component {
       email: "",
       mobileNumber: "",
       password: "",
-      oldPassword: "",
+      oldPassword: ""
     };
   }
-  
+
   componentDidMount() {
     let cart = this.props.cart;
     this.setState({
@@ -39,10 +52,17 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errorMessage, name, email, mobileNumber, password, oldPassword } = this.state;
+    const {
+      errorMessage,
+      name,
+      email,
+      mobileNumber,
+      password,
+      oldPassword
+    } = this.state;
     const cart = this.props.cart;
     return (
-      <Container >
+      <Container>
         {this.state.showError && (
           <Segment basic textAlign="center">
             <Message
@@ -59,14 +79,16 @@ class Checkout extends Component {
             <Form>
               <Header>แก้ไขข้อมูลส่วนตัว</Header>
               <Form.Input
+                label="ชื่อผู้ใช้งาน"
                 fluid
                 icon="user"
                 iconPosition="left"
                 value={name}
-                placeholder="ชื่อผู้ใช้"
+                placeholder="ชื่อผู้ใช้งาน"
                 onChange={e => this.setState({ name: e.target.value })}
               />
               <Form.Input
+                label="ที่อยู่อีเมล์"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -75,6 +97,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ email: e.target.value })}
               />
               <Form.Input
+                label="หมายเลขโทรศัพท์"
                 fluid
                 icon="user"
                 iconPosition="left"
@@ -83,6 +106,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ mobileNumber: e.target.value })}
               />
               <Form.Input
+                label="เปลี่ยนรหัสผ่าน"
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -92,6 +116,7 @@ class Checkout extends Component {
                 onChange={e => this.setState({ password: e.target.value })}
               />
               <Form.Input
+                label="ยืนยันรหัสผ่าน"
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -105,15 +130,13 @@ class Checkout extends Component {
         </Segment>
         <Mutation
           mutation={GQL_MUTATION}
-          variables={
-            {
-              oldPassword,
-              name,
-              email,
-              password,
-              mobileNumber
-            }
-          }
+          variables={{
+            oldPassword,
+            name,
+            email,
+            password,
+            mobileNumber
+          }}
           onCompleted={data => this._confirm(data, cart)}
           onError={error => this._error(error)}
         >
@@ -146,7 +169,7 @@ class Checkout extends Component {
   _confirm = async (data, cart) => {
     cart.onLogin();
     console.log(data);
-    this.setState({ completed: true});
+    this.setState({ completed: true });
     //window.location = "/myorders";
   };
   _error = async error => {

@@ -12,14 +12,15 @@ import {
   Visibility,
   Popup,
   Label,
-  Dropdown
+  Dropdown,
+  Modal
 } from "semantic-ui-react";
 import Loader from "./Loader";
 import { CartContext } from "./CartContext";
 import Category from "./Category/Categories";
-import  Search   from "./Search/Search"
-const CartSummary = React.lazy(() => import("./Cart/CartSummary"))
-const Login = React.lazy(() => import("./Login/Login"))
+import Search from "./Search/Search";
+const CartSummary = React.lazy(() => import("./Cart/CartSummary"));
+const Login = React.lazy(() => import("./Login/Login"));
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up!
@@ -30,7 +31,7 @@ class DesktopContainer extends Component {
   state = {};
   hideFixedMenu = () => this.setState({ fixed: false });
   showFixedMenu = () => this.setState({ fixed: true });
-  
+
   /*toggle = () => this.setState({ open: !this.state.open,redirect: true })
   handleOpen = () => {
     this.setState({ isOpen: true })
@@ -50,7 +51,7 @@ class DesktopContainer extends Component {
     return (
       <CartContext.Consumer>
         {cart => (
-          <Responsive minWidth={Responsive.onlyTablet.minWidth}> 
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
             <Visibility
               once={false}
               onBottomPassed={this.showFixedMenu}
@@ -74,7 +75,7 @@ class DesktopContainer extends Component {
                     </Menu.Item>
 
                     <Menu.Item position="right">
-                      <Search/>
+                      <Search />
                     </Menu.Item>
 
                     <Popup
@@ -88,20 +89,23 @@ class DesktopContainer extends Component {
                               Cart
                             </Button>
                             <Label basic pointing="left">
-                                {cart.itemSum || "0"}
+                              {cart.itemSum || "0"}
                             </Label>
                           </Button>
                         </Menu.Item>
                       }
-                      content={<React.Suspense fallback={<Loader/>}><CartSummary /></React.Suspense>}
+                      content={
+                        <React.Suspense fallback={<Loader />}>
+                          <CartSummary />
+                        </React.Suspense>
+                      }
                       on="hover"
                       position="bottom right"
                     />
 
                     <Menu.Item>
-                      <div>
-                        
-                        {cart.user&&(
+                      <>
+                        {cart.user && (
                           <Dropdown
                             direction="left"
                             trigger={<span>{cart.user.email + " "}</span>}
@@ -125,33 +129,31 @@ class DesktopContainer extends Component {
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
-                        ) }
-                        {!cart.user&&(
-                          <>
-                            
-                            <Popup
-                              wide="very"
-                              trigger={
-                                <Button
-                                  animated="fade"
-                                  as="a"
-                                  inverted={!fixed}
-                                  primary={fixed}
-                                  style={{ marginLeft: "0.5em" }}
-                                >
-                                  <Button.Content visible>Login</Button.Content>
-                                  <Button.Content hidden>
-                                    <Icon name="sign-in" />
-                                  </Button.Content>
-                                </Button>
-                              }
-                              content={<React.Suspense fallback={<Loader/>}><Login /></React.Suspense>}
-                              on="click"
-                              position="bottom right"
-                            />
-                          </>
                         )}
-                      </div>
+                        {!cart.user && (
+                          <Modal
+                            trigger={
+                              <Button
+                                animated="fade"
+                                as="a"
+                                inverted={!fixed}
+                                primary={fixed}
+                                style={{ marginLeft: "0.5em" }}
+                              >
+                                <Button.Content visible>Login</Button.Content>
+                                <Button.Content hidden>
+                                  <Icon name="sign-in" />
+                                </Button.Content>
+                              </Button>
+                            }
+                            size="mini"
+                          >
+                            <React.Suspense fallback={<Loader />}>
+                              <Login />
+                            </React.Suspense>
+                          </Modal>
+                        )}
+                      </>
                     </Menu.Item>
                   </Container>
                 </Menu>
@@ -177,44 +179,89 @@ class MobileContainer extends Component {
     const { children } = this.props;
 
     return (
-      <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-        <Segment
-          inverted
-          textAlign="center"
-          style={{ minHeight: 10, padding: "1em 0em" }}
-          vertical
-        >
-          <Container>
-            <Menu inverted pointing secondary size="large">
-              <Dropdown item icon="sidebar">
-                <Dropdown.Menu>
-                  <Dropdown.Header>All Categories</Dropdown.Header>
-                  <Category />
-                  <Dropdown.Divider />
-                  <Dropdown.Header>User</Dropdown.Header>
-                  <Dropdown.Item>Login</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Menu.Item as={Link} to="/">
-                <Header as="h3" inverted>
-                  TechE
-                </Header>
-              </Menu.Item>
-              <Menu.Item position="right">
-                <Button
-                  as={Link}
-                  to="/login"
-                  inverted
-                  style={{ marginLeft: "0.5em" }}
-                >
-                  Login/Sign Up
-                </Button>
-              </Menu.Item>
-            </Menu>
-          </Container>
-        </Segment>
-        {children}
-      </Responsive>
+      <CartContext.Consumer>
+        {cart => (
+          <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+            <Segment
+              inverted
+              textAlign="center"
+              style={{ minHeight: 10, padding: "1em 0em" }}
+              vertical
+            >
+              <Container>
+                <Menu inverted pointing secondary size="large">
+                  <Dropdown item icon="sidebar">
+                    <Dropdown.Menu>
+                      <Dropdown.Header>All Categories</Dropdown.Header>
+                      <Category />
+                      <Dropdown.Divider />
+                      <Dropdown.Header>User</Dropdown.Header>
+                      <Dropdown.Item>Login</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <Menu.Item as={Link} to="/">
+                    <Header as="h3" inverted>
+                      TechE
+                    </Header>
+                  </Menu.Item>
+                  <Menu.Item position="right">
+                  <>
+                        {cart.user && (
+                          <Dropdown
+                            direction="left"
+                            trigger={<span>{cart.user.email + " "}</span>}
+                            icon="user"
+                            labeled
+                            floating
+                          >
+                            <Dropdown.Menu>
+                              <Dropdown.Item as={Link} to="/cart">
+                                <Icon name="shopping cart" /> Cart
+                              </Dropdown.Item>
+                              <Dropdown.Item as={Link} to="/checkout">
+                                <Icon name="check square outline" /> Check out
+                              </Dropdown.Item>
+                              <Dropdown.Divider />
+                              <Dropdown.Item as={Link} to={"/my"}>
+                                <Icon name="settings" /> Setting
+                              </Dropdown.Item>
+                              <Dropdown.Item as={Link} to="/logout">
+                                <Icon name="power off" /> Logout
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )}
+                        {!cart.user && (
+                          <Modal
+                            trigger={
+                              <Button
+                                animated="fade"
+                                as="a"
+                                inverted
+                                style={{ marginLeft: "0.5em" }}
+                              >
+                                <Button.Content visible>Login</Button.Content>
+                                <Button.Content hidden>
+                                  <Icon name="sign-in" />
+                                </Button.Content>
+                              </Button>
+                            }
+                            size="mini"
+                          >
+                            <React.Suspense fallback={<Loader />}>
+                              <Login />
+                            </React.Suspense>
+                          </Modal>
+                        )}
+                      </>
+                  </Menu.Item>
+                </Menu>
+              </Container>
+            </Segment>
+            {children}
+          </Responsive>
+        )}
+      </CartContext.Consumer>
     );
   }
 }

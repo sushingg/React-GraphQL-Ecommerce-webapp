@@ -14,7 +14,7 @@ const Product = props => {
       <Table.Cell>
         <Label basic as={Link} to={"/admin/o/" + props.order.id}>
           <Icon name="file outline" />
-          View Order
+          { props.order.id}
         </Label>
       </Table.Cell>
       <Table.Cell>

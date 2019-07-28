@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Menu, Segment, Container, Header } from "semantic-ui-react";
+import { Grid, Menu, Segment, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../CartContext";
 import Profile from "./Profile/Profile";
@@ -34,8 +34,8 @@ export default class MyMenu extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Container style={{ paddingBottom: "2em", paddingTop: "2em" }}>
-        <Segment basic>
+      <Segment secondary  vertical style={{ paddingTop: "2em",height: "85vh"}}>
+        <Segment style={{ marginBottom:"2em"}}>
           <Grid>
             <Grid.Column width={4}>
               <Header>การตั่งค่า</Header>
@@ -72,7 +72,7 @@ export default class MyMenu extends Component {
                     cart.user &&
                     (cart.user.type === "admin" && (
                       <Menu.Item
-                        name="จัดการร้านค้าร้านค้า"
+                        name="จัดการร้านค้า"
                         as={Link}
                         to={"/" + cart.user.type || ""}
                       />
@@ -96,7 +96,7 @@ export default class MyMenu extends Component {
             </Grid.Column>
           </Grid>
         </Segment>
-      </Container>
+      </Segment>
     );
   }
 }

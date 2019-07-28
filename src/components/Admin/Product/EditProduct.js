@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import toast from "toasted-notes";
 import {
   Button,
   Form,
@@ -162,6 +163,7 @@ class Checkout extends Component {
                   control={Checkbox}
                   label="Published"
                   placeholder="productPublished"
+                  checked={published}
                   onChange={e => this.setState({ published: !published })}
                 />
                 <Form.Field label="Product Image" />
@@ -266,6 +268,9 @@ class Checkout extends Component {
     const order = data.updateProduct;
     console.log(order);
     this.props.refetch()
+    toast.notify("บันทึกการแก้ไขสินค้าสำเร็จ", {
+      position: "bottom-right"
+    });
     //window.location = "/admin/listproduct";
   };
   _error = async error => {

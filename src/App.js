@@ -32,6 +32,7 @@ import Editor from "./components/Editor/Editor";
 import Admin from "./components/Admin/Adnav/Adnav";
 import Test from "./components/Admin/Mutations/Mutations";
 import AdOrder from "./components/Admin/Order/Orders";
+import Deliver from "./components/Admin/Deliver/GetDeliver"
 //product
 import AddProducts from "./components/Admin/Product/AddProducts";
 import RemoveProduct from "./components/Admin/Product/RemoveProduct";
@@ -48,12 +49,11 @@ import Users from "./components/Admin/User/Users";
 const AUTH_TOKEN = "auth-token";
 
 let token 
-//uri:    https://sushingg-api.herokuapp.com/graphql
-//        http://localhost:4000/graphql
+
 function checklogin(){
   let res = null
   token = localStorage.getItem(AUTH_TOKEN)||null
-
+  console.log(token)
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;
@@ -67,7 +67,8 @@ function checklogin(){
   }
   return res
 }
-
+//uri:    https://sushingg-api.herokuapp.com/graphql
+//        http://localhost:4000/graphql
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   request: async operation => {
@@ -92,9 +93,9 @@ const App = () => (
               <ARoute path="/admin/login" component={LoginLanded} />
               <ARoute path="/admin/Order" component={AdOrder} />
               <ARoute path="/admin/product/add" component={AddProducts} />
-              <ARoute path="/admin/product/list" component={ListProduct} />              
+              <ARoute path="/admin/product/list/:category?/:subCategory?" component={ListProduct} />              
               <ARoute path="/admin/product/edit/:slug?" component={EditProduct} />
-              
+              <ARoute path="/admin/deliver" component={Deliver} />
               <ARoute path="/admin/category/list" component={ListCategory} />      
               <ARoute path="/admin/category/add/" component={AddCategory} />    
               <ARoute path="/admin/category/addsub/:cslug/:id" component={AddSubCategory} />    
