@@ -1,7 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import moment from "moment";
 import _ from "lodash";
 import {
   Button,
@@ -13,11 +12,7 @@ import {
   Label,
   Icon
 } from "semantic-ui-react";
-const formatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "THB",
-  minimumFractionDigits: 2
-});
+
 class Deliver extends React.Component {
   state = {
     deliver: this.props.deliver,
@@ -28,7 +23,7 @@ class Deliver extends React.Component {
     this.setState({ value });
   };
   handleItemClick = () => {
-    if (this.state.value != "") {
+    if (this.state.value !== "") {
       let a = this.state.deliver;
       let b = _.find(a, { key: this.state.value });
       _.remove(a, {

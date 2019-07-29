@@ -31,6 +31,7 @@ class Products extends React.Component {
                 published
                 subCategory
                 image {
+                  id
                   altText
                   name
                 }

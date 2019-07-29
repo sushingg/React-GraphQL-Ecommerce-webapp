@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
-
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2
+});
 const CartSum = props => {
   return (
     <>
@@ -59,13 +61,15 @@ const CartSum = props => {
                         </Table.Cell>
                         <Table.Cell>
                           <Header as="h4">
-                            <Header.Content>{p.price} ฿</Header.Content>
+                            <Header.Content>
+                              {formatter.format(p.price)} ฿
+                            </Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell>
                           <Header as="h4">
                             <Header.Content>
-                              {p.quantity+" " || "none"}ชิ้น
+                              {p.selected + " " || "none"}ชิ้น
                             </Header.Content>
                           </Header>
                         </Table.Cell>
@@ -73,14 +77,8 @@ const CartSum = props => {
                     ))}
                   </Table.Body>
                 </Table>
-                <Header as='h3' textAlign='right'>
-                  รวม{" "}
-                  {cart.items.reduce(
-                    (acc, { price, quantity }) =>
-                      acc + price * quantity,
-                    0
-                  ) || "0"}{" "}
-                  บาท
+                <Header as="h3" textAlign="right">
+                  {"รวม " + formatter.format(cart.price) + " บาท"}
                 </Header>
               </Segment>
             ) : (

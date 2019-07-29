@@ -13,8 +13,9 @@ import {
   Modal
 } from "semantic-ui-react";
 import { CartContext } from "../../CartContext";
-import Upload from './File-Upload'
+import Upload from "./File-Upload";
 import Editor from "../../Editor/Editor";
+import RemoveProductImage from "./RemoveProductImage";
 var Carousel = require("react-responsive-carousel").Carousel;
 const UPDATE_PRODUCT_MUTATION = gql`
   mutation UpdateProductMutation(
@@ -166,51 +167,74 @@ class Checkout extends Component {
                   checked={published}
                   onChange={e => this.setState({ published: !published })}
                 />
-                <Form.Field label="Product Image" />
-                <Form.Group>
-                  <Modal
-                    trigger={
-                      <Form.Field control={Button} content="Add Image" />
-                    }
-                  >
-                    <Modal.Header>Select a Image</Modal.Header>
-                    <Modal.Content image>
-                      <Upload product={this.props.product} refetch={this.props.refetch}/>
-                    </Modal.Content>
-                  </Modal>
+                <Form.Group widths="equal">
+                  <Form.Field label="Product Image" />
+                  <Form.Field label="Upload Product Image" />
                 </Form.Group>
-
-                <Form.Field>
-                  {!this.props.product.image.length && (
-                    <Image
-                      bordered
-                      rounded
-                      size="medium"
-                      src="/image/test.jpg"
-                    />
-                  )}
-                  <div style={{ width: "300px", height: "300px" }}>
-                    <Carousel
-                      showArrows={true}
-                      showThumbs={false}
-                      infiniteLoop={true}
-                      autoPlay={true}
-                      emulateTouch={true}
+                <Form.Group widths="equal">
+                  <Form.Field>
+                    {!this.props.product.image.length && (
+                      <Image
+                        bordered
+                        rounded
+                        size="medium"
+                        src="/image/test.jpg"
+                      />
+                    )}
+                    <div
+                      style={{
+                        width: "300px",
+                        height: "350px",
+                        margin: "auto"
+                      }}
                     >
-                      {this.props.product.image.map((keyName, i) => (
-                        <div key={i}>
-                          <img
-                            alt={this.props.product.image[i].name}
-                            src={
-                              "https://sushingg-api.herokuapp.com/images/" +
-                              this.props.product.image[i].name
-                            }
-                          />
-                        </div>
-                      ))}
-                    </Carousel>
-                  </div>
-                </Form.Field>
+                      <Carousel
+                        showArrows={true}
+                        showThumbs={false}
+                        infiniteLoop={true}
+                        autoPlay={true}
+                        interval={5000}
+                        emulateTouch={true}
+                        dynamicHeight={true}
+                      >
+                        {this.props.product.image.map((keyName, i) => (
+                          <div key={i}>
+                            <Modal
+                              trigger={
+                                <Button color="red" fluid>
+                                  ลบรูปนี้
+                                </Button>
+                              }
+                              basic
+                              size="small"
+                            >
+                              <RemoveProductImage
+                                image={this.props.product.image[i]}
+                                refetch={this.props.refetch}
+                              />
+                            </Modal>
+
+                            <img
+                              alt={this.props.product.image[i].name}
+                              src={
+                                "http://localhost:4000/images/" +
+                                this.props.product.image[i].name
+                              }
+                            />
+                          </div>
+                        ))}
+                      </Carousel>
+                    </div>
+                  </Form.Field>
+                  <Form.Field>
+                    <div style={{ height: "350px", margin: "auto" }}>
+                      <Upload
+                        product={this.props.product}
+                        refetch={this.props.refetch}
+                      />
+                    </div>
+                  </Form.Field>
+                </Form.Group>
 
                 <Form.Field label="DescriptionHtml" />
                 <Form.Field>
@@ -267,7 +291,7 @@ class Checkout extends Component {
   _confirm = async data => {
     const order = data.updateProduct;
     console.log(order);
-    this.props.refetch()
+    this.props.refetch();
     toast.notify("บันทึกการแก้ไขสินค้าสำเร็จ", {
       position: "bottom-right"
     });

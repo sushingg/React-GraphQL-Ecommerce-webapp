@@ -15,6 +15,7 @@ class Products extends React.Component {
           query={gql`
             query GetProduct($slug: String!) { 
               product(slug: $slug) {
+                id
                 slug
                 title
                 price

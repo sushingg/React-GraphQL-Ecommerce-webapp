@@ -49,7 +49,7 @@ footer {
   display: none;
 }
 .editor{
-  min-height: 350px;
+  min-height: 450px;
 }
 .demo-wrapper {
   width: 100% !important;
@@ -77,3 +77,4 @@ input[type="number"] {
 	width: 100%;
 	text-align: center;
   }
+  /*  .filepond--file-action-button {display:none;  }*/

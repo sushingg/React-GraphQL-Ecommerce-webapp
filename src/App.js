@@ -53,7 +53,6 @@ let token
 function checklogin(){
   let res = null
   token = localStorage.getItem(AUTH_TOKEN)||null
-  console.log(token)
   if (token !== null) {
     var decoded = jwtDecode(token);
     res = decoded;

@@ -24,6 +24,7 @@ class EditorConvertToHTML extends Component {
       <Container>
         <Segment className="editor">
           <Editor
+            editorStyle={{minHeight:340}}
             editorState={editorState}
             wrapperClassName="demo-wrapper"
             editorClassName="demo-editor"

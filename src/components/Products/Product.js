@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
 
 import { Card, Image, Button, Icon } from "semantic-ui-react";
-
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2
+});
 const Product = props => {
   return (
     <CartContext.Consumer>
@@ -36,7 +38,7 @@ const Product = props => {
               </Link>
             </Card.Header>
             <Card.Meta>
-              <span className="date">{props.product.price} ฿</span>
+              <span className="date">{formatter.format(props.product.price)} ฿</span>
             </Card.Meta>
             <Card.Description>{props.product.description}</Card.Description>
             <br />

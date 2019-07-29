@@ -77,36 +77,44 @@ class Inventory extends Component {
     this.setState({
       price:
         this.state.items.reduce(
-          (acc, { price, quantity }) => acc + price * quantity,
+          (acc, { price, selected }) => acc + price * selected,
           0
         ) || 0,
       itemSum:
-        this.state.items.reduce((acc, { quantity }) => acc + quantity, 0) || 0
+        this.state.items.reduce((acc, { selected }) => acc + selected, 0) || 0
     });
     localStorage.setItem("price", this.state.price);
     localStorage.setItem("itemSum", this.state.itemSum);
   }
   onAddToCart = this.onAddToCart.bind(this);
   async onAddToCart(p, n) {
+    var text = "";
     const index = this.state.items.findIndex(function(object) {
       return object.slug === p.slug;
     });
+    console.log(p.quantity);
     if (index >= 0) {
       var newArray = [...this.state.items];
-      newArray[index].quantity += parseInt(n, 10);
-      this.setState({
-        items: newArray
-      });
+      console.log("n:" + (newArray[index].selected + n - 1) + "|" + p.quantity);
+      if (newArray[index].selected + n - 1 >= p.quantity) {
+        text = "สิ้นค้าในร้านไม่พอให้เพิ่มเข้าตะกร้า";
+      } else {
+        newArray[index].selected += parseInt(n, 10);
+        await this.setState({
+          items: newArray
+        });
+        text = "เพิ่มสินค้า " + n + " ชิ้นเข้าตะกร้า";
+      }
     } else {
-      p.quantity = parseInt(n, 10);
+      p.selected = parseInt(n, 10);
       await this.setState({
         items: [...this.state.items, p]
       });
+      text = "เพิ่มสินค้า " + n + " ชิ้นเข้าตะกร้า";
     }
-    toast.notify("เพิ่มสินค้า " + n + " ชิ้นเข้าตะกร้า", {
-      position: "bottom-right"
-    });
+    toast.notify(text, { position: "bottom-right" });
     await localStorage.setItem("items", JSON.stringify(this.state.items));
+
     this.updatesum();
   }
   onSetCartValue = this.onSetCartValue.bind(this);
@@ -121,7 +129,7 @@ class Inventory extends Component {
 
     if (index >= 0) {
       var newArray = [...this.state.items];
-      newArray[index].quantity = value;
+      newArray[index].selected = value;
       this.setState({
         items: newArray
       });
@@ -139,7 +147,7 @@ class Inventory extends Component {
     this.setState({
       items: newArray
     });
-    toast.notify("ลบสินค้าออกจากตะกร้า",{
+    toast.notify("ลบสินค้าออกจากตะกร้า", {
       position: "bottom-right"
     });
     await localStorage.setItem("items", JSON.stringify(newArray));
@@ -151,8 +159,8 @@ class Inventory extends Component {
       return object.slug === p.slug;
     });
     var newArray = [...this.state.items];
-    if (this.state.items[index].quantity > 1) {
-      newArray[index].quantity -= 1;
+    if (this.state.items[index].selected > 1) {
+      newArray[index].selected -= 1;
       this.setState({
         items: newArray
       });
@@ -194,8 +202,8 @@ class Inventory extends Component {
     this.runQuery();
   }
 
-
   render() {
+    console.log(this.state.items);
     return (
       <CartContext.Provider
         value={{

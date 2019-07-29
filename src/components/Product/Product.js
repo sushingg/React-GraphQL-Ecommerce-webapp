@@ -14,6 +14,9 @@ import {
 var Carousel = require("react-responsive-carousel").Carousel;
 var HtmlToReactParser = require("html-to-react").Parser;
 var htmlToReactParser = new HtmlToReactParser();
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2
+});
 const Product = props => {
   const [quantity, setQuantity] = useState(1);
   const handlePlus =()=>{
@@ -81,7 +84,7 @@ const Product = props => {
                       <Header as="h2">{props.product.title}</Header>
                       {"คงเหลือ "+props.product.quantity+" ชิ้น"}
                       <div style={{ padding: "3em 0em" }} />
-                      <Header as="h2">฿{props.product.price}</Header>
+                      <Header as="h2">฿{formatter.format(props.product.price)}</Header>
                       <div>
                         <span>จำนวน: </span>
                         <Button basic attached="left" onClick={() => (handleMinus())}>

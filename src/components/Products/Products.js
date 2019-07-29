@@ -13,6 +13,7 @@ const Products = () => (
             {
               products(limit: 12) {
                 product {
+                  id
                   slug
                   title
                   price

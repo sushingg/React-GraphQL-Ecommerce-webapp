@@ -49,6 +49,9 @@ class Checkout extends Component {
         delete address.id;
         product.map(function(a, i) {
           let res = a
+          res.quantity = a.selected
+          delete res.id
+          delete res.selected
           delete res.title
           delete res.price
           delete res.description
@@ -59,6 +62,7 @@ class Checkout extends Component {
           delete res.__typename
           return res;
         })
+        console.log(product)
       } catch {}
       this.setState({
         addrIndex: value,

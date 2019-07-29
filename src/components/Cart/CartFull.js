@@ -14,7 +14,9 @@ import isLogin from "../../common";
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
-
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2
+});
 const CartSum = props => {
   const login = isLogin();
   return (
@@ -82,7 +84,7 @@ const CartSum = props => {
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <Header as="h4">
-                            <Header.Content>฿{p.price}</Header.Content>
+                            <Header.Content>฿{formatter.format(p.price)}</Header.Content>
                           </Header>
                         </Table.Cell>
                         <Table.Cell textAlign="center">
@@ -97,7 +99,7 @@ const CartSum = props => {
                                 style={{ width: "50px" }}
                                 size="mini"
                                 type="tel"
-                                value={parseInt(p.quantity, 10)}
+                                value={parseInt(p.selected, 10)}
                                 onChange={e =>
                                   cart.onSetCartValue(p, e.target.value)
                                 }
@@ -112,7 +114,7 @@ const CartSum = props => {
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <Header as="h4">
-                            {p.quantity * p.price || "none"}
+                            {formatter.format(p.selected * p.price) || "none"}
                           </Header>
                         </Table.Cell>
                         <Table.Cell textAlign="center">
@@ -166,7 +168,7 @@ const CartSum = props => {
                   <Header.Subheader>
                     {"รวมค่าสินค้า (" + cart.itemSum + " สินค้า) "}
                   </Header.Subheader>
-                  {cart.price || "0"} บาท
+                  {formatter.format(cart.price)} บาท
                 </Header>
               </Segment>
             ) : (
