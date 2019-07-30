@@ -9,6 +9,7 @@ class SingleOrder extends React.Component {
   componentDidMount() {}
   render() {
     const  id  = this.props.id;
+    console.log('singleorder')
     return (
 
           <Query
@@ -41,7 +42,7 @@ class SingleOrder extends React.Component {
             `}
             variables={{ id }}
           >
-            {({ loading, error, data }) => {
+            {({ loading, error, data, refetch}) => {
               if (loading) return <Loader />;
               if (error)
                 return (
@@ -51,7 +52,7 @@ class SingleOrder extends React.Component {
                     </Message>
                   </Segment>
                 );
-              return <Order key={data.userOrder.id} order={data.userOrder} />;
+              return <Order key={data.userOrder.id} refetch={refetch} order={data.userOrder} />;
             }}
           </Query>
 

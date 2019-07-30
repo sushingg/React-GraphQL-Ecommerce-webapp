@@ -34,7 +34,7 @@ export default class MyMenu extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Segment secondary  vertical style={{ padding: "2em",height: "85vh"}}>
+      <Segment secondary  vertical style={{ padding: "2em 5rem",height: "85vh"}}>
         <Segment style={{ marginBottom:"2em"}}>
           <Grid>
             <Grid.Column width={4}>

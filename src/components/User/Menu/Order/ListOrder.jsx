@@ -84,18 +84,18 @@ class SingleOrder extends React.Component {
             active={status === "successful"}
             onClick={this.handleItemClick}
           >
-            ที่ต้องจัดส่ง
+            รอการจัดส่ง
           </Menu.Item>
           <Menu.Item
             name="sended"
             active={status === "sended"}
             onClick={this.handleItemClick}
           >
-            สำเร็จ
+            ที่สำเร็จ
           </Menu.Item>
           <Menu.Item
-            name="failed"
-            active={status === "failed"}
+            name="cancel"
+            active={status === "cancel"}
             onClick={this.handleItemClick}
           >
             ยกเลิกแล้ว

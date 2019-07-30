@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import moment from "moment";
-import { Segment, Message } from "semantic-ui-react";
+import { Segment, Message, Header } from "semantic-ui-react";
 import Deliver from "./Deliver"
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -11,6 +11,7 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 const FormExampleForm = () => (
   <>
+  <Header as='h2'>ปรับสถานะการจัดส่งสินค้า</Header>
     <Query
       fetchPolicy="network-only"
       query={gql`
@@ -29,7 +30,7 @@ const FormExampleForm = () => (
         }
       `}
     >
-      {({ loading, error, data }) => {
+      {({ loading, error, data, refetch}) => {
         if (loading)
           return (
             <Segment textAlign="center">
@@ -47,6 +48,7 @@ const FormExampleForm = () => (
 
         return (
           <Deliver
+          refetch={refetch}
             deliver={[].concat.apply(
               [],
               data.usersOrder.map(currentOrder =>

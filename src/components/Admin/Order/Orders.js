@@ -33,8 +33,8 @@ class Orders extends React.Component {
             สำเร็จ
           </Menu.Item>
           <Menu.Item
-            name="failed"
-            active={status === "failed"}
+            name="cancel"
+            active={status === "cancel"}
             onClick={this.handleItemClick}
           >
             ยกเลิกแล้ว

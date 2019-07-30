@@ -18,7 +18,7 @@ const Product = props => {
               as={Link}
               to={"/p/" + props.product.slug}
               src={
-                "https://sushingg-api.herokuapp.com/images/" +
+                "http://localhost:4000/images/" +
                 props.product.image[0].name
               }
             />

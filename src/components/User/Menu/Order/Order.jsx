@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import OrderItem from "./OrderItem";
+import CancelOrder from "./CancelOrder"
 import {
   Button,
   Segment,
@@ -9,7 +10,8 @@ import {
   Header,
   Icon,
   Grid,
-  Divider
+  Divider,
+  Modal
 } from "semantic-ui-react";
 import moment from "moment";
 const formatter = new Intl.NumberFormat("en-US", {
@@ -124,7 +126,6 @@ class Checkout extends Component {
               this.props.order.address.postcode}
           </Header>
           {this.props.order.status === "" && (
-          
             <Mutation
               mutation={CREATE_PAYMENT_MUTATION}
               variables={{
@@ -134,9 +135,15 @@ class Checkout extends Component {
               onError={error => this._error(error)}
             >
               {mutation => (
-                <Button fluid color="blue" onClick={mutation}>
-                  ชำระเงิน.
-                </Button>
+                <Button.Group fluid>
+                  <Button positive onClick={mutation}>
+                    ชำระเงิน.
+                  </Button>
+                  <Button.Or />
+                  <Modal trigger={<Button negative>ยกเลิก</Button>} basic size='small'>
+                    <CancelOrder id={this.props.order.id} refetch={this.props.refetch}/>
+                  </Modal>
+                </Button.Group>
               )}
             </Mutation>
           )}

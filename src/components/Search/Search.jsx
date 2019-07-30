@@ -10,7 +10,7 @@ class SearchBox extends Component {
     redirect:null
   };
   handleResultSelect = (e, { result }) => {
-    this.setState({ value: result.title,redirect:"/p/"+result.slug });
+    this.setState({redirect:"/p/"+result.slug });
   };
   search = (e) => {
     this.setState({ value: e.target.value });
@@ -20,7 +20,7 @@ class SearchBox extends Component {
   };
   renderRedirect = () => {
     if (this.state.redirect) {
-        this.setState({ redirect:null })
+        //this.setState({ redirect:null })
   
       return <Redirect to={this.state.redirect} />;
     }

@@ -12,7 +12,7 @@ const Product = (props) => {
  
         {props.product.image.length?
         (<Image className="productImg" wrapped as={Link} to={"/p/"+props.product.slug}  src={
-          "https://sushingg-api.herokuapp.com/images/" +
+          "http://localhost:4000/images/" +
           props.product.image[0].name
         } />)
         :(<Image className="productImg" wrapped as={Link} to={"/p/"+props.product.slug}  src="/image/test.jpg" />)

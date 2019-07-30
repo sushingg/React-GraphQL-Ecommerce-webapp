@@ -1,27 +1,33 @@
 import React from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import _ from "lodash";
 import {
   Button,
   Form,
   Segment,
-  Message,
   Dropdown,
   Table,
   Label,
-  Icon
+  Icon,
+  Modal
 } from "semantic-ui-react";
-
+import SetDeliver from "./SetDeliver";
 class Deliver extends React.Component {
   state = {
     deliver: this.props.deliver,
     value: "",
-    selected: []
+    selected: [],
+    modalOpen: false
   };
+  handleOpen = () => this.setState({ modalOpen: true })
+  handleClose = () => this.setState({ modalOpen: false })
   handleChange = (e, { value, text }) => {
     this.setState({ value });
   };
+  handleRefetch = () =>{
+    this.setState({ selected: [] });
+    this.handleClose()
+    this.props.refetch()
+  }
   handleItemClick = () => {
     if (this.state.value !== "") {
       let a = this.state.deliver;
@@ -29,7 +35,6 @@ class Deliver extends React.Component {
       _.remove(a, {
         key: this.state.value
       });
-
       console.log(b);
       this.setState({
         selected: [...this.state.selected, b],
@@ -38,47 +43,26 @@ class Deliver extends React.Component {
       });
     }
   };
+  handleRemoveItemClick =(e, { name }) => {
+    let value = name
+    if (value !== "") {
+      let a = this.state.selected;
+      let b = _.find(a, { key: value });
+      _.remove(a, {
+        key: value
+      });
+      this.setState({
+        selected: a,
+        deliver: [...this.state.deliver, b],
+        value: ""
+      });
+    }
+  };
   render() {
     console.log(this.state);
-    const { deliver, value, selected } = this.state;
+    const { deliver, value, selected, modalOpen } = this.state;
     return (
       <>
-        <Query
-          fetchPolicy="network-only"
-          query={gql`
-            {
-              usersOrder(status: "successful") {
-                id
-                email
-                name
-                order {
-                  id
-                  createdAt
-                  total
-                  status
-                }
-              }
-            }
-          `}
-        >
-          {({ loading, error, data }) => {
-            if (loading)
-              return (
-                <Segment textAlign="center">
-                  <Message compact>loading</Message>
-                </Segment>
-              );
-            if (error)
-              return (
-                <Segment textAlign="center">
-                  <Message warning compact>
-                    {error.message}
-                  </Message>
-                </Segment>
-              );
-
-            return (
-              <>
                 <Segment>
                   <Form>
                     <Form.Field>
@@ -114,7 +98,7 @@ class Deliver extends React.Component {
                               <Label basic>{thisOrder.description}</Label>
                             </Table.Cell>
                             <Table.Cell>
-                              <Label basic color="red">
+                              <Label basic color="red" name={thisOrder.value} onClick={this.handleRemoveItemClick}>
                                 <Icon name="remove" />
                                 ลบ
                               </Label>
@@ -123,12 +107,20 @@ class Deliver extends React.Component {
                         ))}
                     </Table.Body>
                   </Table>
-                  <Button fluid>Submit</Button>
+                  <Modal 
+                    trigger={<Button fluid onClick={this.handleOpen}>Submit</Button>}
+                    open={modalOpen}
+                    onClose={this.handleClose}
+                  >
+                    <SetDeliver
+                      data={selected.map(thisOrder => (
+                        thisOrder.value
+                      ))}
+                      refetch={this.handleRefetch}
+                    />
+                  </Modal>
                 </Segment>
-              </>
-            );
-          }}
-        </Query>
+              
       </>
     );
   }
