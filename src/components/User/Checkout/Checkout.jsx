@@ -13,7 +13,7 @@ import {
 import { CartContext } from "../../CartContext";
 import Cart from "../../Cart/CartSummary";
 import AddAddress from "../../User/Menu/MyAddress/AddAddress";
-import Complete from "./Complete"
+import Complete from "./Complete";
 const ADD_ORDER_MUTATION = gql`
   mutation addUserOrderMutation(
     $total: Int!
@@ -24,6 +24,22 @@ const ADD_ORDER_MUTATION = gql`
       id
       total
       status
+      address {
+        firstName
+        lastName
+        addr
+        distric
+        province
+        mobileNumber
+        postcode
+      }
+      orderProduct {
+        slug
+        title
+        price
+        option
+        quantity
+      }
       createdAt
     }
   }
@@ -37,32 +53,32 @@ class Checkout extends Component {
     disable: true,
     showError: false,
     isLogged: false,
-    completed:false,
-    order:undefined
+    completed: false,
+    order: undefined
   };
   handleChangeAddress = (value, cart) => {
     if (cart.itemSum > 0) {
       let address = cart.user.address[value];
-      var product = JSON.parse(localStorage.getItem("items"))||[]
+      var product = JSON.parse(localStorage.getItem("items")) || [];
       try {
         delete address.__typename;
         delete address.id;
         product.map(function(a, i) {
-          let res = a
-          res.quantity = a.selected
-          delete res.id
-          delete res.selected
-          delete res.title
-          delete res.price
-          delete res.description
-          delete res.descriptionHtml
-          delete res.category
-          delete res.subCategory
-          delete res.image
-          delete res.__typename
+          let res = a;
+          res.quantity = a.selected;
+          delete res.id;
+          delete res.selected;
+          delete res.title;
+          delete res.price;
+          delete res.description;
+          delete res.descriptionHtml;
+          delete res.category;
+          delete res.subCategory;
+          delete res.image;
+          delete res.__typename;
           return res;
-        })
-        console.log(product)
+        });
+        console.log(product);
       } catch {}
       this.setState({
         addrIndex: value,
@@ -80,7 +96,7 @@ class Checkout extends Component {
   };
   render() {
     const { errorMessage, total, address, products } = this.state;
-    if(this.state.completed) return <Complete order={this.state.order}/>
+    if (this.state.completed) return <Complete order={this.state.order} />;
     return (
       <Container style={{ padding: "3em 0em" }}>
         <CartContext.Consumer>
@@ -133,12 +149,14 @@ class Checkout extends Component {
 
                 <Modal
                   trigger={
-                    <Button style={{ width: "19%" }} attached="right" fluid>เพิ่มที่อยู่ไหม่</Button>
+                    <Button style={{ width: "19%" }} attached="right" fluid>
+                      เพิ่มที่อยู่ไหม่
+                    </Button>
                   }
                   basic
                   size="small"
                 >
-                    <AddAddress />
+                  <AddAddress />
                 </Modal>
               </Segment>
               <Segment padded>
@@ -190,11 +208,11 @@ class Checkout extends Component {
       return { showError: false };
     });
   };
-  _confirm = async (data,cart) => { 
+  _confirm = async (data, cart) => {
     await cart.onClearCart();
     const orders = data.addUserOrder;
     console.log(orders);
-    this.setState({completed:true,order:orders})
+    this.setState({ completed: true, order: orders });
     //window.location = "/myorders";
   };
   _error = async error => {
