@@ -69,7 +69,7 @@ function checklogin(){
 //uri:    https://sushingg-api.herokuapp.com/graphql
 //        http://localhost:4000/graphql
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://sushingg-api.herokuapp.com/graphql",
   request: async operation => {
     if (checklogin()) {
       operation.setContext({
