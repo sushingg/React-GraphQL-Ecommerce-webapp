@@ -63,18 +63,18 @@ const Placehold = props => {
   );
 };
 class SingleOrder extends React.Component {
-  state = { status: "" };
+  state = { status: "wait" };
   handleItemClick = (e, { name }) => this.setState({ status: name });
 
   render() {
     const { status } = this.state;
     return (
-      <>
+      <> 
         <Header as="h3">Order | รายการสั่งซื้อ</Header>
         <Menu tabular>
           <Menu.Item
-            name=""
-            active={status === ""}
+            name="wait"
+            active={status === "wait"}
             onClick={this.handleItemClick}
           >
             ที่ต้องชำระ

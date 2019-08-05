@@ -68,7 +68,8 @@ class Checkout extends Component {
     showError: false,
     isLogged: false,
     value: [],
-    imageOptions: []
+    imageOptions: [],
+    loading: false
   };
   handleAddition = (e, { value }) => {
     this.setState({
@@ -88,7 +89,8 @@ class Checkout extends Component {
       descriptionHtml,
       quantity,
       published,
-      errorMessage
+      errorMessage,
+      loading
     } = this.state;
     return (
       <CartContext.Consumer>
@@ -173,15 +175,15 @@ class Checkout extends Component {
                 </Form.Group>
                 <Form.Group widths="equal">
                   <Form.Field>
-                    {!this.props.product.image.length && (
+                    {!this.props.product.image.length ? (
                       <Image
                         bordered
                         rounded
                         size="medium"
                         src="/image/test.jpg"
                       />
-                    )}
-                    <div
+                    ):(
+<div
                       style={{
                         width: "300px",
                         height: "350px",
@@ -225,6 +227,8 @@ class Checkout extends Component {
                         ))}
                       </Carousel>
                     </div>
+                    )}
+                    
                   </Form.Field>
                   <Form.Field>
                     <div style={{ height: "350px", margin: "auto" }}>
@@ -260,7 +264,16 @@ class Checkout extends Component {
                   onError={error => this._error(error)}
                 >
                   {mutation => (
-                    <Button color="blue" fluid size="large" onClick={mutation}>
+                    <Button
+                      color="blue"
+                      fluid
+                      loading={loading}
+                      size="large"
+                      onClick={() => {
+                        this.setState({ loading: true });
+                        mutation();
+                      }}
+                    >
                       Edit Product
                     </Button>
                   )}
@@ -291,6 +304,8 @@ class Checkout extends Component {
   _confirm = async data => {
     const order = data.updateProduct;
     console.log(order);
+
+    this.setState({ loading: false });
     this.props.refetch();
     toast.notify("บันทึกการแก้ไขสินค้าสำเร็จ", {
       position: "bottom-right"

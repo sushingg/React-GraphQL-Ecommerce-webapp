@@ -1,30 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Table, Icon, Label } from "semantic-ui-react";
+import { Table, Icon, Label, Modal, Segment } from "semantic-ui-react";
 import moment from "moment";
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'THB',
-  minimumFractionDigits: 2
-})
-const Product = props => {
+import OrderDetail from "../../User/Menu/Order/Order";
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "thb",
+  minimumFractionDigits: 0
+});
+const Order = props => {
   moment.locale("th");
   return (
     <Table.Row>
       <Table.Cell>
-        <Label basic as={Link} to={"/admin/o/" + props.order.id}>
-          <Icon name="file outline" />
-          { props.order.id}
+        <Modal
+          trigger={
+            <Label basic>
+              <Icon name="file outline" />
+              {props.order.id}
+            </Label>
+          }
+        >
+          {" "}
+          <Segment>
+            <OrderDetail refetch={props.refetch} order={props.order} />
+          </Segment>
+        </Modal>
+      </Table.Cell>
+      <Table.Cell>
+        <Label basic>
+          {moment.unix(props.order.createdAt / 1000).format("llll")}
         </Label>
       </Table.Cell>
       <Table.Cell>
         <Label basic>
-          {moment.unix((props.order.createdAt)/1000).format("llll")}
+          {moment.unix(props.order.updatedAt / 1000).format("llll")}
         </Label>
-        <Label basic>
-          Email
-          <Label.Detail>{props.user.email}</Label.Detail>
-        </Label>
+      </Table.Cell>
+      <Table.Cell>
         <Label basic>
           User
           <Label.Detail>{props.user.name}</Label.Detail>
@@ -51,4 +63,4 @@ const Product = props => {
   );
 };
 
-export default Product;
+export default Order;

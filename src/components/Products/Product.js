@@ -4,7 +4,7 @@ import { CartContext } from "../CartContext";
 
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 const formatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2
+  minimumFractionDigits: 0
 });
 const Product = props => {
   return (

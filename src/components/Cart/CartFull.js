@@ -15,7 +15,7 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 const formatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2
+  minimumFractionDigits: 0
 });
 const CartSum = props => {
   const login = isLogin();

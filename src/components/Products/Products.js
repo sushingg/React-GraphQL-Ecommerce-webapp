@@ -1,9 +1,9 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Card, Message, Grid} from "semantic-ui-react";
-const Product = React.lazy(() => import("./Product"));
-
+import { Card, Message, Grid } from "semantic-ui-react";
+import Product from "./Product"
+import PrdoctPlaceholder from "../PrdoctPlaceholder"
 const Products = () => (
   <Grid textAlign="center">
     <Grid.Column largeScreen={16} mobile={13}>
@@ -30,7 +30,8 @@ const Products = () => (
           pollInterval={20000}
         >
           {({ loading, error, data }) => {
-            if (loading) return <div>Loading..</div>;
+            if (loading)
+              return (<PrdoctPlaceholder/>);
             if (error)
               return (
                 <Message>

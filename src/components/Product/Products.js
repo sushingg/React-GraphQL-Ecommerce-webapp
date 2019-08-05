@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Product from "./Product";
 import Loader from "../Loader";
 import { Message, Segment } from "semantic-ui-react";
+
 class Products extends React.Component {
   state = {};
   componentDidMount() {}

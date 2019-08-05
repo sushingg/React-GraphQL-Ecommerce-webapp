@@ -16,7 +16,7 @@ import OrderItem from "../Menu/Order/OrderItem";
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "THB",
-  minimumFractionDigits: 2
+  minimumFractionDigits: 0
 });
 const CREATE_PAYMENT_MUTATION = gql`
   mutation createPayment($id: ID!) {

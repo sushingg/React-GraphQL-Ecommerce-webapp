@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Link } from "react-router-dom";
 import Product from "../Products/Product";
-import Loader from "../Loader";
+import PrdoctPlaceholder from "../PrdoctPlaceholder";
 import {
   Card,
   Container,
@@ -102,7 +102,14 @@ export default function AllCategory({ match }) {
             variables={params}
           >
             {({ loading, error, data }) => {
-              if (loading) return <Loader key="" />;
+              if (loading)
+                return (
+                  <Container fluid>
+                    <Card.Group itemsPerRow={4} stackable>
+                      <PrdoctPlaceholder />
+                    </Card.Group>
+                  </Container>
+                );
               if (error)
                 return (
                   <Message>
@@ -111,18 +118,16 @@ export default function AllCategory({ match }) {
                   </Message>
                 );
 
-              if (!data.products)
-                return <NoProduct/>;
+              if (!data.products) return <NoProduct />;
               return (
                 <Container fluid>
-                  {console.log(data.products)}
                   <Card.Group itemsPerRow={4} stackable>
                     {data.products.product.map((currentProduct, i) => (
                       <Product key={i} product={currentProduct} />
                     ))}
                   </Card.Group>
-                  
-                  {data.products.product.length === 0 && <NoProduct/>}
+
+                  {data.products.product.length === 0 && <NoProduct />}
                   <Segment basic textAlign="center">
                     <Pagination
                       activePage={activePage}

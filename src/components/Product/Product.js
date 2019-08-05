@@ -15,7 +15,7 @@ var Carousel = require("react-responsive-carousel").Carousel;
 var HtmlToReactParser = require("html-to-react").Parser;
 var htmlToReactParser = new HtmlToReactParser();
 const formatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2
+  minimumFractionDigits: 0
 });
 const Product = props => {
   const [quantity, setQuantity] = useState(1);

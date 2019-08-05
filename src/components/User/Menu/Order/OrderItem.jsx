@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "THB",
-  minimumFractionDigits: 2
+  minimumFractionDigits: 0
 });
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;

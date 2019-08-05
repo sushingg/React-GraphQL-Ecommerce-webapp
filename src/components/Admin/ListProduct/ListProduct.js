@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Table, Icon, Label } from "semantic-ui-react";
+
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0
+});
 const ListProduct = props => {
-  console.log(props.product.published)
   return (
     <Table.Row>
       <Table.Cell>
@@ -11,7 +14,11 @@ const ListProduct = props => {
         </Label>
       </Table.Cell>
       <Table.Cell>
-        <Label tag>{props.product.price + " ฿"}</Label>
+        <Label tag>{formatter.format(props.product.price) + " ฿"}</Label>
+      </Table.Cell>
+      
+      <Table.Cell>
+        <Label tag>{props.product.quantity + " ชิ้น"}</Label>
       </Table.Cell>
       <Table.Cell textAlign="right">
         {props.product.published ? (
