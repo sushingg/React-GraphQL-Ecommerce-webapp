@@ -50,7 +50,7 @@ class Order extends Component {
             </Message>
           </Segment>
         )}
-        
+
         <Segment basic textAlign="center">
           <OrderComponent
             order={this.props.order}
@@ -142,19 +142,36 @@ class OrderComponent extends Component {
         </Divider>
         <Grid columns={3} divided>
           <Grid.Row>
-            <Grid.Column>
-              <Header>
-                <Icon name="calendar alternate outline" />
-                ชำระเงินค่าสินค้าภายใน
-              </Header>
-              <Header>
-                {moment
-                  .unix(this.props.order.createdAt / 1000)
-                  .add(1, "d")
-                  .format("llll")}
-                <Header.Subheader>กรุณาชำระเงินก่อนเวลา</Header.Subheader>
-              </Header>
-            </Grid.Column>
+            {(!this.props.order.status || this.props.order.status === "wait") ? (
+              <Grid.Column>
+                <Header>
+                  <Icon name="calendar alternate outline" />
+                  ชำระเงินค่าสินค้าภายใน
+                </Header>
+                <Header>
+                  {moment
+                    .unix(this.props.order.createdAt / 1000)
+                    .add(1, "d")
+                    .format("llll")}
+                  <Header.Subheader>กรุณาชำระเงินก่อนเวลา</Header.Subheader>
+                </Header>
+              </Grid.Column>
+            ) : (
+              <Grid.Column>
+                <Header>
+                  <Icon name="calendar alternate outline" />
+                  เวลาที่สำเร็จ
+                </Header>
+                <Header>
+                  {moment
+                    .unix(this.props.order.updatedAt / 1000)
+                    .add(1, "d")
+                    .format("llll")}
+                  
+                </Header>
+              </Grid.Column>
+            )}
+
             <Grid.Column>
               <Header>
                 <Icon name="money bill alternate outline" />
@@ -169,6 +186,8 @@ class OrderComponent extends Component {
                   switch (this.props.order.status) {
                     case null:
                       return <Header color="yellow">รอชำระเงิน</Header>;
+                    case "sended":
+                      return <Header color="blue">สำเร็จ</Header>;
                     case "successful":
                       return <Header color="green">ชำระเงินแล้ว</Header>;
                     case "failed":

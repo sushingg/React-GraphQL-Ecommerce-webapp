@@ -11,7 +11,7 @@ const Products = () => (
         <Query
           query={gql`
             {
-              products(limit: 12) {
+              products(limit: 12,sortBy:"updatedAt") {
                 product {
                   id
                   slug
@@ -23,6 +23,7 @@ const Products = () => (
                     altText
                     name
                   }
+                  updatedAt
                 }
               }
             }

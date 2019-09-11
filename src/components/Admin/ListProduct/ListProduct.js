@@ -5,6 +5,12 @@ import { Table, Icon, Label } from "semantic-ui-react";
 const formatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 0
 });
+const Quantity = (props) =>{
+  var color = "gray"
+  if (props.product.quantity === 0) color = "red" 
+  else if (props.product.quantity <= 10 ) color = "yellow" 
+  return <Label color={color} tag>{props.product.quantity + " ชิ้น"}</Label>
+}
 const ListProduct = props => {
   return (
     <Table.Row>
@@ -18,7 +24,7 @@ const ListProduct = props => {
       </Table.Cell>
       
       <Table.Cell>
-        <Label tag>{props.product.quantity + " ชิ้น"}</Label>
+        <Quantity product={props.product}/>
       </Table.Cell>
       <Table.Cell textAlign="right">
         {props.product.published ? (

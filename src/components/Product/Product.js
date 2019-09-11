@@ -19,11 +19,17 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 const Product = props => {
   const [quantity, setQuantity] = useState(1);
-  const handlePlus =()=>{
-    setQuantity(quantity+1)
+  const handlePlus =(max)=>{
+    if (quantity < max) setQuantity(quantity+1)
   }
   const handleMinus =()=>{
     if (quantity > 1) setQuantity(quantity-1)
+  }
+  const handleChange =(n,max)=>{
+    if ( n > 0) {
+      if(n < max ) setQuantity(n)
+      else setQuantity(max)
+    }
   }
   return (
     <>
@@ -93,9 +99,9 @@ const Product = props => {
                         <Input
                           id="quantity_input"
                           value={quantity}
-                          onChange={e => (setQuantity(e.target.value))}
+                          onChange={e => (handleChange(parseInt(e.target.value),props.product.quantity) )}
                         />
-                        <Button basic attached="right" onClick={() => (handlePlus())}>
+                        <Button basic attached="right" onClick={() => (handlePlus(props.product.quantity))}>
                           &nbsp;
                           <Icon name="plus" />
                         </Button>
@@ -123,7 +129,7 @@ const Product = props => {
                 </Grid>
               </Segment>
               <br />
-              <Segment padded>
+              <Segment padded style={{ overflowX:"hidden"}}>
                 <Header as="h2">รายละเอียดสินค้า</Header>
                 <Divider />
                 {htmlToReactParser.parse(props.product.descriptionHtml)}

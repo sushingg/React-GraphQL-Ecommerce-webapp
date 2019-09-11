@@ -95,8 +95,8 @@ class Inventory extends Component {
     console.log(p.quantity);
     if (index >= 0) {
       var newArray = [...this.state.items];
-      console.log("n:" + (newArray[index].selected + n - 1) + "|" + p.quantity);
-      if (newArray[index].selected + n - 1 >= p.quantity) {
+      console.log("n:" + (newArray[index].selected + n) + "|" + p.quantity);
+      if (newArray[index].selected + n > p.quantity) {
         text = "สิ้นค้าในร้านไม่พอให้เพิ่มเข้าตะกร้า";
       } else {
         newArray[index].selected += parseInt(n, 10);
@@ -126,7 +126,7 @@ class Inventory extends Component {
     if (!value || value < 1) {
       value = 1;
     }
-
+    if (value > p.quantity) value = p.quantity;
     if (index >= 0) {
       var newArray = [...this.state.items];
       newArray[index].selected = value;

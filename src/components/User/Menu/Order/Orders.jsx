@@ -38,6 +38,8 @@ class Orders extends React.Component {
             switch (this.props.order.status) {
               case null:
                 return <Label color="yellow">รอชำระเงิน</Label>;
+              case "sended":
+                return <Label color="blue">สำเร็จ</Label>;
               case "successful":
                 return <Label color="green">ชำระเงินแล้ว</Label>;
               case "failed":

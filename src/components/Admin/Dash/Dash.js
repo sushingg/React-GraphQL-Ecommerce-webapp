@@ -11,7 +11,7 @@ import Order from '../Order/Orders'
 const Dash = props => {
   return (
     <>
-      <Card.Group centered itemsPerRow="4">
+      <Card.Group centered itemsPerRow="4" style={{display:"none"}}>
         <Card color="violet" link>
           <Card.Content>
             <Card.Header>

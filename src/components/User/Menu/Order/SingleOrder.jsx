@@ -37,6 +37,7 @@ class SingleOrder extends React.Component {
                     quantity
                   }
                   createdAt
+                  updatedAt
                 }
               }
             `}
