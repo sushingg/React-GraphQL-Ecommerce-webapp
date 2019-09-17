@@ -16,7 +16,7 @@ import AddAddress from "../../User/Menu/MyAddress/AddAddress";
 import Complete from "./Complete";
 const ADD_ORDER_MUTATION = gql`
   mutation addUserOrderMutation(
-    $total: Int!
+    $total: Int
     $address: Addressinput!
     $products: [OrderProductinput]!
   ) {
@@ -76,6 +76,7 @@ class Checkout extends Component {
           delete res.subCategory;
           delete res.image;
           delete res.__typename;
+          delete res.updatedAt;
           return res;
         });
         console.log(product);

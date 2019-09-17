@@ -22,6 +22,7 @@ import Cart from "./components/Cart/Cart";
 
 import Checkout from "./components/User/Checkout/Checkout";
 import UserMenu from "./components/User/Menu/Menu"
+import Receipt from "./components/User/Receipt/Receipt"
 
 import Home from "./components/HomepageLayout";
 import Inventory from "./components/Inventory";
@@ -112,6 +113,8 @@ const App = () => (
           </Admin>
         </Route>
         <Route path="/logout" component={Logout} />
+        
+        <PRoute exact path="/receipt/:active?/:id?" component={Receipt} />
         <Home>
           <Switch>
             <PRoute exact path="/my/:active?/:id?" component={UserMenu} />

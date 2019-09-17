@@ -9,7 +9,7 @@ function checklogin() {
   token = localStorage.getItem(AUTH_TOKEN) || null;
   if (token !== null) {
     var decoded = jwtDecode(token);
-    if (decoded.type === "admin") res = decoded
+    if (decoded.type === "admin" || decoded.type === "staff" ) res = decoded
     if (Date.now() / 1000 > decoded.exp) {
       localStorage.removeItem(AUTH_TOKEN);
       localStorage.clear();

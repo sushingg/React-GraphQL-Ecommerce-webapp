@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import OrderItem from "./OrderItem";
 import CancelOrder from "./CancelOrder";
+import Receipt from "../../Receipt/Receipt";
 import {
   Button,
   Segment,
@@ -52,10 +53,7 @@ class Order extends Component {
         )}
 
         <Segment basic textAlign="center">
-          <OrderComponent
-            order={this.props.order}
-            ref={el => (this.componentRef = el)}
-          />
+          <OrderComponent order={this.props.order} />
           {this.props.order.status === "wait" && (
             <Mutation
               mutation={CREATE_PAYMENT_MUTATION}
@@ -86,14 +84,25 @@ class Order extends Component {
             </Mutation>
           )}
         </Segment>
-        <ReactToPrint
-          trigger={() => (
-            <Button fluid basic>
-              พิมพ์ใบสั่งซื้อ
-            </Button>
-          )}
-          content={() => this.componentRef}
-        />
+        {this.props.order.status !== "wait" && (
+          <Modal trigger={<Button fluid>พิมพ์ใบเสร็จรับเงิน</Button>}>
+            <Modal.Header>ใบเสร็จรับเงิน</Modal.Header>
+            <Modal.Content>
+              <ReactToPrint
+                trigger={() => (
+                  <Button fluid>
+                    พิมพ์ใบเสร็จรับเงิน
+                  </Button>
+                )}
+                content={() => this.componentRef}
+              />
+              <Receipt
+                order={this.props.order}
+                ref={el => (this.componentRef = el)}
+              />
+            </Modal.Content>
+          </Modal>
+        )}
       </>
     );
   }
@@ -142,7 +151,7 @@ class OrderComponent extends Component {
         </Divider>
         <Grid columns={3} divided>
           <Grid.Row>
-            {(!this.props.order.status || this.props.order.status === "wait") ? (
+            {!this.props.order.status || this.props.order.status === "wait" ? (
               <Grid.Column>
                 <Header>
                   <Icon name="calendar alternate outline" />
@@ -167,7 +176,6 @@ class OrderComponent extends Component {
                     .unix(this.props.order.updatedAt / 1000)
                     .add(1, "d")
                     .format("llll")}
-                  
                 </Header>
               </Grid.Column>
             )}

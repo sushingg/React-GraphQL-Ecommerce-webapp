@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import ListProduct from "./ListProduct";
 import Categories from "./Categories";
 import ReactToPrint from "react-to-print";
+import SumReport from "./SumReport"
 import {
   Table,
   Message,
@@ -14,7 +15,8 @@ import {
   Input,
   Icon,
   Menu,
-  Dropdown
+  Dropdown,
+  Modal
 } from "semantic-ui-react";
 class ListProducts extends React.Component {
   state = {
@@ -121,14 +123,12 @@ class ListProducts extends React.Component {
           </Menu.Item>
 
           <Menu.Item>
-            <ReactToPrint
-              trigger={() => (
-                <Button fluid basic>
-                  พิมพ์รายงานสินค้า
-                </Button>
-              )}
-              content={() => this.componentRef}
-            />
+          <Modal trigger={<Button fluid>พิมพ์รายงานสินค้าคงเหลือ</Button>}>
+              <Modal.Header>รายงานสินค้าคงเหลือ</Modal.Header>
+              <Modal.Content>
+                <SumReport />
+              </Modal.Content>
+            </Modal>
           </Menu.Item>
         </Menu>
 
