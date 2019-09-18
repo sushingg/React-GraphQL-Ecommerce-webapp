@@ -70,13 +70,14 @@ export default class MyMenu extends Component {
                 <CartContext.Consumer>
                   {cart =>
                     cart.user &&
-                    (cart.user.type === "admin"||cart.user.type === "staff" && (
+                    (cart.user.type !== "user" && (
                       <Menu.Item
                         name="จัดการร้านค้า"
                         as={Link}
                         to={"/admin" || ""}
                       />
                     ))
+                    
                   }
                 </CartContext.Consumer>
               </Menu>
