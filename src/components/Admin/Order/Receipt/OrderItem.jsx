@@ -19,8 +19,8 @@ const OrderItem = order => {
           <Table.Cell colSpan={1}>{i+1}</Table.Cell>
           <Table.Cell colSpan={11}>{p.title}</Table.Cell>
           <Table.Cell colSpan={1}>{p.quantity}</Table.Cell>
-          <Table.Cell colSpan={1}>{p.price}</Table.Cell>
-          <Table.Cell colSpan={2}>{p.quantity*p.price}</Table.Cell>
+          <Table.Cell colSpan={1}>{formatter.format(p.price)}</Table.Cell>
+          <Table.Cell colSpan={2}>{formatter.format(p.quantity*p.price)}</Table.Cell>
         </Table.Row>
       ))}
     </>

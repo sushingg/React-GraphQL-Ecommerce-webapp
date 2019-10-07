@@ -294,7 +294,7 @@ class SumReport extends React.Component {
                     "quantity"
                   )}
                 </Table.Cell>
-                <Table.Cell colSpan="2">{currentOrder.price}</Table.Cell>
+                <Table.Cell colSpan="2">{formatter.format(currentOrder.price)}</Table.Cell>
                 <Table.Cell colSpan="2">
                   {formatter.format(
                     _.sumBy(

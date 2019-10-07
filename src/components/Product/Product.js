@@ -78,7 +78,7 @@ const Product = props => {
                             <img
                               alt="slider"
                               src={
-                                "http://localhost:4000/images/" +
+                                "http://sushingg-api.herokuapp.com/images/" +
                                 props.product.image[i].name
                               }
                             />

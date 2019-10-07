@@ -55,7 +55,7 @@ class RemoveProduct extends Component {
             </Button>
           )}
         </Mutation>
-        <Image fluid src={"http://localhost:4000/images/" + image.name} />
+        <Image fluid src={"http://sushingg-api.herokuapp.com/images/" + image.name} />
       </Segment>
     );
   }

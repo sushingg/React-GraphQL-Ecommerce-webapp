@@ -40,7 +40,7 @@ const CartSum = props => {
                                 rounded
                                 size="small"
                                 src={
-                                  "http://localhost:4000/images/" +
+                                  "http://sushingg-api.herokuapp.com/images/" +
                                   p.image[0].name
                                 }
                               />

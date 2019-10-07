@@ -19,8 +19,8 @@ const OrderItem = order => {
           <Grid.Column width={2}>{i+1}</Grid.Column>
           <Grid.Column width={8}>{p.title}</Grid.Column>
           <Grid.Column width={2}>{p.quantity}</Grid.Column>
-          <Grid.Column width={2}>{p.price}</Grid.Column>
-          <Grid.Column width={2}>{p.quantity*p.price}</Grid.Column>
+          <Grid.Column width={2}>{formatter.format(p.price)}</Grid.Column>
+          <Grid.Column width={2}>{formatter.format(p.quantity*p.price)}</Grid.Column>
         </Grid.Row>
       ))}
     </>
